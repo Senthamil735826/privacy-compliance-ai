@@ -3,23 +3,41 @@ import re
 
 def clean_text(text: str) -> str:
     """
-    Clean extracted PDF text before chunking.
+    Clean extracted PDF text while preserving meaningful content.
     """
 
-    # Normalize line breaks
+    if not text:
+        return ""
+
+    # Normalize line endings
     text = text.replace("\r\n", "\n")
     text = text.replace("\r", "\n")
 
-    # Remove excessive spaces
+    # Remove excessive spaces and tabs
     text = re.sub(r"[ \t]+", " ", text)
 
-    # Remove excessive blank lines
-    text = re.sub(r"\n\s*\n+", "\n\n", text)
-
-    # Remove spaces at beginning/end of lines
+    # Remove spaces at the beginning/end of lines
     text = "\n".join(line.strip() for line in text.splitlines())
 
-    # Final cleanup
-    text = text.strip()
+    # Remove excessive blank lines
+    text = re.sub(r"\n{3,}", "\n\n", text)
 
-    return text
+    return text.strip()
+
+
+def clean_pages(pages: list) -> list:
+    """
+    Clean text page-by-page while preserving page numbers.
+    """
+
+    cleaned_pages = []
+
+    for page in pages:
+        cleaned_text = clean_text(page["text"])
+
+        cleaned_pages.append({
+            "page": page["page"],
+            "text": cleaned_text
+        })
+
+    return cleaned_pages

@@ -1,0 +1,1052 @@
+{
+  "version": "1.0",
+  "primary_indicators": [
+    {
+      "id": "A1",
+      "name": "Basic Information",
+      "secondary_ids": [
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6"
+      ]
+    },
+    {
+      "id": "A2",
+      "name": "Data Collection Rules",
+      "secondary_ids": [
+        "B7",
+        "B8",
+        "B9",
+        "B10",
+        "B11",
+        "B12"
+      ]
+    },
+    {
+      "id": "A3",
+      "name": "Data Usage Rules",
+      "secondary_ids": [
+        "B13",
+        "B14",
+        "B15"
+      ]
+    },
+    {
+      "id": "A4",
+      "name": "Data Storage and Security Measures",
+      "secondary_ids": [
+        "B16",
+        "B17",
+        "B18",
+        "B19",
+        "B20",
+        "B21",
+        "B22"
+      ]
+    },
+    {
+      "id": "A5",
+      "name": "Personal Information and Subject Rights",
+      "secondary_ids": [
+        "B23",
+        "B24",
+        "B25",
+        "B26",
+        "B27",
+        "B28",
+        "B29"
+      ]
+    },
+    {
+      "id": "A6",
+      "name": "Rules for Entrusted Processing, Sharing, Transfer, and Public Disclosure",
+      "secondary_ids": [
+        "B30",
+        "B31",
+        "B32",
+        "B33",
+        "B34",
+        "B35"
+      ]
+    },
+    {
+      "id": "A7",
+      "name": "Children's Privacy",
+      "secondary_ids": [
+        "B36",
+        "B37",
+        "B38",
+        "B39",
+        "B40"
+      ]
+    }
+  ],
+  "secondary_indicators": [
+    {
+      "id": "B1",
+      "name": "Privacy Policy Name",
+      "primary": "A1",
+      "any": [
+        "Privacy policy",
+        "User privacy policy",
+        "Privacy protection statement",
+        "Personal info processing rules"
+      ],
+      "all": []
+    },
+    {
+      "id": "B2",
+      "name": "Version Number",
+      "primary": "A1",
+      "any": [
+        "Version number",
+        "Current version",
+        "Policy version",
+        "Revised version"
+      ],
+      "all": []
+    },
+    {
+      "id": "B3",
+      "name": "Effective Date",
+      "primary": "A1",
+      "any": [
+        "Effective date",
+        "Implementation date",
+        "Effective from",
+        "Commencement date"
+      ],
+      "all": []
+    },
+    {
+      "id": "B4",
+      "name": "Update Date",
+      "primary": "A1",
+      "any": [
+        "Update date",
+        "Revision date",
+        "Last updated",
+        "Release date",
+        "Recently modified"
+      ],
+      "all": []
+    },
+    {
+      "id": "B5",
+      "name": "Data Controller",
+      "primary": "A1",
+      "any": [
+        "Personal info processor",
+        "Operator",
+        "Data controller",
+        "Responsible party",
+        "Company name"
+      ],
+      "all": []
+    },
+    {
+      "id": "B6",
+      "name": "Contact Information",
+      "primary": "A1",
+      "any": [
+        "Contact info",
+        "Contact phone",
+        "Customer service email",
+        "Contact address",
+        "Online support"
+      ],
+      "all": []
+    },
+    {
+      "id": "B7",
+      "name": "Purpose and Scope of Collection",
+      "primary": "A2",
+      "any": [
+        "Purpose of collection",
+        "Processing scope",
+        "Uses of personal info",
+        "To achieve functions"
+      ],
+      "all": [
+        [
+          [
+            "collect",
+            "acquire",
+            "process",
+            "use"
+          ],
+          [
+            "personal info",
+            "data"
+          ],
+          [
+            "purpose",
+            "scope",
+            "type",
+            "content"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B8",
+      "name": "Transparency in Collection",
+      "primary": "A2",
+      "any": [
+        "Open and transparent",
+        "Explicitly state",
+        "Fully inform",
+        "Clearly explain"
+      ],
+      "all": [
+        [
+          [
+            "collect",
+            "process",
+            "use"
+          ],
+          [
+            "inform",
+            "explain",
+            "transparent",
+            "explicit"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B9",
+      "name": "Use of Cookies or Similar Technology",
+      "primary": "A2",
+      "any": [
+        "Cookie",
+        "Browser cache",
+        "Local storage",
+        "Log files",
+        "Web beacon",
+        "SDK",
+        "Tracking tech"
+      ],
+      "all": []
+    },
+    {
+      "id": "B10",
+      "name": "Notice and Consent Mechanism",
+      "primary": "A2",
+      "any": [
+        "Obtain consent",
+        "User consent",
+        "Pop-up consent",
+        "Check to agree",
+        "Explicit consent"
+      ],
+      "all": [
+        [
+          [
+            "notify",
+            "inform"
+          ],
+          [
+            "consent",
+            "authorize"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B11",
+      "name": "Opt-out Options",
+      "primary": "A2",
+      "any": [
+        "Refuse collection",
+        "Opt-out",
+        "Turn off permission",
+        "Cancel authorization",
+        "Stop collecting"
+      ],
+      "all": [
+        [
+          [
+            "refuse",
+            "opt-out",
+            "close",
+            "cancel"
+          ],
+          [
+            "collect",
+            "authorize",
+            "permission",
+            "push"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B12",
+      "name": "Protection of Minors' Information",
+      "primary": "A2",
+      "any": [
+        "Minors",
+        "Guardian's consent",
+        "Under 14 years old",
+        "Youth mode",
+        "Guardian authorization"
+      ],
+      "all": [
+        [
+          [
+            "minor",
+            "child"
+          ],
+          [
+            "protect",
+            "guardian",
+            "consent",
+            "measure"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B13",
+      "name": "Minimum Necessity Principle",
+      "primary": "A3",
+      "any": [
+        "Minimum necessary",
+        "Necessary scope",
+        "Minimal data",
+        "Strictly necessary for purpose"
+      ],
+      "all": [
+        [
+          [
+            "minimum",
+            "minimal",
+            "necessary"
+          ],
+          [
+            "collect",
+            "process",
+            "info",
+            "data"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B14",
+      "name": "Purpose Restriction",
+      "primary": "A3",
+      "any": [
+        "Not for other purposes",
+        "Only for declared purposes",
+        "Beyond purpose scope",
+        "Purpose limitation"
+      ],
+      "all": [
+        [
+          [
+            "purpose",
+            "usage"
+          ],
+          [
+            "restrict",
+            "only for",
+            "not for",
+            "beyond"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B15",
+      "name": "Special Purpose Usage Rules",
+      "primary": "A3",
+      "any": [
+        "Sensitive personal info",
+        "Biometric",
+        "Face info",
+        "Health data",
+        "Separate consent"
+      ],
+      "all": [
+        [
+          [
+            "sensitive info",
+            "biometric",
+            "face",
+            "fingerprint",
+            "health"
+          ],
+          [
+            "protect",
+            "separate consent",
+            "notify"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B16",
+      "name": "Storage Location",
+      "primary": "A4",
+      "any": [
+        "Storage location",
+        "Stored in",
+        "Servers located at",
+        "Domestic storage",
+        "Cross-border storage"
+      ],
+      "all": [
+        [
+          [
+            "store",
+            "save"
+          ],
+          [
+            "location",
+            "domestic",
+            "overseas",
+            "server",
+            "data center"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B17",
+      "name": "Retention Time & Deletion Mechanism",
+      "primary": "A4",
+      "any": [
+        "Retention period",
+        "Storage duration",
+        "Retained until",
+        "Deletion mechanism",
+        "Anonymization"
+      ],
+      "all": [
+        [
+          [
+            "save",
+            "store",
+            "retain"
+          ],
+          [
+            "period",
+            "duration",
+            "until"
+          ]
+        ],
+        [
+          [
+            "delete",
+            "clear",
+            "destroy",
+            "anonymize"
+          ],
+          [
+            "mechanism",
+            "method",
+            "rule"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B18",
+      "name": "Safety Qualification Description",
+      "primary": "A4",
+      "any": [
+        "ISO27001",
+        "Level protection",
+        "Security certification",
+        "Compliance certification",
+        "Filing"
+      ],
+      "all": [
+        [
+          [
+            "security",
+            "info security"
+          ],
+          [
+            "certification",
+            "qualification",
+            "level protection"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B19",
+      "name": "Security Measures",
+      "primary": "A4",
+      "any": [
+        "Security safeguards",
+        "Technical/Organizational measures",
+        "Encryption",
+        "Access control",
+        "Desensitization"
+      ],
+      "all": [
+        [
+          [
+            "technical",
+            "organizational"
+          ],
+          [
+            "measure",
+            "safeguard"
+          ]
+        ],
+        [
+          [
+            "encrypt",
+            "desensitize",
+            "access control",
+            "audit"
+          ],
+          [
+            "security",
+            "protect"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B20",
+      "name": "Emergency Handling of Leaks",
+      "primary": "A4",
+      "any": [
+        "Contingency plan",
+        "Emergency mechanism",
+        "Leak handling",
+        "Remedial measures",
+        "Urgent response"
+      ],
+      "all": [
+        [
+          [
+            "leak",
+            "security incident",
+            "risk"
+          ],
+          [
+            "emergency",
+            "disposal",
+            "response",
+            "remedy"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B21",
+      "name": "Security Self-Inspection",
+      "primary": "A4",
+      "any": [
+        "Security self-check",
+        "Compliance assessment",
+        "Risk assessment",
+        "Internal audit",
+        "PIA/DPIA"
+      ],
+      "all": [
+        [
+          [
+            "self-check",
+            "assess",
+            "audit",
+            "inspect"
+          ],
+          [
+            "security",
+            "info protection",
+            "risk"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B22",
+      "name": "Security Incident Notification",
+      "primary": "A4",
+      "any": [
+        "Notify users",
+        "Incident notification",
+        "Leak announcement",
+        "Email notification",
+        "SMS alert"
+      ],
+      "all": [
+        [
+          [
+            "security incident",
+            "leak",
+            "risk"
+          ],
+          [
+            "notify",
+            "inform"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B23",
+      "name": "Data Access Rights",
+      "primary": "A5",
+      "any": [
+        "Access your personal info",
+        "Inquire about info",
+        "Obtain data copy",
+        "Access personal data",
+        "Request information"
+      ],
+      "all": [
+        [
+          [
+            "access",
+            "inquire",
+            "obtain",
+            "request"
+          ],
+          [
+            "personal info",
+            "personal information",
+            "personal data",
+            "data"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B24",
+      "name": "Right to Correction and Deletion",
+      "primary": "A5",
+      "any": [
+        "Correct personal information",
+        "Update personal information",
+        "Delete personal information",
+        "Correction request",
+        "Deletion request"
+      ],
+      "all": [
+        [
+          [
+            "correct",
+            "update",
+            "delete",
+            "erase"
+          ],
+          [
+            "personal information",
+            "personal data",
+            "account data"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B25",
+      "name": "Withdrawal of Consent",
+      "primary": "A5",
+      "any": [
+        "Withdraw consent",
+        "Revoke consent",
+        "Cancel consent",
+        "Withdraw authorization"
+      ],
+      "all": [
+        [
+          [
+            "withdraw",
+            "revoke",
+            "cancel"
+          ],
+          [
+            "consent",
+            "authorization"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B26",
+      "name": "Data Portability Services",
+      "primary": "A5",
+      "any": [
+        "Data portability",
+        "Transfer personal data",
+        "Export personal data",
+        "Receive data copy"
+      ],
+      "all": [
+        [
+          [
+            "export",
+            "transfer",
+            "receive",
+            "copy"
+          ],
+          [
+            "personal data",
+            "personal information",
+            "data"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B27",
+      "name": "Privacy Preferences Settings",
+      "primary": "A5",
+      "any": [
+        "Privacy preferences",
+        "Permission settings",
+        "Recommendation toggle"
+      ],
+      "all": [
+        [
+          [
+            "privacy",
+            "permission",
+            "recommendation",
+            "push"
+          ],
+          [
+            "setting",
+            "preference",
+            "manage",
+            "toggle"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B28",
+      "name": "Right to Cancel Account",
+      "primary": "A5",
+      "any": [
+        "Cancel account",
+        "Account deregistration",
+        "Apply for cancellation",
+        "Delete account data"
+      ],
+      "all": [
+        [
+          [
+            "cancel",
+            "delete"
+          ],
+          [
+            "account"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B29",
+      "name": "Supervision and Complaint Channels",
+      "primary": "A5",
+      "any": [
+        "Complaint channel",
+        "Reporting channel",
+        "Feedback",
+        "Complaint email",
+        "Supervisory authority"
+      ],
+      "all": [
+        [
+          [
+            "complaint",
+            "report",
+            "supervise",
+            "appeal"
+          ],
+          [
+            "channel",
+            "phone",
+            "email",
+            "method"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B30",
+      "name": "Scope/Purpose of Entrusted Processing",
+      "primary": "A6",
+      "any": [
+        "Entrusted processing",
+        "Sharing",
+        "Transfer",
+        "Provide to third party",
+        "Partners"
+      ],
+      "all": [
+        [
+          [
+            "entrust",
+            "share",
+            "transfer"
+          ],
+          [
+            "scope",
+            "purpose",
+            "method",
+            "duration"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B31",
+      "name": "User's Explicit Authorization",
+      "primary": "A6",
+      "any": [
+        "Explicit authorization",
+        "Explicit consent",
+        "Obtain authorization before processing",
+        "Separate consent"
+      ],
+      "all": [
+        [
+          [
+            "before processing",
+            "prior to"
+          ],
+          [
+            "consent",
+            "authorization"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B32",
+      "name": "Recipient Identity",
+      "primary": "A6",
+      "any": [
+        "Recipient",
+        "Third-party name",
+        "Partner name",
+        "Entrusted party",
+        "Data recipient identity"
+      ],
+      "all": [
+        [
+          [
+            "recipient",
+            "third party",
+            "entrusted party",
+            "partner"
+          ],
+          [
+            "name",
+            "identity",
+            "entity",
+            "info"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B33",
+      "name": "Rights and Obligations of Recipient",
+      "primary": "A6",
+      "any": [
+        "Recipient's obligations",
+        "Third-party obligations",
+        "Confidentiality duty",
+        "Security responsibility"
+      ],
+      "all": [
+        [
+          [
+            "recipient",
+            "third party",
+            "entrusted party"
+          ],
+          [
+            "obligation",
+            "responsibility",
+            "right"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B34",
+      "name": "Public Disclosure of Risks",
+      "primary": "A6",
+      "any": [
+        "Public disclosure",
+        "Disclose externally",
+        "Disclosure risk assessment",
+        "Prominent notification"
+      ],
+      "all": [
+        [
+          [
+            "public disclosure",
+            "disclose externally"
+          ],
+          [
+            "risk assessment",
+            "notify",
+            "inform"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B35",
+      "name": "Cross-border Data Transfer",
+      "primary": "A6",
+      "any": [
+        "Cross-border transmission",
+        "Overseas provision",
+        "Cross-border data flow",
+        "Standard contract",
+        "Security assessment"
+      ],
+      "all": [
+        [
+          [
+            "cross-border",
+            "overseas"
+          ],
+          [
+            "transmit",
+            "transfer",
+            "provide",
+            "rule",
+            "measure"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B36",
+      "name": "Collection of Children's Information",
+      "primary": "A7",
+      "any": [
+        "Children's personal info",
+        "Children's collection rules",
+        "Minors' info rules"
+      ],
+      "all": [
+        [
+          [
+            "child",
+            "minor"
+          ],
+          [
+            "collect",
+            "rule",
+            "info"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B37",
+      "name": "Child Identity Smart Trigger",
+      "primary": "A7",
+      "any": [
+        "Identify child users",
+        "Age verification",
+        "Guardian verification",
+        "Age judgment mechanism"
+      ],
+      "all": [
+        [
+          [
+            "child",
+            "minor",
+            "age"
+          ],
+          [
+            "identify",
+            "verify",
+            "judge",
+            "mechanism"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B38",
+      "name": "Anonymization of Children's Information",
+      "primary": "A7",
+      "any": [
+        "Anonymize children's info",
+        "De-identify children's info",
+        "Children's data desensitization"
+      ],
+      "all": [
+        [
+          [
+            "child",
+            "minor"
+          ],
+          [
+            "anonymize",
+            "de-identify",
+            "desensitize"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B39",
+      "name": "Child Privacy Protection",
+      "primary": "A7",
+      "any": [
+        "Children's privacy protection measures",
+        "Special protection mechanisms",
+        "Strict protection"
+      ],
+      "all": [
+        [
+          [
+            "child",
+            "minor"
+          ],
+          [
+            "special protection",
+            "dedicated protection",
+            "strict protection"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "B40",
+      "name": "Security Risk Assessment for Children",
+      "primary": "A7",
+      "any": [
+        "Children's info risk assessment",
+        "Children's data security assessment",
+        "System risk assessment"
+      ],
+      "all": [
+        [
+          [
+            "child",
+            "minor"
+          ],
+          [
+            "system security",
+            "risk assessment",
+            "impact assessment"
+          ]
+        ]
+      ]
+    }
+  ]
+}

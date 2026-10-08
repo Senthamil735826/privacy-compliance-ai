@@ -5,6 +5,7 @@ import tempfile
 from ingestion.pdf_parser import extract_text_from_pdf
 from ingestion.cleaner import clean_text
 from ingestion.chunker import create_chunks
+from indicators.indicator_engine import analyze_policy
 
 
 app = FastAPI(
@@ -46,26 +47,85 @@ async def upload_policy(file: UploadFile = File(...)):
         temp_file_path = temp_file.name
 
     try:
-        # Step 1: Extract text from PDF
+        # ==========================================
+        # STEP 1: Extract text from PDF
+        # ==========================================
+
         result = extract_text_from_pdf(temp_file_path)
 
-        # Step 2: Clean extracted text
+        # ==========================================
+        # STEP 2: Clean extracted text
+        # ==========================================
+
         cleaned_text = clean_text(result["text"])
 
-        # Step 3: Split into chunks
+        # ==========================================
+        # STEP 3: Split text into chunks
+        # ==========================================
+
         chunks = create_chunks(
             cleaned_text,
             chunk_size=200,
             overlap=30
         )
 
+        # ==========================================
+        # STEP 4: Analyze privacy indicators
+        # B1 → B40
+        # ==========================================
+
+        indicator_results = analyze_policy(cleaned_text)
+
+        # ==========================================
+        # STEP 5: Calculate compliance summary
+        # ==========================================
+
+        total_indicators = len(indicator_results)
+
+        matched_indicators = [
+            indicator
+            for indicator in indicator_results
+            if indicator["matched"]
+        ]
+
+        not_matched_indicators = [
+            indicator
+            for indicator in indicator_results
+            if not indicator["matched"]
+        ]
+
+        matched_count = len(matched_indicators)
+        not_matched_count = len(not_matched_indicators)
+
+        coverage = (
+            (matched_count / total_indicators) * 100
+            if total_indicators > 0
+            else 0
+        )
+
+        # ==========================================
+        # STEP 6: Return complete analysis
+        # ==========================================
+
         return {
             "status": "success",
-            "filename": file.filename,
-            "total_pages": result["total_pages"],
-            "total_characters": len(cleaned_text),
-            "total_chunks": len(chunks),
-            "text": cleaned_text,
+
+            "document": {
+                "filename": file.filename,
+                "total_pages": result["total_pages"],
+                "total_characters": len(cleaned_text),
+                "total_chunks": len(chunks)
+            },
+
+            "compliance_summary": {
+                "total_indicators": total_indicators,
+                "matched": matched_count,
+                "not_matched": not_matched_count,
+                "coverage": round(coverage, 2)
+            },
+
+            "indicators": indicator_results,
+
             "chunks": chunks
         }
 

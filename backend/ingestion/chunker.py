@@ -1,49 +1,36 @@
 def create_chunks(
     text: str,
-    chunk_size: int = 200,
-    overlap: int = 30
-) -> list[dict]:
+    chunk_size: int = 1500,
+    overlap: int = 200
+) -> list:
     """
     Split cleaned text into overlapping chunks.
-
-    chunk_size:
-        Maximum number of words in each chunk.
-
-    overlap:
-        Number of words shared between consecutive chunks.
     """
 
-    if not text.strip():
+    if not text:
         return []
 
-    words = text.split()
-
     if overlap >= chunk_size:
-        raise ValueError("overlap must be smaller than chunk_size")
+        raise ValueError("Overlap must be smaller than chunk size.")
 
     chunks = []
 
     start = 0
-    chunk_number = 1
+    text_length = len(text)
 
-    while start < len(words):
+    while start < text_length:
+        end = start + chunk_size
 
-        end = min(start + chunk_size, len(words))
+        chunk_text = text[start:end].strip()
 
-        chunk_text = " ".join(words[start:end])
+        if chunk_text:
+            chunks.append({
+                "chunk_id": len(chunks) + 1,
+                "text": chunk_text,
+                "start": start,
+                "end": min(end, text_length)
+            })
 
-        chunks.append({
-            "chunk_id": f"chunk_{chunk_number:03d}",
-            "text": chunk_text,
-            "start_word": start,
-            "end_word": end
-        })
-
-        chunk_number += 1
-
-        if end == len(words):
-            break
-
-        start = end - overlap
+        start += chunk_size - overlap
 
     return chunks
