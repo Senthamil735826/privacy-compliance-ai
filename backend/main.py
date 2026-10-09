@@ -5,15 +5,41 @@ import tempfile
 from ingestion.pdf_parser import extract_text_from_pdf
 from ingestion.cleaner import clean_text
 from ingestion.chunker import create_chunks
-from indicators.indicator_engine import analyze_policy
+from indicators.indicator_engine import IndicatorEngine
 
 
+# Initialize indicator engine
+engine = IndicatorEngine()
+
+
+# Initialize FastAPI application
 app = FastAPI(
     title="Privacy Compliance AI",
-    description="Multi-AI Agent Oriented Privacy Policy Compliance Checking for Mobile IoT Systems",
+    description=(
+        "Multi-AI Agent Oriented Privacy Policy Compliance "
+        "Checking for Mobile IoT Systems"
+    ),
     version="0.1.0"
 )
 
+
+# =========================================================
+# ROOT ENDPOINT
+# =========================================================
+
+@app.get("/")
+def read_root():
+    return {
+        "message": (
+            "Welcome to Privacy Compliance AI API. "
+            "Visit /docs for the API documentation."
+        )
+    }
+
+
+# =========================================================
+# HEALTH CHECK ENDPOINT
+# =========================================================
 
 @app.get("/api/health")
 def health_check():
@@ -24,110 +50,149 @@ def health_check():
     }
 
 
+# =========================================================
+# PDF UPLOAD AND COMPLIANCE ANALYSIS
+# =========================================================
+
 @app.post("/api/policy/upload")
 async def upload_policy(file: UploadFile = File(...)):
 
-    # Check file type
-    if file.content_type != "application/pdf":
+    # STEP 1: Validate uploaded file
+    if not file.filename or not file.filename.lower().endswith(".pdf"):
         raise HTTPException(
             status_code=400,
             detail="Only PDF files are allowed."
         )
 
-    # Read uploaded file
-    file_content = await file.read()
+    if file.content_type not in (
+        "application/pdf",
+        "application/octet-stream"
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid file content type. Please upload a PDF."
+        )
 
-    # Save temporarily
-    with tempfile.NamedTemporaryFile(
-        delete=False,
-        suffix=".pdf"
-    ) as temp_file:
-
-        temp_file.write(file_content)
-        temp_file_path = temp_file.name
+    temp_file_path = None
 
     try:
-        # ==========================================
-        # STEP 1: Extract text from PDF
-        # ==========================================
+        # STEP 2: Read uploaded PDF
+        file_content = await file.read()
 
+        if not file_content:
+            raise HTTPException(
+                status_code=400,
+                detail="The uploaded PDF is empty."
+            )
+
+        # STEP 3: Save PDF temporarily
+        with tempfile.NamedTemporaryFile(
+            delete=False,
+            suffix=".pdf"
+        ) as temp_file:
+
+            temp_file.write(file_content)
+            temp_file_path = temp_file.name
+
+        # STEP 4: Extract text from PDF
         result = extract_text_from_pdf(temp_file_path)
 
-        # ==========================================
-        # STEP 2: Clean extracted text
-        # ==========================================
+        extracted_text = result.get("text", "")
 
-        cleaned_text = clean_text(result["text"])
+        if not extracted_text or not extracted_text.strip():
+            raise HTTPException(
+                status_code=422,
+                detail=(
+                    "No readable text was extracted from the PDF. "
+                    "Please upload a text-based PDF."
+                )
+            )
 
-        # ==========================================
-        # STEP 3: Split text into chunks
-        # ==========================================
+        # STEP 5: Clean extracted text
+        cleaned_text = clean_text(extracted_text)
 
+        # STEP 6: Create overlapping text chunks
         chunks = create_chunks(
             cleaned_text,
             chunk_size=200,
             overlap=30
         )
 
-        # ==========================================
-        # STEP 4: Analyze privacy indicators
-        # B1 → B40
-        # ==========================================
+        # STEP 7: DEBUG INFORMATION
+        # These logs help us investigate the coverage mismatch.
+        print("\n" + "=" * 60)
+        print("PDF COMPLIANCE ANALYSIS DEBUG")
+        print("=" * 60)
 
-        indicator_results = analyze_policy(cleaned_text)
+        print("Filename:", file.filename)
+        print("Extracted characters:", len(extracted_text))
+        print("Cleaned characters:", len(cleaned_text))
+        print("Total pages:", result.get("total_pages"))
+        print("Total chunks:", len(chunks))
 
-        # ==========================================
-        # STEP 5: Calculate compliance summary
-        # ==========================================
+        print("\nFirst 500 characters of cleaned text:")
+        print(cleaned_text[:500])
 
-        total_indicators = len(indicator_results)
+        # STEP 8: Analyze the complete cleaned document
+        analysis = engine.analyze_policy(cleaned_text)
+
+        print("\nIndicator analysis results:")
+        print("Total indicators:", analysis["total_indicators"])
+        print("Found:", analysis["found"])
+        print("Not found:", analysis["not_found"])
+        print("Coverage:", analysis["coverage"])
+
+        # Print every matched indicator for debugging
+        print("\nMatched indicator IDs:")
 
         matched_indicators = [
-            indicator
-            for indicator in indicator_results
-            if indicator["matched"]
+            item["id"]
+            for item in analysis["results"]
+            if item.get("matched", False)
         ]
 
-        not_matched_indicators = [
-            indicator
-            for indicator in indicator_results
-            if not indicator["matched"]
-        ]
+        print(matched_indicators)
+        print("=" * 60 + "\n")
 
-        matched_count = len(matched_indicators)
-        not_matched_count = len(not_matched_indicators)
-
-        coverage = (
-            (matched_count / total_indicators) * 100
-            if total_indicators > 0
-            else 0
-        )
-
-        # ==========================================
-        # STEP 6: Return complete analysis
-        # ==========================================
-
+        # STEP 9: Return analysis results
         return {
             "status": "success",
 
             "document": {
                 "filename": file.filename,
-                "total_pages": result["total_pages"],
+                "total_pages": result.get("total_pages", 0),
                 "total_characters": len(cleaned_text),
                 "total_chunks": len(chunks)
             },
 
             "compliance_summary": {
-                "total_indicators": total_indicators,
-                "matched": matched_count,
-                "not_matched": not_matched_count,
-                "coverage": round(coverage, 2)
+                "total_indicators": analysis["total_indicators"],
+                "matched": analysis["found"],
+                "not_matched": analysis["not_found"],
+                "coverage": analysis["coverage"]
             },
 
-            "indicators": indicator_results,
+            "indicators": analysis["results"],
 
             "chunks": chunks
         }
 
+    except HTTPException:
+        # Preserve intentional HTTP errors
+        raise
+
+    except Exception as exc:
+        # Log the error for debugging
+        print("PDF analysis error:", repr(exc))
+
+        raise HTTPException(
+            status_code=500,
+            detail="An error occurred while processing the PDF."
+        ) from exc
+
     finally:
-        Path(temp_file_path).unlink(missing_ok=True)
+        # STEP 10: Remove temporary PDF
+        if temp_file_path:
+            Path(temp_file_path).unlink(missing_ok=True)
+
+        await file.close()

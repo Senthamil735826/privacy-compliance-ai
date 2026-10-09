@@ -30,3 +30,5 @@ Thumbs.db
 # Generated files
 uploads/
 reports/
+# Temporary development scripts
+/scratch/

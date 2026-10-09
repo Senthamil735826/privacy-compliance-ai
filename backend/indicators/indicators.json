@@ -90,10 +90,10 @@
       "name": "Privacy Policy Name",
       "primary": "A1",
       "any": [
-        "Privacy policy",
-        "User privacy policy",
+        "Personal info processing rules",
         "Privacy protection statement",
-        "Personal info processing rules"
+        "User privacy policy",
+        "Privacy policy"
       ],
       "all": []
     },
@@ -102,10 +102,10 @@
       "name": "Version Number",
       "primary": "A1",
       "any": [
-        "Version number",
-        "Current version",
+        "Revised version",
         "Policy version",
-        "Revised version"
+        "Current version",
+        "Version number"
       ],
       "all": []
     },
@@ -115,9 +115,9 @@
       "primary": "A1",
       "any": [
         "Effective date",
-        "Implementation date",
+        "Commencement date",
         "Effective from",
-        "Commencement date"
+        "Implementation date"
       ],
       "all": []
     },
@@ -126,11 +126,11 @@
       "name": "Update Date",
       "primary": "A1",
       "any": [
-        "Update date",
-        "Revision date",
-        "Last updated",
         "Release date",
-        "Recently modified"
+        "Recently modified",
+        "Revision date",
+        "Update date",
+        "Last updated"
       ],
       "all": []
     },
@@ -140,10 +140,9 @@
       "primary": "A1",
       "any": [
         "Personal info processor",
-        "Operator",
-        "Data controller",
         "Responsible party",
-        "Company name"
+        "Data controller",
+        "Operator"
       ],
       "all": []
     },
@@ -152,11 +151,13 @@
       "name": "Contact Information",
       "primary": "A1",
       "any": [
+        "Customer service email",
+        "Email:",
         "Contact info",
         "Contact phone",
-        "Customer service email",
         "Contact address",
-        "Online support"
+        "Online support",
+        "Privacy Team"
       ],
       "all": []
     },
@@ -167,26 +168,38 @@
       "any": [
         "Purpose of collection",
         "Processing scope",
-        "Uses of personal info",
-        "To achieve functions"
+        "To achieve functions",
+        "Uses of personal info"
       ],
       "all": [
         [
           [
-            "collect",
             "acquire",
+            "used",
+            "processed",
             "process",
-            "use"
+            "collect",
+            "collected",
+            "processing",
+            "use",
+            "using",
+            "collecting"
           ],
           [
+            "personal information",
             "personal info",
-            "data"
+            "personal data"
           ],
           [
-            "purpose",
-            "scope",
-            "type",
-            "content"
+            "purpose of collection",
+            "purpose of our services",
+            "purpose of processing",
+            "purpose of delivering",
+            "purposes for which",
+            "scope of collection",
+            "purpose of providing",
+            "provide our services",
+            "provide services"
           ]
         ]
       ]
@@ -204,15 +217,20 @@
       "all": [
         [
           [
-            "collect",
+            "processed",
             "process",
-            "use"
+            "collect",
+            "collected",
+            "processing",
+            "collection",
+            "collecting"
           ],
           [
             "inform",
-            "explain",
+            "explicitly state",
+            "clearly explain",
             "transparent",
-            "explicit"
+            "explain"
           ]
         ]
       ]
@@ -222,12 +240,12 @@
       "name": "Use of Cookies or Similar Technology",
       "primary": "A2",
       "any": [
-        "Cookie",
         "Browser cache",
-        "Local storage",
-        "Log files",
         "Web beacon",
+        "Local storage",
+        "Cookie",
         "SDK",
+        "Log files",
         "Tracking tech"
       ],
       "all": []
@@ -237,17 +255,17 @@
       "name": "Notice and Consent Mechanism",
       "primary": "A2",
       "any": [
-        "Obtain consent",
         "User consent",
-        "Pop-up consent",
+        "Explicit consent",
+        "Obtain consent",
         "Check to agree",
-        "Explicit consent"
+        "Pop-up consent"
       ],
       "all": [
         [
           [
-            "notify",
-            "inform"
+            "inform",
+            "notify"
           ],
           [
             "consent",
@@ -261,25 +279,27 @@
       "name": "Opt-out Options",
       "primary": "A2",
       "any": [
-        "Refuse collection",
-        "Opt-out",
-        "Turn off permission",
         "Cancel authorization",
+        "Turn off permission",
+        "Opt-out",
+        "Refuse collection",
         "Stop collecting"
       ],
       "all": [
         [
           [
-            "refuse",
-            "opt-out",
             "close",
-            "cancel"
+            "opt-out",
+            "cancel",
+            "refuse"
           ],
           [
             "collect",
+            "collected",
             "authorize",
             "permission",
-            "push"
+            "push",
+            "collecting"
           ]
         ]
       ]
@@ -289,23 +309,26 @@
       "name": "Protection of Minors' Information",
       "primary": "A2",
       "any": [
-        "Minors",
         "Guardian's consent",
-        "Under 14 years old",
+        "Guardian authorization",
+        "Minors",
         "Youth mode",
-        "Guardian authorization"
+        "Under 14 years old"
       ],
       "all": [
         [
           [
+            "minors",
             "minor",
-            "child"
+            "child",
+            "children"
           ],
           [
-            "protect",
-            "guardian",
             "consent",
-            "measure"
+            "measure",
+            "measures",
+            "protect",
+            "guardian"
           ]
         ]
       ]
@@ -315,23 +338,27 @@
       "name": "Minimum Necessity Principle",
       "primary": "A3",
       "any": [
-        "Minimum necessary",
         "Necessary scope",
         "Minimal data",
-        "Strictly necessary for purpose"
+        "Strictly necessary for purpose",
+        "Minimum necessary"
       ],
       "all": [
         [
           [
-            "minimum",
             "minimal",
+            "minimum",
             "necessary"
           ],
           [
-            "collect",
+            "data",
+            "processed",
             "process",
+            "collect",
+            "collected",
+            "processing",
             "info",
-            "data"
+            "collecting"
           ]
         ]
       ]
@@ -341,10 +368,10 @@
       "name": "Purpose Restriction",
       "primary": "A3",
       "any": [
-        "Not for other purposes",
-        "Only for declared purposes",
+        "Purpose limitation",
         "Beyond purpose scope",
-        "Purpose limitation"
+        "Not for other purposes",
+        "Only for declared purposes"
       ],
       "all": [
         [
@@ -353,10 +380,10 @@
             "usage"
           ],
           [
-            "restrict",
             "only for",
+            "beyond",
             "not for",
-            "beyond"
+            "restrict"
           ]
         ]
       ]
@@ -366,25 +393,25 @@
       "name": "Special Purpose Usage Rules",
       "primary": "A3",
       "any": [
-        "Sensitive personal info",
-        "Biometric",
-        "Face info",
         "Health data",
-        "Separate consent"
+        "Separate consent",
+        "Face info",
+        "Sensitive personal info",
+        "Biometric"
       ],
       "all": [
         [
           [
-            "sensitive info",
             "biometric",
-            "face",
+            "health",
             "fingerprint",
-            "health"
+            "face",
+            "sensitive info"
           ],
           [
             "protect",
-            "separate consent",
-            "notify"
+            "notify",
+            "separate consent"
           ]
         ]
       ]
@@ -394,23 +421,29 @@
       "name": "Storage Location",
       "primary": "A4",
       "any": [
-        "Storage location",
-        "Stored in",
         "Servers located at",
+        "company servers",
+        "cloud infrastructure",
+        "Stored in",
         "Domestic storage",
-        "Cross-border storage"
+        "Cross-border storage",
+        "Storage location"
       ],
       "all": [
         [
           [
             "store",
+            "storing",
+            "stored",
             "save"
           ],
           [
             "location",
-            "domestic",
+            "cloud infrastructure",
             "overseas",
+            "domestic",
             "server",
+            "servers",
             "data center"
           ]
         ]
@@ -421,36 +454,31 @@
       "name": "Retention Time & Deletion Mechanism",
       "primary": "A4",
       "any": [
-        "Retention period",
-        "Storage duration",
+        "Anonymization",
+        "as long as",
+        "Specific retention periods",
         "Retained until",
+        "Storage duration",
         "Deletion mechanism",
-        "Anonymization"
+        "Retention period"
       ],
       "all": [
         [
           [
+            "retention",
+            "retain",
             "save",
             "store",
-            "retain"
+            "storing",
+            "retained",
+            "retaining",
+            "stored"
           ],
           [
-            "period",
             "duration",
+            "long as",
+            "period",
             "until"
-          ]
-        ],
-        [
-          [
-            "delete",
-            "clear",
-            "destroy",
-            "anonymize"
-          ],
-          [
-            "mechanism",
-            "method",
-            "rule"
           ]
         ]
       ]
@@ -460,22 +488,23 @@
       "name": "Safety Qualification Description",
       "primary": "A4",
       "any": [
+        "Compliance certification",
+        "Filing",
         "ISO27001",
         "Level protection",
-        "Security certification",
-        "Compliance certification",
-        "Filing"
+        "Security certification"
       ],
       "all": [
         [
           [
+            "info security",
             "security",
-            "info security"
+            "security measures"
           ],
           [
             "certification",
-            "qualification",
-            "level protection"
+            "level protection",
+            "qualification"
           ]
         ]
       ]
@@ -485,20 +514,27 @@
       "name": "Security Measures",
       "primary": "A4",
       "any": [
+        "Access control",
         "Security safeguards",
+        "Desensitization",
+        "technical and organizational safeguards",
         "Technical/Organizational measures",
         "Encryption",
-        "Access control",
-        "Desensitization"
+        "reasonable technical and organizational safeguards",
+        "security measures",
+        "reasonable security measures"
       ],
       "all": [
         [
           [
             "technical",
-            "organizational"
+            "organizational",
+            "security"
           ],
           [
             "measure",
+            "measures",
+            "safeguards",
             "safeguard"
           ]
         ],
@@ -506,12 +542,13 @@
           [
             "encrypt",
             "desensitize",
-            "access control",
-            "audit"
+            "audit",
+            "access control"
           ],
           [
+            "protect",
             "security",
-            "protect"
+            "security measures"
           ]
         ]
       ]
@@ -523,8 +560,8 @@
       "any": [
         "Contingency plan",
         "Emergency mechanism",
-        "Leak handling",
         "Remedial measures",
+        "Leak handling",
         "Urgent response"
       ],
       "all": [
@@ -535,10 +572,10 @@
             "risk"
           ],
           [
-            "emergency",
-            "disposal",
             "response",
-            "remedy"
+            "disposal",
+            "remedy",
+            "emergency"
           ]
         ]
       ]
@@ -548,24 +585,25 @@
       "name": "Security Self-Inspection",
       "primary": "A4",
       "any": [
-        "Security self-check",
-        "Compliance assessment",
+        "PIA/DPIA",
         "Risk assessment",
+        "Compliance assessment",
         "Internal audit",
-        "PIA/DPIA"
+        "Security self-check"
       ],
       "all": [
         [
           [
-            "self-check",
             "assess",
+            "self-check",
             "audit",
             "inspect"
           ],
           [
             "security",
-            "info protection",
-            "risk"
+            "security measures",
+            "risk",
+            "info protection"
           ]
         ]
       ]
@@ -575,22 +613,22 @@
       "name": "Security Incident Notification",
       "primary": "A4",
       "any": [
-        "Notify users",
-        "Incident notification",
+        "SMS alert",
         "Leak announcement",
-        "Email notification",
-        "SMS alert"
+        "Incident notification",
+        "Notify users",
+        "Email notification"
       ],
       "all": [
         [
           [
-            "security incident",
             "leak",
+            "security incident",
             "risk"
           ],
           [
-            "notify",
-            "inform"
+            "inform",
+            "notify"
           ]
         ]
       ]
@@ -600,25 +638,25 @@
       "name": "Data Access Rights",
       "primary": "A5",
       "any": [
-        "Access your personal info",
-        "Inquire about info",
-        "Obtain data copy",
         "Access personal data",
-        "Request information"
+        "Inquire about info",
+        "Request information",
+        "Obtain data copy",
+        "Access your personal info"
       ],
       "all": [
         [
           [
-            "access",
             "inquire",
-            "obtain",
-            "request"
+            "access",
+            "request",
+            "obtain"
           ],
           [
-            "personal info",
+            "data",
             "personal information",
-            "personal data",
-            "data"
+            "personal info",
+            "personal data"
           ]
         ]
       ]
@@ -629,18 +667,20 @@
       "primary": "A5",
       "any": [
         "Correct personal information",
-        "Update personal information",
         "Delete personal information",
+        "Deletion request",
         "Correction request",
-        "Deletion request"
+        "Update personal information"
       ],
       "all": [
         [
           [
-            "correct",
             "update",
+            "deleting",
+            "deleted",
             "delete",
-            "erase"
+            "erase",
+            "correct"
           ],
           [
             "personal information",
@@ -656,16 +696,16 @@
       "primary": "A5",
       "any": [
         "Withdraw consent",
-        "Revoke consent",
         "Cancel consent",
+        "Revoke consent",
         "Withdraw authorization"
       ],
       "all": [
         [
           [
             "withdraw",
-            "revoke",
-            "cancel"
+            "cancel",
+            "revoke"
           ],
           [
             "consent",
@@ -679,23 +719,25 @@
       "name": "Data Portability Services",
       "primary": "A5",
       "any": [
-        "Data portability",
-        "Transfer personal data",
         "Export personal data",
+        "Transfer personal data",
+        "Data portability",
         "Receive data copy"
       ],
       "all": [
         [
           [
-            "export",
             "transfer",
+            "copy",
             "receive",
-            "copy"
+            "transferring",
+            "transferred",
+            "export"
           ],
           [
-            "personal data",
+            "data",
             "personal information",
-            "data"
+            "personal data"
           ]
         ]
       ]
@@ -705,23 +747,23 @@
       "name": "Privacy Preferences Settings",
       "primary": "A5",
       "any": [
-        "Privacy preferences",
         "Permission settings",
+        "Privacy preferences",
         "Recommendation toggle"
       ],
       "all": [
         [
           [
-            "privacy",
+            "push",
             "permission",
             "recommendation",
-            "push"
+            "privacy"
           ],
           [
-            "setting",
             "preference",
-            "manage",
-            "toggle"
+            "setting",
+            "toggle",
+            "manage"
           ]
         ]
       ]
@@ -732,15 +774,17 @@
       "primary": "A5",
       "any": [
         "Cancel account",
-        "Account deregistration",
         "Apply for cancellation",
-        "Delete account data"
+        "Delete account data",
+        "Account deregistration"
       ],
       "all": [
         [
           [
-            "cancel",
-            "delete"
+            "delete",
+            "deleting",
+            "deleted",
+            "cancel"
           ],
           [
             "account"
@@ -753,25 +797,25 @@
       "name": "Supervision and Complaint Channels",
       "primary": "A5",
       "any": [
-        "Complaint channel",
-        "Reporting channel",
         "Feedback",
+        "Reporting channel",
         "Complaint email",
+        "Complaint channel",
         "Supervisory authority"
       ],
       "all": [
         [
           [
-            "complaint",
             "report",
             "supervise",
+            "complaint",
             "appeal"
           ],
           [
-            "channel",
-            "phone",
             "email",
-            "method"
+            "method",
+            "phone",
+            "channel"
           ]
         ]
       ]
@@ -782,22 +826,26 @@
       "primary": "A6",
       "any": [
         "Entrusted processing",
-        "Sharing",
-        "Transfer",
         "Provide to third party",
-        "Partners"
+        "data transfer",
+        "trusted partners",
+        "data sharing"
       ],
       "all": [
         [
           [
             "entrust",
+            "transfer",
+            "transferred",
+            "transferring",
+            "shared",
             "share",
-            "transfer"
+            "sharing"
           ],
           [
-            "scope",
             "purpose",
             "method",
+            "scope",
             "duration"
           ]
         ]
@@ -808,10 +856,10 @@
       "name": "User's Explicit Authorization",
       "primary": "A6",
       "any": [
+        "Separate consent",
         "Explicit authorization",
-        "Explicit consent",
         "Obtain authorization before processing",
-        "Separate consent"
+        "Explicit consent"
       ],
       "all": [
         [
@@ -831,25 +879,29 @@
       "name": "Recipient Identity",
       "primary": "A6",
       "any": [
-        "Recipient",
+        "Data recipient identity",
         "Third-party name",
-        "Partner name",
+        "cloud hosting providers",
+        "analytics providers",
         "Entrusted party",
-        "Data recipient identity"
+        "data recipient",
+        "customer support providers",
+        "service providers",
+        "Partner name"
       ],
       "all": [
         [
           [
-            "recipient",
             "third party",
+            "recipient",
             "entrusted party",
             "partner"
           ],
           [
-            "name",
-            "identity",
             "entity",
-            "info"
+            "name",
+            "info",
+            "identity"
           ]
         ]
       ]
@@ -860,21 +912,21 @@
       "primary": "A6",
       "any": [
         "Recipient's obligations",
-        "Third-party obligations",
         "Confidentiality duty",
-        "Security responsibility"
+        "Security responsibility",
+        "Third-party obligations"
       ],
       "all": [
         [
           [
-            "recipient",
             "third party",
+            "recipient",
             "entrusted party"
           ],
           [
+            "right",
             "obligation",
-            "responsibility",
-            "right"
+            "responsibility"
           ]
         ]
       ]
@@ -885,20 +937,20 @@
       "primary": "A6",
       "any": [
         "Public disclosure",
-        "Disclose externally",
+        "Prominent notification",
         "Disclosure risk assessment",
-        "Prominent notification"
+        "Disclose externally"
       ],
       "all": [
         [
           [
-            "public disclosure",
-            "disclose externally"
+            "disclose externally",
+            "public disclosure"
           ],
           [
             "risk assessment",
-            "notify",
-            "inform"
+            "inform",
+            "notify"
           ]
         ]
       ]
@@ -908,24 +960,28 @@
       "name": "Cross-border Data Transfer",
       "primary": "A6",
       "any": [
-        "Cross-border transmission",
-        "Overseas provision",
         "Cross-border data flow",
+        "Overseas provision",
+        "Transfer personal data overseas",
         "Standard contract",
+        "International data transfer",
+        "Cross-border transmission",
         "Security assessment"
       ],
       "all": [
         [
           [
             "cross-border",
+            "international transfer",
             "overseas"
           ],
           [
-            "transmit",
             "transfer",
-            "provide",
-            "rule",
-            "measure"
+            "transferring",
+            "overseas provision",
+            "transferred",
+            "transmitting",
+            "transmit"
           ]
         ]
       ]
@@ -935,20 +991,30 @@
       "name": "Collection of Children's Information",
       "primary": "A7",
       "any": [
-        "Children's personal info",
+        "Collection of children's information",
+        "Collection of minors' information",
+        "Rules for collecting children's personal information",
         "Children's collection rules",
-        "Minors' info rules"
+        "Minors' information collection rules"
       ],
       "all": [
         [
           [
+            "minors",
+            "minor",
             "child",
-            "minor"
+            "children"
           ],
           [
             "collect",
-            "rule",
-            "info"
+            "collection",
+            "collecting",
+            "collected"
+          ],
+          [
+            "personal information",
+            "personal data",
+            "information"
           ]
         ]
       ]
@@ -959,22 +1025,24 @@
       "primary": "A7",
       "any": [
         "Identify child users",
-        "Age verification",
+        "Age judgment mechanism",
         "Guardian verification",
-        "Age judgment mechanism"
+        "Age verification"
       ],
       "all": [
         [
           [
-            "child",
             "minor",
-            "age"
+            "age",
+            "children",
+            "minors",
+            "child"
           ],
           [
             "identify",
-            "verify",
             "judge",
-            "mechanism"
+            "mechanism",
+            "verify"
           ]
         ]
       ]
@@ -985,19 +1053,21 @@
       "primary": "A7",
       "any": [
         "Anonymize children's info",
-        "De-identify children's info",
-        "Children's data desensitization"
+        "Children's data desensitization",
+        "De-identify children's info"
       ],
       "all": [
         [
           [
+            "minors",
+            "minor",
             "child",
-            "minor"
+            "children"
           ],
           [
-            "anonymize",
             "de-identify",
-            "desensitize"
+            "desensitize",
+            "anonymize"
           ]
         ]
       ]
@@ -1014,8 +1084,10 @@
       "all": [
         [
           [
+            "minors",
+            "minor",
             "child",
-            "minor"
+            "children"
           ],
           [
             "special protection",
@@ -1037,13 +1109,17 @@
       "all": [
         [
           [
+            "minors",
+            "minor",
             "child",
-            "minor"
+            "children"
           ],
           [
             "system security",
+            "risk assessments",
+            "impact assessment",
             "risk assessment",
-            "impact assessment"
+            "impact assessments"
           ]
         ]
       ]
