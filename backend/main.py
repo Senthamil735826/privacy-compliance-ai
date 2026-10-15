@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 import tempfile
 
@@ -8,11 +9,17 @@ from ingestion.chunker import create_chunks
 from indicators.indicator_engine import IndicatorEngine
 
 
-# Initialize indicator engine
+# =========================================================
+# INITIALIZE INDICATOR ENGINE
+# =========================================================
+
 engine = IndicatorEngine()
 
 
-# Initialize FastAPI application
+# =========================================================
+# INITIALIZE FASTAPI APPLICATION
+# =========================================================
+
 app = FastAPI(
     title="Privacy Compliance AI",
     description=(
@@ -20,6 +27,22 @@ app = FastAPI(
         "Checking for Mobile IoT Systems"
     ),
     version="0.1.0"
+)
+
+
+# =========================================================
+# CORS CONFIGURATION
+# =========================================================
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "https://privacy-compliance-ai.vercel.app",
+    ],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
 )
 
 
@@ -90,7 +113,6 @@ async def upload_policy(file: UploadFile = File(...)):
             delete=False,
             suffix=".pdf"
         ) as temp_file:
-
             temp_file.write(file_content)
             temp_file_path = temp_file.name
 
@@ -119,7 +141,6 @@ async def upload_policy(file: UploadFile = File(...)):
         )
 
         # STEP 7: DEBUG INFORMATION
-        # These logs help us investigate the coverage mismatch.
         print("\n" + "=" * 60)
         print("PDF COMPLIANCE ANALYSIS DEBUG")
         print("=" * 60)
