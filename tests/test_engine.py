@@ -3,10 +3,10 @@ import sys
 import os
 from pathlib import Path
 
-# Add backend to path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend"))
+# Add project root to path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from indicators.indicator_engine import (
+from backend.indicators.indicator_engine import (
     normalize_text,
     split_sentences,
     get_keyword_pattern,
@@ -15,9 +15,8 @@ from indicators.indicator_engine import (
     check_all_rules,
     find_evidence,
     check_indicator,
-    IndicatorEngine
+    IndicatorEngine,
 )
-
 class TestIndicatorEngine(unittest.TestCase):
     def setUp(self):
         self.engine = IndicatorEngine()
