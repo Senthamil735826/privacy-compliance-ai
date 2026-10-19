@@ -1523,3 +1523,371 @@ input:focus-visible,
     padding: 13px;
   }
 }
+
+.indicator-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.indicator-group {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #e4e7ef;
+  border-radius: 14px;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.indicator-group:hover {
+  border-color: #d8d4ff;
+  box-shadow: 0 4px 16px #302d7108;
+}
+
+.indicator-group-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 76px;
+  padding: 17px 20px;
+  border: none;
+  background: #fafaff;
+  color: #25243a;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.indicator-group-header:hover {
+  background: #f0efff;
+}
+
+.indicator-group-header:focus-visible {
+  outline: 3px solid #b9b6ff;
+  outline-offset: -3px;
+}
+
+.group-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  flex-shrink: 0;
+  color: #7065d8;
+  font-size: 11px;
+}
+
+.group-title {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.group-title strong {
+  color: #30364d;
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.group-title small {
+  color: #858ba0;
+  font-size: 11px;
+}
+
+.group-progress {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  flex-shrink: 0;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: #eeecff;
+  color: #6558c9;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.indicator-group .indicator-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: none;
+  border-top: 1px solid #e9eaf2;
+  border-radius: 0;
+}
+
+.indicator-group .indicator-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.indicator-group .indicator-table thead {
+  background: #fcfcff;
+}
+
+.indicator-group .indicator-table th {
+  padding: 14px 15px;
+  color: #9099ac;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.indicator-group .indicator-table td {
+  padding: 14px 15px;
+  border-top: 1px solid #edf0f5;
+  color: #59647b;
+  font-size: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.indicator-group .indicator-table tbody tr:hover {
+  background: #fcfcff;
+}
+
+.indicator-group .indicator-name-cell {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 180px;
+}
+
+.indicator-group .indicator-name-cell strong {
+  display: block;
+  max-width: 300px;
+  color: #354056;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.indicator-group .indicator-name-cell small {
+  display: block;
+  margin-top: 4px;
+  color: #a0a8b7;
+  font-size: 9px;
+}
+
+.indicator-group .status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 7px;
+  font-size: 9px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.indicator-group .status-pill.detected {
+  color: #198d69;
+  background: #eaf8f1;
+}
+
+.indicator-group .status-pill.missing {
+  color: #c18139;
+  background: #fff4e6;
+}
+
+.indicator-group .evidence-details {
+  min-width: 130px;
+}
+
+.indicator-group .evidence-details summary {
+  color: #6658d5;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.7;
+}
+
+.indicator-group .evidence-list {
+  display: grid;
+  gap: 9px;
+  min-width: 220px;
+  max-width: 420px;
+  padding-top: 11px;
+}
+
+.indicator-group .evidence-item {
+  padding: 11px;
+  border: 1px solid #e9e8f7;
+  border-radius: 8px;
+  background: #fbfaff;
+}
+
+.indicator-group .evidence-item p {
+  margin: 0;
+  color: #58637a;
+  font-size: 10px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.indicator-group .no-evidence {
+  color: #a2a9b8;
+  font-size: 9px;
+}
+
+/* =========================================
+   TABLET RESPONSIVENESS
+========================================= */
+
+@media (max-width: 1200px) {
+  .indicator-group .indicator-table th,
+  .indicator-group .indicator-table td {
+    padding: 12px 10px;
+  }
+
+  .indicator-group .indicator-name-cell {
+    min-width: 150px;
+  }
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+========================================= */
+
+@media (max-width: 760px) {
+  .indicator-groups {
+    gap: 11px;
+  }
+
+  .indicator-group-header {
+    gap: 9px;
+    min-height: 68px;
+    padding: 13px 12px;
+  }
+
+  .group-chevron {
+    width: 14px;
+    font-size: 10px;
+  }
+
+  .group-title strong {
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .group-title small {
+    font-size: 10px;
+  }
+
+  .group-progress {
+    min-width: 42px;
+    padding: 6px 7px;
+    font-size: 10px;
+  }
+
+  .indicator-group .indicator-table-wrap {
+    overflow-x: auto;
+  }
+
+  .indicator-group .indicator-table {
+    display: table;
+    width: 100%;
+    min-width: 490px;
+    border-collapse: collapse;
+  }
+
+  .indicator-group .indicator-table thead {
+    position: static;
+    display: table-header-group;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  .indicator-group .indicator-table tbody {
+    display: table-row-group;
+    width: auto;
+  }
+
+  .indicator-group .indicator-table thead tr {
+    display: table-row;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    background: #fcfcff;
+  }
+
+  .indicator-group .indicator-table tbody tr {
+    display: table-row;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    background: #fff;
+  }
+
+  .indicator-group .indicator-table th {
+    display: table-cell;
+    padding: 12px 8px;
+    font-size: 8px;
+  }
+
+  .indicator-group .indicator-table td {
+    display: table-cell;
+    padding: 12px 8px;
+    border-top: 1px solid #edf0f5;
+    font-size: 10px;
+    vertical-align: top;
+  }
+
+  .indicator-group .indicator-name-cell {
+    min-width: 150px;
+    gap: 7px;
+  }
+
+  .indicator-group .indicator-name-cell strong {
+    max-width: 180px;
+    font-size: 10px;
+  }
+
+  .indicator-group .indicator-id {
+    min-width: 31px;
+    height: 23px;
+    font-size: 9px;
+  }
+
+  .indicator-group .evidence-list {
+    min-width: 190px;
+    max-width: 280px;
+  }
+
+  .indicator-group .status-pill {
+    padding: 5px 6px;
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 380px) {
+  .indicator-group-header {
+    gap: 7px;
+    padding: 12px 9px;
+  }
+
+  .group-title strong {
+    font-size: 10px;
+  }
+
+  .group-progress {
+    min-width: 37px;
+    padding: 5px;
+    font-size: 9px;
+  }
+
+}

@@ -1,6 +1,44 @@
 import { useMemo, useRef, useState } from 'react'
 import './App.css'
 
+const PRIMARY_INDICATORS = [
+  {
+    id: 'A1',
+    name: 'Basic Information',
+    secondaryIds: ['B1', 'B2', 'B3', 'B4', 'B5', 'B6'],
+  },
+  {
+    id: 'A2',
+    name: 'Data Collection Rules',
+    secondaryIds: ['B7', 'B8', 'B9', 'B10', 'B11', 'B12'],
+  },
+  {
+    id: 'A3',
+    name: 'Data Usage Rules',
+    secondaryIds: ['B13', 'B14', 'B15'],
+  },
+  {
+    id: 'A4',
+    name: 'Data Storage and Security Measures',
+    secondaryIds: ['B16', 'B17', 'B18', 'B19', 'B20', 'B21', 'B22'],
+  },
+  {
+    id: 'A5',
+    name: 'Personal Information and Subject Rights',
+    secondaryIds: ['B23', 'B24', 'B25', 'B26', 'B27', 'B28', 'B29'],
+  },
+  {
+    id: 'A6',
+    name: 'Rules for Entrusted Processing, Sharing, Transfer, and Public Disclosure',
+    secondaryIds: ['B30', 'B31', 'B32', 'B33', 'B34', 'B35'],
+  },
+  {
+    id: 'A7',
+    name: "Children's Privacy",
+    secondaryIds: ['B36', 'B37', 'B38', 'B39', 'B40'],
+  },
+]
+
 function App() {
   const fileInputRef = useRef(null)
 
@@ -11,36 +49,34 @@ function App() {
   const [filter, setFilter] = useState('all')
   const [search, setSearch] = useState('')
   const [dragging, setDragging] = useState(false)
+  const [expandedGroups, setExpandedGroups] = useState({ A1: true })
 
   const summary = analysis?.compliance_summary
 
-  // Keep the array reference stable to satisfy React's exhaustive-deps rule.
   const indicators = useMemo(
     () => analysis?.indicators ?? [],
     [analysis],
   )
 
-  // Filter indicators by status, ID, name, or primary category.
   const filteredIndicators = useMemo(() => {
+    const query = search.trim().toLowerCase()
+
     return indicators.filter((indicator) => {
       const matchesFilter =
         filter === 'all' ||
         (filter === 'found' && indicator.matched) ||
         (filter === 'missing' && !indicator.matched)
 
-      const query = search.trim().toLowerCase()
-
       const matchesSearch =
         !query ||
-        indicator.id.toLowerCase().includes(query) ||
-        indicator.name.toLowerCase().includes(query) ||
-        (indicator.primary ?? '').toLowerCase().includes(query)
+        String(indicator.id ?? '').toLowerCase().includes(query) ||
+        String(indicator.name ?? '').toLowerCase().includes(query) ||
+        String(indicator.primary ?? '').toLowerCase().includes(query)
 
       return matchesFilter && matchesSearch
     })
   }, [indicators, filter, search])
 
-  // Validate and select a PDF file.
   function selectFile(selectedFile) {
     if (!selectedFile) return
 
@@ -58,9 +94,9 @@ function App() {
 
     setFile(selectedFile)
     setAnalysis(null)
+    setExpandedGroups({ A1: true })
   }
 
-  // Upload the PDF to the FastAPI backend and display the results.
   async function handleAnalyze() {
     if (!file) {
       setError('Select a privacy policy PDF before starting analysis.')
@@ -80,7 +116,15 @@ function App() {
         body: formData,
       })
 
-      const data = await response.json()
+      let data
+
+      try {
+        data = await response.json()
+      } catch {
+        throw new Error(
+          'The server returned an invalid response. Check that the backend is running.',
+        )
+      }
 
       if (!response.ok) {
         throw new Error(
@@ -101,14 +145,13 @@ function App() {
       setAnalysis(data)
       setFilter('all')
       setSearch('')
+      setExpandedGroups({ A1: true })
 
       window.setTimeout(() => {
-        document
-          .getElementById('analysis-results')
-          ?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          })
+        document.getElementById('analysis-results')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })
       }, 100)
     } catch (err) {
       setError(
@@ -120,21 +163,26 @@ function App() {
     }
   }
 
-  // Handle drag-and-drop PDF uploads.
   function handleDrop(event) {
     event.preventDefault()
     setDragging(false)
     selectFile(event.dataTransfer.files?.[0])
   }
 
+  function toggleGroup(groupId) {
+    setExpandedGroups((previous) => ({
+      ...previous,
+      [groupId]: !previous[groupId],
+    }))
+  }
+
   const coverage = Number(summary?.coverage ?? 0)
   const matched = Number(summary?.matched ?? 0)
-  const total = Number(summary?.total_indicators ?? 40)
+  const total = Number(summary?.total_indicators ?? indicators.length ?? 40)
   const notMatched = Number(summary?.not_matched ?? 0)
 
   return (
     <div className="app-shell">
-      {/* Sidebar */}
       <aside className="sidebar">
         <a href="#overview" className="brand">
           <span className="brand-mark">P</span>
@@ -187,9 +235,7 @@ function App() {
         </div>
       </aside>
 
-      {/* Main dashboard */}
       <main className="main-content" id="overview">
-        {/* Header */}
         <header className="topbar">
           <div>
             <div className="breadcrumb">Workspace / Overview</div>
@@ -202,7 +248,6 @@ function App() {
           </div>
         </header>
 
-        {/* Welcome banner */}
         <section className="welcome-section">
           <div>
             <div className="eyebrow">
@@ -230,27 +275,16 @@ function App() {
               <span>✓</span>
             </div>
 
-            <div className="floating-chip chip-one">
-              40 indicators
-            </div>
-
-            <div className="floating-chip chip-two">
-              PDF analysis
-            </div>
+            <div className="floating-chip chip-one">40 indicators</div>
+            <div className="floating-chip chip-two">PDF analysis</div>
           </div>
         </section>
 
-        {/* Summary cards */}
-        <section
-          className="metrics-grid"
-          aria-label="Analysis summary"
-        >
+        <section className="metrics-grid" aria-label="Analysis summary">
           <article className="metric-card">
             <div className="metric-top">
               <span className="metric-icon purple">◉</span>
-              <span className="metric-caption">
-                OVERALL COVERAGE
-              </span>
+              <span className="metric-caption">OVERALL COVERAGE</span>
             </div>
 
             <div className="metric-value">
@@ -266,10 +300,7 @@ function App() {
             <div className="metric-progress">
               <span
                 style={{
-                  width: `${Math.min(
-                    100,
-                    Math.max(0, coverage),
-                  )}%`,
+                  width: `${Math.min(100, Math.max(0, coverage))}%`,
                 }}
               />
             </div>
@@ -283,7 +314,6 @@ function App() {
 
             <div className="metric-value">
               {summary ? matched : '—'}
-
               <span className="metric-denominator">
                 {summary ? ` / ${total}` : ''}
               </span>
@@ -307,9 +337,7 @@ function App() {
             </div>
 
             <div className="metric-bottom">
-              <span className="metric-muted">
-                Requires review
-              </span>
+              <span className="metric-muted">Requires review</span>
             </div>
           </article>
 
@@ -320,20 +348,19 @@ function App() {
             </div>
 
             <div className="metric-value">
-              {analysis ? analysis.document.total_pages : '—'}
+              {analysis ? analysis.document?.total_pages ?? '—' : '—'}
             </div>
 
             <div className="metric-bottom">
               <span className="metric-muted">
                 {analysis
-                  ? `${analysis.document.total_chunks} text chunks`
+                  ? `${analysis.document?.total_chunks ?? 0} text chunks`
                   : 'No document processed'}
               </span>
             </div>
           </article>
         </section>
 
-        {/* Upload and analysis pipeline */}
         <section className="workspace-grid">
           <article className="panel upload-panel" id="upload">
             <div className="panel-heading">
@@ -358,10 +385,7 @@ function App() {
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
               onKeyDown={(event) => {
-                if (
-                  event.key === 'Enter' ||
-                  event.key === ' '
-                ) {
+                if (event.key === 'Enter' || event.key === ' ') {
                   event.preventDefault()
                   fileInputRef.current?.click()
                 }
@@ -396,10 +420,7 @@ function App() {
                 <>
                   <h4>Drop your PDF here</h4>
                   <p>or click to browse your files</p>
-
-                  <span className="file-format">
-                    PDF DOCUMENTS ONLY
-                  </span>
+                  <span className="file-format">PDF DOCUMENTS ONLY</span>
                 </>
               )}
             </div>
@@ -433,9 +454,9 @@ function App() {
               <span>◆</span>
 
               <p>
-                Your PDF is processed by your local development backend.
-                This interface does not upload it to a third-party AI
-                service.
+                Your PDF is processed by the configured backend. Review
+                your backend deployment and storage settings to understand
+                where uploaded documents are processed.
               </p>
             </div>
           </article>
@@ -451,9 +472,7 @@ function App() {
 
             <div className="pipeline">
               <div className="pipeline-step">
-                <div className="pipeline-icon purple-bg">
-                  PDF
-                </div>
+                <div className="pipeline-icon purple-bg">PDF</div>
 
                 <div className="pipeline-copy">
                   <strong>Document ingestion</strong>
@@ -466,9 +485,7 @@ function App() {
               <div className="pipeline-connector" />
 
               <div className="pipeline-step">
-                <div className="pipeline-icon blue-bg">
-                  TXT
-                </div>
+                <div className="pipeline-icon blue-bg">TXT</div>
 
                 <div className="pipeline-copy">
                   <strong>Text processing</strong>
@@ -481,9 +498,7 @@ function App() {
               <div className="pipeline-connector" />
 
               <div className="pipeline-step">
-                <div className="pipeline-icon green-bg">
-                  40
-                </div>
+                <div className="pipeline-icon green-bg">40</div>
 
                 <div className="pipeline-copy">
                   <strong>Indicator engine</strong>
@@ -511,15 +526,13 @@ function App() {
               <strong>Current analysis method</strong>
 
               <p>
-                Keyword-based rules with evidence extraction.
-                Results require human review and do not establish
-                legal compliance.
+                Keyword-based rules with evidence extraction. Results
+                require human review and do not establish legal compliance.
               </p>
             </div>
           </article>
         </section>
 
-        {/* Indicator results */}
         <section className="results-section" id="analysis-results">
           <div className="results-heading">
             <div>
@@ -535,10 +548,7 @@ function App() {
 
             <div className="results-tag">
               <span className="results-tag-dot" />
-
-              {analysis
-                ? 'Analysis complete'
-                : 'Awaiting document'}
+              {analysis ? 'Analysis complete' : 'Awaiting document'}
             </div>
           </div>
 
@@ -552,36 +562,28 @@ function App() {
                     type="search"
                     placeholder="Search by ID or indicator name..."
                     value={search}
-                    onChange={(event) =>
-                      setSearch(event.target.value)
-                    }
+                    onChange={(event) => setSearch(event.target.value)}
                     aria-label="Search indicators"
                   />
                 </div>
 
                 <div className="filter-buttons">
                   <button
-                    className={
-                      filter === 'all' ? 'selected' : ''
-                    }
+                    className={filter === 'all' ? 'selected' : ''}
                     onClick={() => setFilter('all')}
                   >
                     All ({indicators.length})
                   </button>
 
                   <button
-                    className={
-                      filter === 'found' ? 'selected' : ''
-                    }
+                    className={filter === 'found' ? 'selected' : ''}
                     onClick={() => setFilter('found')}
                   >
                     Detected ({matched})
                   </button>
 
                   <button
-                    className={
-                      filter === 'missing' ? 'selected' : ''
-                    }
+                    className={filter === 'missing' ? 'selected' : ''}
                     onClick={() => setFilter('missing')}
                   >
                     Not detected ({notMatched})
@@ -589,117 +591,178 @@ function App() {
                 </div>
               </div>
 
-              <div className="indicator-table-wrap">
-                <table className="indicator-table">
-                  <thead>
-                    <tr>
-                      <th>INDICATOR</th>
-                      <th>CATEGORY</th>
-                      <th>STATUS</th>
-                      <th>EVIDENCE</th>
-                    </tr>
-                  </thead>
+              <div className="indicator-groups">
+                {PRIMARY_INDICATORS.map((primary) => {
+                  const groupIndicators = filteredIndicators.filter(
+                    (indicator) =>
+                      indicator.primary === primary.id &&
+                      primary.secondaryIds.includes(indicator.id),
+                  )
 
-                  <tbody>
-                    {filteredIndicators.map((indicator) => (
-                      <tr key={indicator.id}>
-                        <td>
-                          <div className="indicator-name-cell">
-                            <span className="indicator-id">
-                              {indicator.id}
-                            </span>
+                  const totalInGroup = indicators.filter(
+                    (indicator) =>
+                      indicator.primary === primary.id &&
+                      primary.secondaryIds.includes(indicator.id),
+                  )
 
-                            <div>
-                              <strong>{indicator.name}</strong>
-                              <small>{indicator.primary}</small>
-                            </div>
-                          </div>
-                        </td>
+                  const detectedCount = totalInGroup.filter(
+                    (indicator) => indicator.matched,
+                  ).length
 
-                        <td>
-                          <span className="category-label">
-                            {indicator.primary}
-                          </span>
-                        </td>
+                  const isExpanded = Boolean(expandedGroups[primary.id])
 
-                        <td>
-                          <span
-                            className={`status-pill ${
-                              indicator.matched
-                                ? 'detected'
-                                : 'missing'
-                            }`}
-                          >
-                            <span className="status-pill-dot" />
+                  return (
+                    <section
+                      className="indicator-group"
+                      key={primary.id}
+                    >
+                      <button
+                        type="button"
+                        className="indicator-group-header"
+                        onClick={() => toggleGroup(primary.id)}
+                        aria-expanded={isExpanded}
+                      >
+                        <span className="group-chevron">
+                          {isExpanded ? '▼' : '▶'}
+                        </span>
 
-                            {indicator.matched
-                              ? 'Detected'
-                              : 'Not detected'}
-                          </span>
-                        </td>
+                        <span className="group-title">
+                          <strong>
+                            {primary.id} — {primary.name}
+                          </strong>
 
-                        <td>
-                          {indicator.evidence?.length > 0 ? (
-                            <details className="evidence-details">
-                              <summary>
-                                View evidence (
-                                {indicator.evidence.length})
-                              </summary>
+                          <small>
+                            {detectedCount}/{totalInGroup.length} detected
+                          </small>
+                        </span>
 
-                              <div className="evidence-list">
-                                {indicator.evidence.map(
-                                  (item, index) => (
-                                    <div
-                                      className="evidence-item"
-                                      key={`${indicator.id}-${index}`}
-                                    >
-                                      <div className="evidence-meta">
-                                        <span>
-                                          {item.matched_by || 'MATCH'}
-                                        </span>
+                        <span className="group-progress">
+                          {totalInGroup.length
+                            ? Math.round(
+                                (detectedCount / totalInGroup.length) * 100,
+                              )
+                            : 0}
+                          %
+                        </span>
+                      </button>
 
-                                        <span>
-                                          {item.evidence_type ||
-                                            'evidence'}
-                                        </span>
+                      {isExpanded && (
+                        <div className="indicator-table-wrap">
+                          <table className="indicator-table">
+                            <thead>
+                              <tr>
+                                <th>INDICATOR</th>
+                                <th>STATUS</th>
+                                <th>EVIDENCE</th>
+                              </tr>
+                            </thead>
+
+                            <tbody>
+                              {groupIndicators.map((indicator) => (
+                                <tr key={indicator.id}>
+                                  <td>
+                                    <div className="indicator-name-cell">
+                                      <span className="indicator-id">
+                                        {indicator.id}
+                                      </span>
+
+                                      <div>
+                                        <strong>{indicator.name}</strong>
+                                        <small>{primary.id}</small>
                                       </div>
+                                    </div>
+                                  </td>
 
-                                      <p>{item.text}</p>
+                                  <td>
+                                    <span
+                                      className={`status-pill ${
+                                        indicator.matched
+                                          ? 'detected'
+                                          : 'missing'
+                                      }`}
+                                    >
+                                      <span className="status-pill-dot" />
 
-                                      {item.matches?.length > 0 && (
-                                        <div className="keyword-list">
-                                          {item.matches.map(
-                                            (keyword) => (
-                                              <span key={keyword}>
-                                                {keyword}
-                                              </span>
+                                      {indicator.matched
+                                        ? 'Detected'
+                                        : 'Not detected'}
+                                    </span>
+                                  </td>
+
+                                  <td>
+                                    {indicator.evidence?.length > 0 ? (
+                                      <details className="evidence-details">
+                                        <summary>
+                                          View evidence (
+                                          {indicator.evidence.length})
+                                        </summary>
+
+                                        <div className="evidence-list">
+                                          {indicator.evidence.map(
+                                            (item, index) => (
+                                              <div
+                                                className="evidence-item"
+                                                key={`${indicator.id}-${index}`}
+                                              >
+                                                <div className="evidence-meta">
+                                                  <span>
+                                                    {item.matched_by ||
+                                                      'MATCH'}
+                                                  </span>
+
+                                                  <span>
+                                                    {item.evidence_type ||
+                                                      'evidence'}
+                                                  </span>
+                                                </div>
+
+                                                <p>{item.text}</p>
+
+                                                {item.matches?.length > 0 && (
+                                                  <div className="keyword-list">
+                                                    {item.matches.map(
+                                                      (keyword, keywordIndex) => (
+                                                        <span
+                                                          key={`${keyword}-${keywordIndex}`}
+                                                        >
+                                                          {keyword}
+                                                        </span>
+                                                      ),
+                                                    )}
+                                                  </div>
+                                                )}
+                                              </div>
                                             ),
                                           )}
                                         </div>
-                                      )}
-                                    </div>
-                                  ),
-                                )}
-                              </div>
-                            </details>
-                          ) : (
-                            <span className="no-evidence">
-                              No evidence found
-                            </span>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
+                                      </details>
+                                    ) : (
+                                      <span className="no-evidence">
+                                        No evidence found
+                                      </span>
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
 
-                    {filteredIndicators.length === 0 && (
-                      <tr>
-                        <td colSpan="4" className="empty-table">
-                          No indicators match your search.
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
+                              {groupIndicators.length === 0 && (
+                                <tr>
+                                  <td
+                                    colSpan="3"
+                                    className="empty-table"
+                                  >
+                                    No indicators match the current
+                                    search or filter.
+                                  </td>
+                                </tr>
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </section>
+                  )
+                })}
               </div>
             </>
           )}
@@ -718,7 +781,6 @@ function App() {
           )}
         </section>
 
-        {/* Footer */}
         <footer className="page-footer">
           <span>PrivAI · Privacy Compliance AI</span>
 

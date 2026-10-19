@@ -90,76 +90,225 @@
       "name": "Privacy Policy Name",
       "primary": "A1",
       "any": [
-        "Personal info processing rules",
-        "Privacy protection statement",
-        "User privacy policy",
-        "Privacy policy"
+        "Privacy Policy Name:",
+        "Privacy Policy Title:",
+        "Policy Name:",
+        "Document Title:",
+        "Privacy Policy Name",
+        "Policy Name",
+        "Document Title",
+        "Official User Privacy Policy",
+        "Smart Services Privacy Policy"
       ],
-      "all": []
+      "all": [
+        [
+          [
+            "privacy policy name",
+            "policy name",
+            "policy title",
+            "document title",
+            "official user privacy policy",
+            "this document is the official",
+            "title of this policy"
+          ],
+          [
+            "privacy policy",
+            "policy",
+            "privacy statement"
+          ]
+        ]
+      ]
     },
     {
       "id": "B2",
       "name": "Version Number",
       "primary": "A1",
       "any": [
-        "Revised version",
-        "Policy version",
-        "Current version",
-        "Version number"
+        "Policy Version:",
+        "Version Number:",
+        "Current Version:",
+        "Revised Version:",
+        "Version Number",
+        "Policy Version",
+        "Current Version",
+        "Document Version"
       ],
-      "all": []
+      "all": [
+        [
+          [
+            "version number",
+            "policy version",
+            "current version",
+            "document version",
+            "revised version",
+            "version:"
+          ],
+          [
+            "regex:\\b(?:v(?:er(?:sion)?)?\\.?\\s*)?\\d+(?:\\.\\d+)+(?:-[a-z0-9.]+)?\\b|\\bversion\\s+\\d+\\b|\\bv\\d+\\b"
+          ]
+        ]
+      ]
     },
     {
       "id": "B3",
       "name": "Effective Date",
       "primary": "A1",
       "any": [
-        "Effective date",
-        "Commencement date",
-        "Effective from",
-        "Implementation date"
+        "Effective Date:",
+        "Commencement Date:",
+        "Effective From:",
+        "Implementation Date:",
+        "Effective Date",
+        "Commencement Date",
+        "Effective From",
+        "Implementation Date"
       ],
-      "all": []
+      "all": [
+        [
+          [
+            "effective date",
+            "commencement date",
+            "effective from",
+            "implementation date"
+          ],
+          [
+            "regex:\\b(?:\\d{1,2}[-/]\\d{1,2}[-/]\\d{2,4}|\\d{4}[-/]\\d{1,2}[-/]\\d{1,2}|(?:january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)\\s+\\d{1,2}(?:st|nd|rd|th)?,?\\s+\\d{4}|\\d{1,2}(?:st|nd|rd|th)?\\s+(?:of\\s+)?(?:january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)\\s+\\d{4}|(?:january|february|march|april|may|june|july|august|september|october|november|december)\\s+\\d{4})\\b"
+          ]
+        ]
+      ]
     },
     {
       "id": "B4",
       "name": "Update Date",
       "primary": "A1",
       "any": [
-        "Release date",
-        "Recently modified",
-        "Revision date",
-        "Update date",
-        "Last updated"
+        "Last Updated:",
+        "Update Date:",
+        "Revision Date:",
+        "Recently Modified:",
+        "Release Date:",
+        "Last Updated",
+        "Update Date",
+        "Revision Date",
+        "Recently Modified",
+        "Release Date"
       ],
-      "all": []
+      "all": [
+        [
+          [
+            "last updated",
+            "update date",
+            "revision date",
+            "recently modified",
+            "release date"
+          ],
+          [
+            "regex:\\b(?:\\d{1,2}[-/]\\d{1,2}[-/]\\d{2,4}|\\d{4}[-/]\\d{1,2}[-/]\\d{1,2}|(?:january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)\\s+\\d{1,2}(?:st|nd|rd|th)?,?\\s+\\d{4}|\\d{1,2}(?:st|nd|rd|th)?\\s+(?:of\\s+)?(?:january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)\\s+\\d{4}|(?:january|february|march|april|may|june|july|august|september|october|november|december)\\s+\\d{4})\\b"
+          ]
+        ]
+      ]
     },
     {
       "id": "B5",
       "name": "Data Controller",
       "primary": "A1",
       "any": [
+        "Data Controller:",
+        "Data Controller",
+        "Personal info processor:",
         "Personal info processor",
-        "Responsible party",
-        "Data controller",
-        "Operator"
+        "Personal information processor",
+        "Responsible party:",
+        "Responsible party for data",
+        "Data controller responsible for"
       ],
-      "all": []
+      "all": [
+        [
+          [
+            "data controller",
+            "personal info processor",
+            "personal information processor",
+            "responsible party"
+          ],
+          [
+            "responsible for",
+            "example digital",
+            "abc technologies",
+            "acme",
+            "entity",
+            "company",
+            "organization",
+            "pvt",
+            "ltd",
+            "inc",
+            "corp",
+            "llc",
+            "acts as",
+            "contact",
+            "controller:"
+          ]
+        ]
+      ]
     },
     {
       "id": "B6",
       "name": "Contact Information",
       "primary": "A1",
       "any": [
-        "Customer service email",
-        "Email:",
+        "Contact Information:",
+        "Contact Information",
         "Contact info",
+        "Contact details",
+        "Contact us",
         "Contact phone",
         "Contact address",
+        "Email address",
+        "Email addresses",
+        "Privacy contact email addresses",
+        "Privacy contact email address",
+        "Privacy contact email",
+        "Customer support email addresses",
+        "Customer support email address",
+        "Customer support email",
+        "Customer service email",
+        "Privacy team contact details",
+        "Privacy team contact",
+        "Privacy team",
         "Online support",
-        "Privacy Team"
+        "DPO email"
       ],
-      "all": []
+      "all": [
+        [
+          [
+            "contact",
+            "reach",
+            "write to",
+            "inquiries",
+            "inquiry",
+            "direct questions to",
+            "support",
+            "privacy team",
+            "email addresses",
+            "email address",
+            "dpo"
+          ],
+          [
+            "privacy",
+            "support",
+            "dpo",
+            "customer service",
+            "data protection officer",
+            "contact details",
+            "contact info",
+            "contact information",
+            "privacy contact",
+            "customer support",
+            "questions",
+            "inquiries",
+            "regex:\\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\\b"
+          ]
+        ]
+      ]
     },
     {
       "id": "B7",
@@ -169,7 +318,10 @@
         "Purpose of collection",
         "Processing scope",
         "To achieve functions",
-        "Uses of personal info"
+        "Uses of personal info",
+        "Purposes for collection",
+        "Purposes for which",
+        "Purpose and scope"
       ],
       "all": [
         [
@@ -199,7 +351,9 @@
             "scope of collection",
             "purpose of providing",
             "provide our services",
-            "provide services"
+            "provide services",
+            "purposes for collection",
+            "purpose and scope"
           ]
         ]
       ]
@@ -242,13 +396,51 @@
       "any": [
         "Browser cache",
         "Web beacon",
+        "Web beacons",
         "Local storage",
-        "Cookie",
-        "SDK",
+        "Browser cookies",
+        "Cookie preferences",
+        "Cookie policy",
+        "Cookie settings",
+        "Use cookies",
+        "Cookies and similar",
+        "Cookies or similar",
+        "Session cookies",
+        "Persistent cookies",
+        "Third-party cookies",
         "Log files",
-        "Tracking tech"
+        "Tracking tech",
+        "Tracking technologies"
       ],
-      "all": []
+      "all": [
+        [
+          [
+            "cookie",
+            "cookies",
+            "web beacon",
+            "web beacons",
+            "local storage",
+            "browser cache",
+            "sdk"
+          ],
+          [
+            "website",
+            "browser",
+            "browsing",
+            "online",
+            "preferences",
+            "analytics",
+            "tracking",
+            "technologies",
+            "site",
+            "services",
+            "device",
+            "session",
+            "user",
+            "settings"
+          ]
+        ]
+      ]
     },
     {
       "id": "B10",
@@ -259,17 +451,21 @@
         "Explicit consent",
         "Obtain consent",
         "Check to agree",
-        "Pop-up consent"
+        "Pop-up consent",
+        "Notice and consent",
+        "Provide notice and request consent"
       ],
       "all": [
         [
           [
             "inform",
-            "notify"
+            "notify",
+            "notice"
           ],
           [
             "consent",
-            "authorize"
+            "authorize",
+            "authorization"
           ]
         ]
       ]
@@ -283,7 +479,9 @@
         "Turn off permission",
         "Opt-out",
         "Refuse collection",
-        "Stop collecting"
+        "Stop collecting",
+        "Opt out",
+        "Opt out of"
       ],
       "all": [
         [
@@ -291,7 +489,9 @@
             "close",
             "opt-out",
             "cancel",
-            "refuse"
+            "refuse",
+            "opt out",
+            "opt out of"
           ],
           [
             "collect",
@@ -313,7 +513,9 @@
         "Guardian authorization",
         "Minors",
         "Youth mode",
-        "Under 14 years old"
+        "Under 14 years old",
+        "Safeguards to children",
+        "Appropriate authorization"
       ],
       "all": [
         [
@@ -328,7 +530,10 @@
             "measure",
             "measures",
             "protect",
-            "guardian"
+            "guardian",
+            "safeguard",
+            "safeguards",
+            "authorization"
           ]
         ]
       ]
@@ -371,7 +576,9 @@
         "Purpose limitation",
         "Beyond purpose scope",
         "Not for other purposes",
-        "Only for declared purposes"
+        "Only for declared purposes",
+        "Unrelated purposes",
+        "Not use personal information for unrelated"
       ],
       "all": [
         [
@@ -383,7 +590,9 @@
             "only for",
             "beyond",
             "not for",
-            "restrict"
+            "restrict",
+            "unrelated",
+            "unrelated purposes"
           ]
         ]
       ]
@@ -427,15 +636,19 @@
         "Stored in",
         "Domestic storage",
         "Cross-border storage",
-        "Storage location"
+        "Storage location",
+        "Stored on systems"
       ],
       "all": [
         [
           [
-            "store",
-            "storing",
+            "data stored",
             "stored",
-            "save"
+            "storing",
+            "storage",
+            "store data",
+            "store personal",
+            "save data"
           ],
           [
             "location",
@@ -444,7 +657,9 @@
             "domestic",
             "server",
             "servers",
-            "data center"
+            "data center",
+            "systems",
+            "hosting providers"
           ]
         ]
       ]
@@ -467,18 +682,19 @@
           [
             "retention",
             "retain",
-            "save",
-            "store",
-            "storing",
             "retained",
             "retaining",
-            "stored"
+            "storage duration",
+            "data retention",
+            "retention period"
           ],
           [
             "duration",
             "long as",
             "period",
-            "until"
+            "until",
+            "necessary",
+            "stated purposes"
           ]
         ]
       ]
@@ -585,24 +801,75 @@
       "name": "Security Self-Inspection",
       "primary": "A4",
       "any": [
-        "PIA/DPIA",
-        "Risk assessment",
-        "Compliance assessment",
+        "Security self-inspection",
+        "Security self-inspections",
+        "Security self-check",
+        "Security self-checks",
+        "Internal security audit",
+        "Internal security audits",
+        "Internal security inspection",
+        "Internal security inspections",
         "Internal audit",
-        "Security self-check"
+        "Internal audits",
+        "Security audit",
+        "Security audits",
+        "Periodic security assessment",
+        "Periodic security assessments",
+        "Periodic security audit",
+        "Periodic security audits",
+        "Regular security assessment",
+        "Regular security assessments",
+        "Regular security audit",
+        "Regular security audits",
+        "Annual security audit",
+        "Annual security audits",
+        "Security inspection",
+        "Security inspections",
+        "Security review",
+        "Security reviews",
+        "PIA/DPIA",
+        "DPIA",
+        "Data protection impact assessment",
+        "Privacy impact assessment",
+        "Compliance audit",
+        "Periodically review security",
+        "Periodic security review",
+        "Review security practices"
       ],
       "all": [
         [
           [
-            "assess",
+            "internal",
+            "periodic",
+            "regular",
+            "annual",
+            "routine",
+            "self-inspection",
             "self-check",
+            "systematic",
+            "periodically"
+          ],
+          [
             "audit",
-            "inspect"
+            "audits",
+            "inspection",
+            "inspections",
+            "self-check",
+            "self-inspection",
+            "security assessment",
+            "security assessments",
+            "security audit",
+            "security audits",
+            "security review",
+            "security reviews",
+            "review security practices",
+            "review"
           ],
           [
             "security",
             "security measures",
-            "risk",
+            "security controls",
+            "data protection",
             "info protection"
           ]
         ]
@@ -638,25 +905,75 @@
       "name": "Data Access Rights",
       "primary": "A5",
       "any": [
+        "Right to access",
+        "Right of access",
+        "Access your personal data",
+        "Access your personal information",
         "Access personal data",
-        "Inquire about info",
-        "Request information",
+        "Access personal information",
+        "Access to your personal information",
+        "Access to personal information",
+        "Access to your personal data",
+        "Access to personal data",
+        "Access to your data",
+        "Request access to your personal information",
+        "Request access to personal information",
+        "Request access to personal data",
+        "Request access to your data",
+        "Request access to",
+        "Request access",
+        "Obtain a copy of your personal data",
+        "Obtain a copy of your personal information",
+        "Obtain a copy of your data",
+        "Obtain a copy of their data",
+        "Obtain a copy",
         "Obtain data copy",
-        "Access your personal info"
+        "Inquire about your personal information",
+        "Inquire about their personal information",
+        "Inquire about your personal data",
+        "Inquire about your information",
+        "Inquire about personal information",
+        "Access your personal info",
+        "Data access request",
+        "Right to know"
       ],
       "all": [
         [
           [
-            "inquire",
-            "access",
-            "request",
-            "obtain"
+            "you",
+            "your",
+            "user",
+            "users",
+            "individual",
+            "individuals",
+            "data subject",
+            "data subjects",
+            "right to",
+            "right of",
+            "your right"
           ],
           [
-            "data",
+            "request access",
+            "access your",
+            "access their",
+            "access to",
+            "access personal",
+            "obtain a copy",
+            "receive a copy",
+            "inquire about",
+            "inquire",
+            "inspect your",
+            "inspect their"
+          ],
+          [
             "personal information",
+            "personal data",
             "personal info",
-            "personal data"
+            "your data",
+            "their data",
+            "copy of your data",
+            "copy of their data",
+            "data"
           ]
         ]
       ]
@@ -670,7 +987,12 @@
         "Delete personal information",
         "Deletion request",
         "Correction request",
-        "Update personal information"
+        "Update personal information",
+        "Request deletion",
+        "Request correction",
+        "Right to deletion",
+        "Right to correction",
+        "Correction of your personal information"
       ],
       "all": [
         [
@@ -680,12 +1002,18 @@
             "deleted",
             "delete",
             "erase",
-            "correct"
+            "correct",
+            "correction",
+            "deletion",
+            "rectification",
+            "rectify",
+            "erasure"
           ],
           [
             "personal information",
             "personal data",
-            "account data"
+            "account data",
+            "your data"
           ]
         ]
       ]
@@ -719,25 +1047,65 @@
       "name": "Data Portability Services",
       "primary": "A5",
       "any": [
-        "Export personal data",
-        "Transfer personal data",
         "Data portability",
-        "Receive data copy"
+        "Right to data portability",
+        "Right to portability",
+        "Export personal data",
+        "Export your personal data",
+        "Export your personal information",
+        "Export your data",
+        "Export or download",
+        "Download or export",
+        "Download a copy of your personal data",
+        "Download a copy of your data",
+        "Download your personal data",
+        "Download your data",
+        "Receive data copy",
+        "Receive a copy of your personal data",
+        "Receive a copy of your data",
+        "Transfer your data to another",
+        "Transfer your personal data to another",
+        "Transmit that data to another controller",
+        "Transfer of your data to another service provider",
+        "Machine-readable format",
+        "Portability of your personal data",
+        "Portability request"
       ],
       "all": [
         [
           [
-            "transfer",
-            "copy",
-            "receive",
-            "transferring",
-            "transferred",
-            "export"
+            "you",
+            "your",
+            "user",
+            "users",
+            "individual",
+            "individuals",
+            "data subject",
+            "data subjects",
+            "right to",
+            "right of"
           ],
           [
-            "data",
+            "data portability",
+            "portability",
+            "download",
+            "export",
+            "receive a copy",
+            "obtain a copy",
+            "machine-readable format",
+            "transfer to another",
+            "transmit to another"
+          ],
+          [
+            "personal data",
             "personal information",
-            "personal data"
+            "personal info",
+            "your data",
+            "their data",
+            "machine-readable",
+            "copy of your personal data",
+            "copy of their data",
+            "copy of your data"
           ]
         ]
       ]
@@ -749,7 +1117,9 @@
       "any": [
         "Permission settings",
         "Privacy preferences",
-        "Recommendation toggle"
+        "Recommendation toggle",
+        "Privacy settings",
+        "Manage privacy settings"
       ],
       "all": [
         [
@@ -763,7 +1133,9 @@
             "preference",
             "setting",
             "toggle",
-            "manage"
+            "manage",
+            "privacy settings",
+            "settings"
           ]
         ]
       ]
@@ -776,7 +1148,10 @@
         "Cancel account",
         "Apply for cancellation",
         "Delete account data",
-        "Account deregistration"
+        "Account deregistration",
+        "Close account",
+        "Close your account",
+        "Account closure"
       ],
       "all": [
         [
@@ -784,7 +1159,12 @@
             "delete",
             "deleting",
             "deleted",
-            "cancel"
+            "cancel",
+            "close",
+            "closure",
+            "terminate",
+            "termination",
+            "deregister"
           ],
           [
             "account"
@@ -801,7 +1181,11 @@
         "Reporting channel",
         "Complaint email",
         "Complaint channel",
-        "Supervisory authority"
+        "Supervisory authority",
+        "Submit a complaint",
+        "File a complaint",
+        "Lodge a complaint",
+        "Submit a request or complaint"
       ],
       "all": [
         [
@@ -815,7 +1199,12 @@
             "email",
             "method",
             "phone",
-            "channel"
+            "channel",
+            "submit",
+            "file",
+            "lodge",
+            "contact",
+            "authority"
           ]
         ]
       ]
@@ -859,7 +1248,9 @@
         "Separate consent",
         "Explicit authorization",
         "Obtain authorization before processing",
-        "Explicit consent"
+        "Explicit consent",
+        "Authorized purposes",
+        "Only for authorized purposes"
       ],
       "all": [
         [
@@ -869,7 +1260,9 @@
           ],
           [
             "consent",
-            "authorization"
+            "authorization",
+            "authorized",
+            "authorized purposes"
           ]
         ]
       ]
@@ -920,13 +1313,20 @@
         [
           [
             "third party",
+            "third parties",
             "recipient",
-            "entrusted party"
+            "entrusted party",
+            "service provider",
+            "service providers",
+            "vendors"
           ],
           [
             "right",
             "obligation",
-            "responsibility"
+            "responsibility",
+            "protect",
+            "safeguard",
+            "duty"
           ]
         ]
       ]
@@ -936,21 +1336,29 @@
       "name": "Public Disclosure of Risks",
       "primary": "A6",
       "any": [
-        "Public disclosure",
-        "Prominent notification",
+        "Public disclosure of personal",
+        "Publicly disclose personal",
+        "Public disclosure risk",
+        "Public disclosure risk assessment",
         "Disclosure risk assessment",
-        "Disclose externally"
+        "Disclose personal data externally"
       ],
       "all": [
         [
           [
             "disclose externally",
-            "public disclosure"
+            "public disclosure",
+            "publicly disclose"
           ],
           [
+            "personal information",
+            "personal data",
             "risk assessment",
-            "inform",
-            "notify"
+            "risk assessments",
+            "security risk",
+            "privacy risk",
+            "prominent notification",
+            "notification"
           ]
         ]
       ]
@@ -963,9 +1371,12 @@
         "Cross-border data flow",
         "Overseas provision",
         "Transfer personal data overseas",
-        "Standard contract",
+        "Standard contractual clauses",
+        "Standard contract for cross-border",
         "International data transfer",
         "Cross-border transmission",
+        "Transferred across national borders",
+        "Transfer across national borders",
         "Security assessment"
       ],
       "all": [
@@ -973,7 +1384,9 @@
           [
             "cross-border",
             "international transfer",
-            "overseas"
+            "overseas",
+            "national borders",
+            "international"
           ],
           [
             "transfer",
@@ -1027,7 +1440,10 @@
         "Identify child users",
         "Age judgment mechanism",
         "Guardian verification",
-        "Age verification"
+        "Age verification",
+        "Not directed to children under",
+        "Children under 13",
+        "Under 13 years old"
       ],
       "all": [
         [
@@ -1042,7 +1458,11 @@
             "identify",
             "judge",
             "mechanism",
-            "verify"
+            "verify",
+            "not directed to",
+            "under 13",
+            "under 14",
+            "under 16"
           ]
         ]
       ]
@@ -1054,7 +1474,10 @@
       "any": [
         "Anonymize children's info",
         "Children's data desensitization",
-        "De-identify children's info"
+        "De-identify children's info",
+        "Take steps to delete it",
+        "Delete children's information",
+        "Delete minor data"
       ],
       "all": [
         [
@@ -1067,7 +1490,10 @@
           [
             "de-identify",
             "desensitize",
-            "anonymize"
+            "anonymize",
+            "delete",
+            "deleted",
+            "remove"
           ]
         ]
       ]
@@ -1079,7 +1505,9 @@
       "any": [
         "Children's privacy protection measures",
         "Special protection mechanisms",
-        "Strict protection"
+        "Strict protection",
+        "Additional safeguards to children",
+        "Safeguards to children's information"
       ],
       "all": [
         [
@@ -1092,7 +1520,10 @@
           [
             "special protection",
             "dedicated protection",
-            "strict protection"
+            "strict protection",
+            "safeguards",
+            "additional safeguards",
+            "safeguard"
           ]
         ]
       ]
@@ -1104,7 +1535,9 @@
       "any": [
         "Children's info risk assessment",
         "Children's data security assessment",
-        "System risk assessment"
+        "System risk assessment",
+        "Assess relevant privacy and security risks",
+        "Children privacy and security risks"
       ],
       "all": [
         [
@@ -1119,7 +1552,9 @@
             "risk assessments",
             "impact assessment",
             "risk assessment",
-            "impact assessments"
+            "impact assessments",
+            "privacy and security risks",
+            "security risks"
           ]
         ]
       ]
