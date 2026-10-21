@@ -891,11 +891,17 @@
           [
             "leak",
             "security incident",
+            "security incidents",
+            "data incident",
+            "data incidents",
+            "personal data breach",
+            "breach",
             "risk"
           ],
           [
             "inform",
-            "notify"
+            "notify",
+            "notification"
           ]
         ]
       ]
