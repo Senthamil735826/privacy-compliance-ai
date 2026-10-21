@@ -1,7 +1,24 @@
+import sys
+from pathlib import Path
+from uuid import uuid4
+import tempfile
+
+# Ensure both backend directory and project root are on sys.path
+_BACKEND_DIR = Path(__file__).resolve().parent
+_PROJECT_ROOT = _BACKEND_DIR.parent
+if str(_BACKEND_DIR) not in sys.path:
+    sys.path.insert(0, str(_BACKEND_DIR))
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
+
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pathlib import Path
-import tempfile
+from pydantic import BaseModel, Field
+
+try:
+    from backend.vector_store.search_service import SemanticSearchService
+except ImportError:
+    from vector_store.search_service import SemanticSearchService
 
 from ingestion.pdf_parser import extract_text_from_pdf
 from ingestion.cleaner import clean_text
@@ -14,6 +31,7 @@ from indicators.indicator_engine import IndicatorEngine
 # =========================================================
 
 engine = IndicatorEngine()
+semantic_search = SemanticSearchService()
 
 
 # =========================================================
@@ -140,12 +158,23 @@ async def upload_policy(file: UploadFile = File(...)):
             overlap=30
         )
 
-        # STEP 7: DEBUG INFORMATION
+        # STEP 7: Index chunks for semantic search
+        document_id = str(uuid4())
+        indexed_chunks = 0
+        if chunks:
+            try:
+                indexed_chunks = semantic_search.index_document(document_id, chunks)
+            except Exception as index_err:
+                print("Semantic indexing error:", repr(index_err))
+
+        # STEP 8: DEBUG INFORMATION
         print("\n" + "=" * 60)
         print("PDF COMPLIANCE ANALYSIS DEBUG")
         print("=" * 60)
 
         print("Filename:", file.filename)
+        print("Document ID:", document_id)
+        print("Indexed chunks:", indexed_chunks)
         print("Extracted characters:", len(extracted_text))
         print("Cleaned characters:", len(cleaned_text))
         print("Total pages:", result.get("total_pages"))
@@ -154,7 +183,7 @@ async def upload_policy(file: UploadFile = File(...)):
         print("\nFirst 500 characters of cleaned text:")
         print(cleaned_text[:500])
 
-        # STEP 8: Analyze the complete cleaned document
+        # STEP 9: Analyze the complete cleaned document
         analysis = engine.analyze_policy(cleaned_text)
 
         print("\nIndicator analysis results:")
@@ -175,15 +204,20 @@ async def upload_policy(file: UploadFile = File(...)):
         print(matched_indicators)
         print("=" * 60 + "\n")
 
-        # STEP 9: Return analysis results
+        # STEP 10: Return analysis results
         return {
             "status": "success",
 
+            "document_id": document_id,
+            "indexed_chunks": indexed_chunks,
+
             "document": {
+                "document_id": document_id,
                 "filename": file.filename,
                 "total_pages": result.get("total_pages", 0),
                 "total_characters": len(cleaned_text),
-                "total_chunks": len(chunks)
+                "total_chunks": len(chunks),
+                "indexed_chunks": indexed_chunks
             },
 
             "compliance_summary": {
@@ -212,8 +246,76 @@ async def upload_policy(file: UploadFile = File(...)):
         ) from exc
 
     finally:
-        # STEP 10: Remove temporary PDF
+        # STEP 11: Remove temporary PDF
         if temp_file_path:
             Path(temp_file_path).unlink(missing_ok=True)
 
         await file.close()
+
+
+# =========================================================
+# SEMANTIC SEARCH ENDPOINT
+# =========================================================
+
+class PolicySearchRequest(BaseModel):
+    document_id: str = Field(..., min_length=1, description="Unique ID of the uploaded document")
+    query: str = Field(..., min_length=1, description="Search query text")
+    top_k: int = Field(default=3, ge=1, le=50, description="Maximum number of passages to retrieve")
+
+
+@app.post("/api/policy/search")
+def search_policy(request: PolicySearchRequest):
+    """Retrieve relevant policy passages using semantic search on document chunks."""
+    clean_doc_id = request.document_id.strip()
+    clean_query = request.query.strip()
+
+    if not clean_doc_id:
+        raise HTTPException(
+            status_code=422,
+            detail="document_id cannot be empty or whitespace only."
+        )
+
+    if not clean_query:
+        raise HTTPException(
+            status_code=422,
+            detail="query cannot be empty or whitespace only."
+        )
+
+    if not semantic_search.has_document(clean_doc_id):
+        raise HTTPException(
+            status_code=404,
+            detail=f"No indexed document found for ID: {clean_doc_id}"
+        )
+
+    try:
+        results = semantic_search.search(
+            document_id=clean_doc_id,
+            query=clean_query,
+            top_k=request.top_k,
+        )
+
+        return {
+            "status": "success",
+            "document_id": clean_doc_id,
+            "query": clean_query,
+            "results": results
+        }
+
+    except KeyError as exc:
+        raise HTTPException(
+            status_code=404,
+            detail=str(exc)
+        ) from exc
+
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=422,
+            detail=str(exc)
+        ) from exc
+
+    except Exception as exc:
+        print("Semantic search error:", repr(exc))
+        raise HTTPException(
+            status_code=500,
+            detail="An error occurred while executing semantic search."
+        ) from exc

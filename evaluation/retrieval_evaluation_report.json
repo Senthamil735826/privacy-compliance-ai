@@ -1,0 +1,322 @@
+{
+  "dataset_schema_version": "1.0",
+  "document": "sample_privacy_policy.pdf",
+  "total_chunks_indexed": 25,
+  "total_queries": 10,
+  "successful_queries": 10,
+  "failed_queries": 0,
+  "top_k": 3,
+  "recall_at_3": 100.0,
+  "results": [
+    {
+      "query_id": "EVAL-Q01",
+      "topic": "Data Collection Categories",
+      "query": "What personal information does the company collect?",
+      "success": true,
+      "first_relevant_rank": 3,
+      "highest_similarity": 0.6027,
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "chunk_id": 13,
+          "similarity": 0.6027,
+          "is_relevant": false,
+          "text_snippet": "ated by our company and contracted hosting providers. We\nretain personal information only for as long as necessary for t..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": 12,
+          "similarity": 0.5832,
+          "is_relevant": false,
+          "text_snippet": "for authorized purposes. We do not sell personal information in this\nfictional example.\n6. Storage, Retention, and Delet..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": 4,
+          "similarity": 0.5424,
+          "is_relevant": true,
+          "text_snippet": "nformation We Collect\nWe collect personal information such as your name, email address, phone number, device identifiers..."
+        }
+      ]
+    },
+    {
+      "query_id": "EVAL-Q02",
+      "topic": "Consent Basis",
+      "query": "When does the company obtain user consent?",
+      "success": true,
+      "first_relevant_rank": 2,
+      "highest_similarity": 0.5073,
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "chunk_id": 18,
+          "similarity": 0.5073,
+          "is_relevant": false,
+          "text_snippet": "count. You may contact privacy@example.com to submit a request\nor complaint. We will review requests and respond in acco..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": 8,
+          "similarity": 0.4796,
+          "is_relevant": true,
+          "text_snippet": "ere required, obtaining consent.\n4. Cookies and Consent\nOur website may use cookies and similar technologies to remember..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": 13,
+          "similarity": 0.4636,
+          "is_relevant": false,
+          "text_snippet": "ated by our company and contracted hosting providers. We\nretain personal information only for as long as necessary for t..."
+        }
+      ]
+    },
+    {
+      "query_id": "EVAL-Q03",
+      "topic": "Cookie Controls",
+      "query": "How can users manage cookie preferences?",
+      "success": true,
+      "first_relevant_rank": 1,
+      "highest_similarity": 0.5649,
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "chunk_id": 9,
+          "similarity": 0.5649,
+          "is_relevant": true,
+          "text_snippet": "equired, we provide notice and request consent before using non-essential cookies. You can change\ncookie preferences or ..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": 8,
+          "similarity": 0.4907,
+          "is_relevant": false,
+          "text_snippet": "ere required, obtaining consent.\n4. Cookies and Consent\nOur website may use cookies and similar technologies to remember..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": 10,
+          "similarity": 0.2932,
+          "is_relevant": false,
+          "text_snippet": "settings available in your account.\n5. Data Sharing and Service Providers\nWe may share personal information with service..."
+        }
+      ]
+    },
+    {
+      "query_id": "EVAL-Q04",
+      "topic": "Retention Period",
+      "query": "How long does the company retain personal information?",
+      "success": true,
+      "first_relevant_rank": 1,
+      "highest_similarity": 0.6422,
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "chunk_id": 13,
+          "similarity": 0.6422,
+          "is_relevant": true,
+          "text_snippet": "ated by our company and contracted hosting providers. We\nretain personal information only for as long as necessary for t..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": 12,
+          "similarity": 0.5923,
+          "is_relevant": false,
+          "text_snippet": "for authorized purposes. We do not sell personal information in this\nfictional example.\n6. Storage, Retention, and Delet..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": 17,
+          "similarity": 0.4685,
+          "is_relevant": false,
+          "text_snippet": "Your Privacy Rights\nSubject to applicable law, you may request access to or correction of your personal information, req..."
+        }
+      ]
+    },
+    {
+      "query_id": "EVAL-Q05",
+      "topic": "Deletion Requests",
+      "query": "How can users request deletion of their personal information?",
+      "success": true,
+      "first_relevant_rank": 1,
+      "highest_similarity": 0.6261,
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "chunk_id": 17,
+          "similarity": 0.6261,
+          "is_relevant": true,
+          "text_snippet": "Your Privacy Rights\nSubject to applicable law, you may request access to or correction of your personal information, req..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": 20,
+          "similarity": 0.5623,
+          "is_relevant": false,
+          "text_snippet": "nformation\nwithout appropriate authorization where required. If we learn that such information has been collected\nimprop..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": 12,
+          "similarity": 0.5457,
+          "is_relevant": false,
+          "text_snippet": "for authorized purposes. We do not sell personal information in this\nfictional example.\n6. Storage, Retention, and Delet..."
+        }
+      ]
+    },
+    {
+      "query_id": "EVAL-Q06",
+      "topic": "Security Safeguards",
+      "query": "What security measures protect personal information?",
+      "success": true,
+      "first_relevant_rank": 1,
+      "highest_similarity": 0.5985,
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "chunk_id": 15,
+          "similarity": 0.5985,
+          "is_relevant": true,
+          "text_snippet": "encryption where appropriate, staff training, and security monitoring to protect personal\ninformation. We periodically r..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": 5,
+          "similarity": 0.5847,
+          "is_relevant": false,
+          "text_snippet": "es. We explain the categories of personal data collected and the\npurposes for collection in this policy. We collect only..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": 14,
+          "similarity": 0.5842,
+          "is_relevant": true,
+          "text_snippet": "les. When information is no longer needed, we delete it or securely dispose of it according to our retention\nprocedures...."
+        }
+      ]
+    },
+    {
+      "query_id": "EVAL-Q07",
+      "topic": "Incident Notice",
+      "query": "When will affected users be notified of a security incident?",
+      "success": true,
+      "first_relevant_rank": 1,
+      "highest_similarity": 0.6135,
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "chunk_id": 16,
+          "similarity": 0.6135,
+          "is_relevant": true,
+          "text_snippet": "d data incidents. If a security\nincident creates a notification obligation, we will notify affected individuals and rele..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": 15,
+          "similarity": 0.4257,
+          "is_relevant": false,
+          "text_snippet": "encryption where appropriate, staff training, and security monitoring to protect personal\ninformation. We periodically r..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": 23,
+          "similarity": 0.3871,
+          "is_relevant": false,
+          "text_snippet": "11. Policy Updates\nWe may update this privacy policy to reflect changes in our services or practices. We will revise the..."
+        }
+      ]
+    },
+    {
+      "query_id": "EVAL-Q08",
+      "topic": "Privacy Rights",
+      "query": "What rights do users have over their personal information?",
+      "success": true,
+      "first_relevant_rank": 1,
+      "highest_similarity": 0.6359,
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "chunk_id": 17,
+          "similarity": 0.6359,
+          "is_relevant": true,
+          "text_snippet": "Your Privacy Rights\nSubject to applicable law, you may request access to or correction of your personal information, req..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": 12,
+          "similarity": 0.6004,
+          "is_relevant": false,
+          "text_snippet": "for authorized purposes. We do not sell personal information in this\nfictional example.\n6. Storage, Retention, and Delet..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": 13,
+          "similarity": 0.5725,
+          "is_relevant": false,
+          "text_snippet": "ated by our company and contracted hosting providers. We\nretain personal information only for as long as necessary for t..."
+        }
+      ]
+    },
+    {
+      "query_id": "EVAL-Q09",
+      "topic": "Vendor Sharing",
+      "query": "Why does the company share data with service providers?",
+      "success": true,
+      "first_relevant_rank": 1,
+      "highest_similarity": 0.5837,
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "chunk_id": 10,
+          "similarity": 0.5837,
+          "is_relevant": true,
+          "text_snippet": "settings available in your account.\n5. Data Sharing and Service Providers\nWe may share personal information with service..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": 11,
+          "similarity": 0.4888,
+          "is_relevant": true,
+          "text_snippet": "for hosting,\ncustomer support, analytics, and security. We identify the categories of recipients and require service pro..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": 12,
+          "similarity": 0.4667,
+          "is_relevant": false,
+          "text_snippet": "for authorized purposes. We do not sell personal information in this\nfictional example.\n6. Storage, Retention, and Delet..."
+        }
+      ]
+    },
+    {
+      "query_id": "EVAL-Q10",
+      "topic": "Children's Privacy",
+      "query": "How does the company protect children's information?",
+      "success": true,
+      "first_relevant_rank": 2,
+      "highest_similarity": 0.6213,
+      "retrieved_results": [
+        {
+          "rank": 1,
+          "chunk_id": 21,
+          "similarity": 0.6213,
+          "is_relevant": false,
+          "text_snippet": "ditional safeguards to children's information where\napplicable and assess relevant privacy and security risks.\n10. Inter..."
+        },
+        {
+          "rank": 2,
+          "chunk_id": 20,
+          "similarity": 0.596,
+          "is_relevant": true,
+          "text_snippet": "nformation\nwithout appropriate authorization where required. If we learn that such information has been collected\nimprop..."
+        },
+        {
+          "rank": 3,
+          "chunk_id": 19,
+          "similarity": 0.5798,
+          "is_relevant": true,
+          "text_snippet": "ay depend on your location and circumstances.\n9. Children's Privacy\n\nOur services are not directed to children under 13...."
+        }
+      ]
+    }
+  ]
+}

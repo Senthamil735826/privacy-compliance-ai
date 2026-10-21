@@ -44,12 +44,19 @@ function App() {
 
   const [file, setFile] = useState(null)
   const [analysis, setAnalysis] = useState(null)
+  const [documentId, setDocumentId] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [filter, setFilter] = useState('all')
   const [search, setSearch] = useState('')
   const [dragging, setDragging] = useState(false)
   const [expandedGroups, setExpandedGroups] = useState({ A1: true })
+
+  // Semantic search state
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searching, setSearching] = useState(false)
+  const [searchResults, setSearchResults] = useState(null)
+  const [searchError, setSearchError] = useState('')
 
   const summary = analysis?.compliance_summary
 
@@ -94,6 +101,10 @@ function App() {
 
     setFile(selectedFile)
     setAnalysis(null)
+    setDocumentId(null)
+    setSearchResults(null)
+    setSearchQuery('')
+    setSearchError('')
     setExpandedGroups({ A1: true })
   }
 
@@ -106,6 +117,9 @@ function App() {
     setLoading(true)
     setError('')
     setAnalysis(null)
+    setDocumentId(null)
+    setSearchResults(null)
+    setSearchError('')
 
     try {
       const formData = new FormData()
@@ -143,6 +157,8 @@ function App() {
       }
 
       setAnalysis(data)
+      const docId = data.document_id || data.document?.document_id || null
+      setDocumentId(docId)
       setFilter('all')
       setSearch('')
       setExpandedGroups({ A1: true })
@@ -160,6 +176,61 @@ function App() {
       )
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function handleSemanticSearch(event) {
+    if (event) event.preventDefault()
+
+    const trimmedQuery = searchQuery.trim()
+    if (!trimmedQuery) {
+      setSearchError('Please enter a question or query.')
+      return
+    }
+
+    if (!documentId) {
+      setSearchError('Upload and analyze a policy first to enable semantic search.')
+      return
+    }
+
+    setSearching(true)
+    setSearchError('')
+
+    try {
+      const response = await fetch('/api/policy/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          document_id: documentId,
+          query: trimmedQuery,
+          top_k: 3,
+        }),
+      })
+
+      let data
+
+      try {
+        data = await response.json()
+      } catch {
+        throw new Error('The server returned an invalid response.')
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          typeof data.detail === 'string'
+            ? data.detail
+            : 'Failed to retrieve semantic search results.',
+        )
+      }
+
+      setSearchResults(data.results || [])
+    } catch (err) {
+      setSearchError(err.message || 'Error occurred while executing semantic search.')
+      setSearchResults(null)
+    } finally {
+      setSearching(false)
     }
   }
 
@@ -204,6 +275,11 @@ function App() {
           <a className="nav-link" href="#upload">
             <span className="nav-icon">⇧</span>
             Policy analysis
+          </a>
+
+          <a className="nav-link" href="#semantic-search">
+            <span className="nav-icon">⌕</span>
+            Semantic search
           </a>
 
           <a className="nav-link" href="#analysis-results">
@@ -533,10 +609,105 @@ function App() {
           </article>
         </section>
 
-        <section className="results-section" id="analysis-results">
+        <section className="search-section" id="semantic-search">
           <div className="results-heading">
             <div>
               <span className="section-kicker">STEP 02</span>
+              <h3>Semantic policy search</h3>
+              <p>
+                Ask questions in natural language to retrieve relevant policy passages with similarity scores.
+              </p>
+            </div>
+
+            <div className="results-tag">
+              <span className="results-tag-dot" />
+              {documentId ? 'Document indexed' : 'Awaiting document'}
+            </div>
+          </div>
+
+          <form className="search-form" onSubmit={handleSemanticSearch}>
+            <div className="search-input-wrap">
+              <span className="search-icon">⌕</span>
+              <input
+                type="text"
+                placeholder={
+                  documentId
+                    ? "Ask a question (e.g. How long is personal data retained?)..."
+                    : "Upload and analyze a policy above to enable semantic search..."
+                }
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                disabled={!documentId || searching}
+                aria-label="Semantic search query"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="search-button"
+              disabled={!documentId || searching || !searchQuery.trim()}
+            >
+              {searching ? (
+                <>
+                  <span className="spinner" />
+                  Searching...
+                </>
+              ) : (
+                <>
+                  Search
+                  <span className="button-arrow">→</span>
+                </>
+              )}
+            </button>
+          </form>
+
+          {searchError && (
+            <div className="error-message" role="alert">
+              <span>!</span>
+              {searchError}
+            </div>
+          )}
+
+          {searchResults && (
+            <div className="passages-grid">
+              {searchResults.length > 0 ? (
+                searchResults.map((result, index) => (
+                  <article className="passage-card" key={`passage-${result.chunk_id}-${index}`}>
+                    <div className="passage-header">
+                      <div className="passage-header-left">
+                        <span className="rank-badge">Rank #{index + 1}</span>
+                        <span className="similarity-badge">
+                          Score: {typeof result.similarity === 'number' ? result.similarity.toFixed(4) : result.similarity}
+                        </span>
+                      </div>
+                      <span className="chunk-meta">
+                        Chunk #{result.chunk_id} · Offsets: {result.start}–{result.end}
+                      </span>
+                    </div>
+                    <p className="passage-text">&ldquo;{result.text}&rdquo;</p>
+                  </article>
+                ))
+              ) : (
+                <div className="search-empty-hint">
+                  No relevant policy passages found matching your query.
+                </div>
+              )}
+            </div>
+          )}
+
+          {!searchResults && !searchError && (
+            <div className="search-empty-hint">
+              {documentId
+                ? "Enter a natural-language query above and click Search to retrieve evidence passages."
+                : "Upload and analyze a PDF above to index its contents for semantic search."}
+            </div>
+          )}
+        </section>
+
+        <section className="results-section" id="analysis-results">
+          <div className="results-heading">
+            <div>
+              <span className="section-kicker">STEP 03</span>
               <h3>Indicator analysis</h3>
 
               <p>

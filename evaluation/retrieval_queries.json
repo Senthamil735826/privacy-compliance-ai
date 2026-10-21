@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0",
+  "description": "Ground-truth evaluation queries and expected policy evidence for Phase 1 semantic search evaluation.",
+  "document": "dataset/sample_privacy_policy.pdf",
+  "queries": [
+    {
+      "query_id": "EVAL-Q01",
+      "topic": "Data Collection Categories",
+      "query": "What personal information does the company collect?",
+      "expected_evidence": "We collect personal information such as your name, email address, phone number, device identifiers, and approximate location when you use our services. We explain the categories of personal data collected and the purposes for collection in this policy. We collect only information that is reasonably necessary to provide, maintain, and secure our services.",
+      "key_phrases": [
+        "such as your name, email address",
+        "device identifiers, and approximate location",
+        "categories of personal data collected",
+        "reasonably necessary to provide, maintain, and secure our services"
+      ]
+    },
+    {
+      "query_id": "EVAL-Q02",
+      "topic": "Consent Basis",
+      "query": "When does the company obtain user consent?",
+      "expected_evidence": "We do not use personal information for unrelated purposes without providing notice and, where required, obtaining consent. Where required, we provide notice and request consent before using non-essential cookies.",
+      "key_phrases": [
+        "unrelated purposes without providing notice and, where required, obtaining consent",
+        "request consent before using non-essential cookies",
+        "obtaining consent"
+      ]
+    },
+    {
+      "query_id": "EVAL-Q03",
+      "topic": "Cookie Controls",
+      "query": "How can users manage cookie preferences?",
+      "expected_evidence": "You can change cookie preferences or opt out of optional analytics through the privacy settings available in your account.",
+      "key_phrases": [
+        "change cookie preferences",
+        "opt out of optional analytics",
+        "privacy settings available in your account"
+      ]
+    },
+    {
+      "query_id": "EVAL-Q04",
+      "topic": "Retention Period",
+      "query": "How long does the company retain personal information?",
+      "expected_evidence": "We retain personal information only for as long as necessary for the stated purposes or as required by applicable rules. When information is no longer needed, we delete it or securely dispose of it according to our retention procedures.",
+      "key_phrases": [
+        "retain personal information only for as long as necessary",
+        "as long as necessary for the stated purposes",
+        "according to our retention procedures"
+      ]
+    },
+    {
+      "query_id": "EVAL-Q05",
+      "topic": "Deletion Requests",
+      "query": "How can users request deletion of their personal information?",
+      "expected_evidence": "Subject to applicable law, you may request access to or correction of your personal information, request deletion, withdraw consent, or close your account. You may contact privacy@example.com to submit a request or complaint.",
+      "key_phrases": [
+        "request deletion",
+        "contact privacy@example.com to submit a request",
+        "request access to or correction of your personal information, request deletion"
+      ]
+    },
+    {
+      "query_id": "EVAL-Q06",
+      "topic": "Security Safeguards",
+      "query": "What security measures protect personal information?",
+      "expected_evidence": "We use access controls, encryption where appropriate, staff training, and security monitoring to protect personal information. We periodically review security practices and investigate suspected data incidents.",
+      "key_phrases": [
+        "access controls, encryption where appropriate",
+        "staff training, and security monitoring to protect personal information",
+        "periodically review security practices"
+      ]
+    },
+    {
+      "query_id": "EVAL-Q07",
+      "topic": "Incident Notice",
+      "query": "When will affected users be notified of a security incident?",
+      "expected_evidence": "If a security incident creates a notification obligation, we will notify affected individuals and relevant authorities as required by applicable law.",
+      "key_phrases": [
+        "security incident creates a notification obligation",
+        "notify affected individuals and relevant authorities"
+      ]
+    },
+    {
+      "query_id": "EVAL-Q08",
+      "topic": "Privacy Rights",
+      "query": "What rights do users have over their personal information?",
+      "expected_evidence": "Subject to applicable law, you may request access to or correction of your personal information, request deletion, withdraw consent, or close your account. You may contact privacy@example.com to submit a request or complaint. We will review requests and respond in accordance with applicable requirements. Some rights may depend on your location and circumstances.",
+      "key_phrases": [
+        "request access to or correction of your personal information",
+        "withdraw consent, or close your account",
+        "your privacy rights"
+      ]
+    },
+    {
+      "query_id": "EVAL-Q09",
+      "topic": "Vendor Sharing",
+      "query": "Why does the company share data with service providers?",
+      "expected_evidence": "We may share personal information with service providers that process information on our behalf for hosting, customer support, analytics, and security. We identify the categories of recipients and require service providers to protect the information and use it only for authorized purposes. We do not sell personal information in this fictional example.",
+      "key_phrases": [
+        "service providers that process information on our behalf",
+        "for hosting, customer support, analytics, and security",
+        "require service providers to protect the information and use it only for authorized purposes"
+      ]
+    },
+    {
+      "query_id": "EVAL-Q10",
+      "topic": "Children's Privacy",
+      "query": "How does the company protect children's information?",
+      "expected_evidence": "Our services are not directed to children under 13. We do not knowingly collect children's personal information without appropriate authorization where required. If we learn that such information has been collected improperly, we will take steps to delete it. We apply additional safeguards to children's information where applicable and assess relevant privacy and security risks.",
+      "key_phrases": [
+        "not directed to children under 13",
+        "knowingly collect children's personal information",
+        "additional safeguards to children's information",
+        "take steps to delete it"
+      ]
+    }
+  ]
+}

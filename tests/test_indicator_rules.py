@@ -600,16 +600,22 @@ def test_api_contract_upload_endpoint():
     # Exact Top-Level Keys
     assert set(data.keys()) == {
         "status",
+        "document_id",
+        "indexed_chunks",
         "document",
         "compliance_summary",
         "indicators",
         "chunks",
     }
     assert data["status"] == "success"
+    assert isinstance(data["document_id"], str) and data["document_id"]
+    assert isinstance(data["indexed_chunks"], int) and data["indexed_chunks"] >= 0
 
     # Document Section Schema
     doc = data["document"]
     assert set(doc.keys()) == {
+        "document_id",
+        "indexed_chunks",
         "filename",
         "total_pages",
         "total_characters",

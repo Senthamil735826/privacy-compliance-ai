@@ -268,10 +268,51 @@ def validate_evidence_sentence(sentence: str, indicator_id: str) -> bool:
         return any(es in s_lower for es in entity_signals)
 
     elif indicator_id == "B6":
-        if any(bad in s_lower for bad in ["server logs", "plain email text", "sales department for bulk enterprise pricing", "bulk enterprise pricing"]):
+        if any(bad in s_lower for bad in [
+            "server logs",
+            "plain email text",
+            "sales department for bulk enterprise pricing",
+            "bulk enterprise pricing",
+        ]):
             return False
+
+        # Reject commercial sales contacts that are unrelated to privacy.
+        commercial_sales_phrases = [
+            "bulk enterprise sales pricing",
+            "enterprise sales pricing",
+            "sales pricing discounts",
+        ]
+
+        if (
+            any(phrase in s_lower for phrase in commercial_sales_phrases)
+            and not any(term in s_lower for term in [
+                "privacy",
+                "data protection",
+                "data subject",
+                "personal information",
+                "personal data",
+            ])
+        ):
+            return False
+
         has_email = bool(EMAIL_PATTERN.search(sentence))
-        has_contact_word = any(cw in s_lower for cw in ["contact", "reach", "email", "support", "inquiry", "inquiries", "dpo", "questions", "write to", "privacy team", "online support"])
+        has_contact_word = any(
+            cw in s_lower for cw in [
+                "contact",
+                "reach",
+                "email",
+                "support",
+                "inquiry",
+                "inquiries",
+                "dpo",
+                "questions",
+                "write to",
+                "privacy team",
+                "privacy desk",
+                "online support",
+            ]
+        )
+
         return has_email or has_contact_word
 
     elif indicator_id == "B7":
@@ -285,8 +326,36 @@ def validate_evidence_sentence(sentence: str, indicator_id: str) -> bool:
         return True
 
     elif indicator_id == "B9":
-        if any(bad in s_lower for bad in ["baked fresh", "chocolate cookies", "cafeteria", "dessert", "ssd hardware"]):
+        if any(bad in s_lower for bad in [
+            "baked fresh",
+            "chocolate cookies",
+            "cafeteria",
+            "dessert",
+            "ssd hardware",
+        ]):
             return False
+
+        # Reject explicit statements that deny using cookies or tracking technologies.
+        negative_patterns = [
+            "do not use cookies",
+            "don't use cookies",
+            "does not use cookies",
+            "do not use browser cookies",
+            "does not use browser cookies",
+            "do not use web beacons",
+            "does not use web beacons",
+            "do not use tracking technologies",
+            "does not use tracking technologies",
+            "do not use tracking pixels",
+            "does not use tracking pixels",
+            "not use cookies",
+            "never use cookies",
+            "never use tracking technologies",
+        ]
+
+        if any(pattern in s_lower for pattern in negative_patterns):
+            return False
+
         return True
 
     elif indicator_id == "B10":

@@ -271,6 +271,8 @@
         "Customer support email address",
         "Customer support email",
         "Customer service email",
+        "Privacy desk",
+        "Privacy desk email",
         "Privacy team contact details",
         "Privacy team contact",
         "Privacy team",
@@ -288,6 +290,7 @@
             "direct questions to",
             "support",
             "privacy team",
+            "privacy desk",
             "email addresses",
             "email address",
             "dpo"

@@ -1,0 +1,494 @@
+{
+  "schema_version": "1.0",
+  "description": "Ground-truth evaluation dataset for Privacy Compliance AI indicators with explicit manual annotations.",
+  "target_indicators": [
+    "B1",
+    "B3",
+    "B6",
+    "B9",
+    "B22"
+  ],
+  "indicator_metadata": {
+    "B1": {
+      "name": "Privacy Policy Name",
+      "primary": "A1",
+      "description": "Identifies the explicit name or title of the privacy policy document."
+    },
+    "B3": {
+      "name": "Effective Date",
+      "primary": "A1",
+      "description": "Specifies the legal commencement or effective date of the privacy policy."
+    },
+    "B6": {
+      "name": "Contact Information",
+      "primary": "A1",
+      "description": "Provides contact channels (email, DPO, privacy department) for privacy-related inquiries."
+    },
+    "B9": {
+      "name": "Use of Cookies or Similar Technology",
+      "primary": "A2",
+      "description": "Discloses the deployment of HTTP cookies, web beacons, tracking pixels, or mobile tracking SDKs."
+    },
+    "B22": {
+      "name": "Security Incident Notification",
+      "primary": "A4",
+      "description": "Discloses procedures to notify affected individuals or regulatory authorities in the event of a security incident or data breach."
+    }
+  },
+  "samples": [
+    {
+      "sample_id": "SAMPLE-001",
+      "name": "Standard Enterprise SaaS Policy",
+      "scenario": "Comprehensive cloud SaaS policy with explicit title, date, contact, cookie disclosure, and incident notification.",
+      "text": "Privacy Policy Name: Apex Cloud Platform Privacy Policy.\nEffective Date: January 15, 2026.\nContact Information: privacy@apexcloud.io.\nOur website uses persistent cookies and web beacons to remember user preferences and analyze performance.\nIf a security incident creates a regulatory notification obligation, we will notify affected individuals and relevant supervisory authorities without undue delay.",
+      "annotations": {
+        "B1": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Privacy Policy Name: Apex Cloud Platform Privacy Policy."
+          ],
+          "notes": "Explicit 'Privacy Policy Name:' prefix clearly identifies the document title."
+        },
+        "B3": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Effective Date: January 15, 2026."
+          ],
+          "notes": "Standard textual effective date format with explicit label."
+        },
+        "B6": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Contact Information: privacy@apexcloud.io."
+          ],
+          "notes": "Explicit contact label and designated privacy email address."
+        },
+        "B9": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Our website uses persistent cookies and web beacons to remember user preferences and analyze performance."
+          ],
+          "notes": "Affirmatively discloses browser cookies and web beacons."
+        },
+        "B22": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "If a security incident creates a regulatory notification obligation, we will notify affected individuals and relevant supervisory authorities without undue delay."
+          ],
+          "notes": "Contains commitments to notify affected individuals and authorities of security incidents."
+        }
+      }
+    },
+    {
+      "sample_id": "SAMPLE-002",
+      "name": "E-Commerce Store Customer Policy",
+      "scenario": "Retail store policy with title, ISO date, and DPO contact, but explicitly disclaiming cookies and omitting incident notifications.",
+      "text": "Privacy Policy Title: ShopSphere Online Store Customer Privacy Policy.\nEffective Date: 2026-03-01.\nFor questions regarding your data, contact our Data Protection Officer at privacy-team@shopsphere.com.\nWe do not use browser cookies or tracking pixels on our web store; our platform relies exclusively on temporary server sessions.\nCustomer orders are retained for billing purposes as required by commercial law.",
+      "annotations": {
+        "B1": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Privacy Policy Title: ShopSphere Online Store Customer Privacy Policy."
+          ],
+          "notes": "Explicit 'Privacy Policy Title:' heading fulfills B1."
+        },
+        "B3": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Effective Date: 2026-03-01."
+          ],
+          "notes": "ISO 8601 formatted effective date."
+        },
+        "B6": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "For questions regarding your data, contact our Data Protection Officer at privacy-team@shopsphere.com."
+          ],
+          "notes": "Designates DPO contact channel with email."
+        },
+        "B9": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground-truth: text explicitly disclaims cookies and tracking pixels ('We do not use browser cookies...')."
+        },
+        "B22": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground-truth: policy completely omits any mention of security incident or breach notification."
+        }
+      }
+    },
+    {
+      "sample_id": "SAMPLE-003",
+      "name": "B1 Boundary Case A - Explicit Prefix",
+      "scenario": "Tests B1 detection when explicit 'Privacy Policy Name:' prefix is present.",
+      "text": "Privacy Policy Name: Example Services Privacy Policy.\nEffective Date: February 10, 2026.\nContact us at support@example.com for inquiries.",
+      "annotations": {
+        "B1": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Privacy Policy Name: Example Services Privacy Policy."
+          ],
+          "notes": "Positive ground truth: explicit 'Privacy Policy Name:' marker is present."
+        },
+        "B3": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Effective Date: February 10, 2026."
+          ],
+          "notes": "Standard effective date."
+        },
+        "B6": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Contact us at support@example.com for inquiries."
+          ],
+          "notes": "Support email channel provided for inquiries."
+        }
+      }
+    },
+    {
+      "sample_id": "SAMPLE-004",
+      "name": "B1 Boundary Case B - Policy Title Prefix",
+      "scenario": "Tests B1 detection when alternative 'Policy Title:' prefix is used.",
+      "text": "Policy Title: Example Services Privacy Policy.\nEffective Date: 15 August 2026.\nUsers can email our privacy desk at privacy@example.org.",
+      "annotations": {
+        "B1": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Policy Title: Example Services Privacy Policy."
+          ],
+          "notes": "Positive ground truth: explicit 'Policy Title:' marker is present."
+        },
+        "B3": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Effective Date: 15 August 2026."
+          ],
+          "notes": "UK style date format with effective date label."
+        },
+        "B6": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Users can email our privacy desk at privacy@example.org."
+          ],
+          "notes": "Direct email to privacy desk."
+        }
+      }
+    },
+    {
+      "sample_id": "SAMPLE-005",
+      "name": "B1 Boundary Case C - Bare Document Heading",
+      "scenario": "Tests B1 evaluation when the document heading lacks an explicit title descriptor cue.",
+      "text": "Example Services Privacy Policy.\nEffective Date: September 2026.\nIf you have questions, please reach out to dpo@example.com.",
+      "annotations": {
+        "B1": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground-truth under engine evaluation rules: 'Example Services Privacy Policy.' lacks an explicit naming cue ('Privacy Policy Name:', 'Policy Title:', etc.) required to separate titles from body phrases."
+        },
+        "B3": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Effective Date: September 2026."
+          ],
+          "notes": "Month-year date with effective date label."
+        },
+        "B6": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "If you have questions, please reach out to dpo@example.com."
+          ],
+          "notes": "Designated DPO contact email."
+        }
+      }
+    },
+    {
+      "sample_id": "SAMPLE-006",
+      "name": "Culinary Cookies & Promotional Discount Distractor",
+      "scenario": "Near-miss test containing culinary cookies and promotional coupon dates that must not be counted as privacy indicators.",
+      "text": "Welcome to the Baker's Hearth Community Portal.\nThis discount coupon is effective until Friday, December 31, 2026.\nDuring our holiday festival, our staff baked fresh chocolate cookies for visitors in the reception lounge.\nFor general event questions, write to info@bakershearth.local.",
+      "annotations": {
+        "B1": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: welcome header for a community portal, not a privacy policy title."
+        },
+        "B3": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: 'effective until Friday' describes a promotional discount coupon, not a policy commencement date."
+        },
+        "B6": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "For general event questions, write to info@bakershearth.local."
+          ],
+          "notes": "Positive ground truth: valid email address and contact channel provided."
+        },
+        "B9": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: 'baked fresh chocolate cookies' refers to edible food, not HTTP browser tracking cookies."
+        }
+      }
+    },
+    {
+      "sample_id": "SAMPLE-007",
+      "name": "Marketing Newsletter & Reception Notification Distractor",
+      "scenario": "Near-miss test containing notify and inform keywords in non-security contexts.",
+      "text": "Document Title: Greenfield Mobile Utilities Privacy Notice.\nWe notify newsletter subscribers whenever a new recipe article or gardening tip is published.\nThe receptionist informed the visitor that the conference room was ready.\nIf you need account assistance, email support@greenfieldapps.com.",
+      "annotations": {
+        "B1": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Document Title: Greenfield Mobile Utilities Privacy Notice."
+          ],
+          "notes": "Positive ground truth: explicit 'Document Title:' header."
+        },
+        "B6": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "If you need account assistance, email support@greenfieldapps.com."
+          ],
+          "notes": "Support email contact."
+        },
+        "B22": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: 'notify newsletter subscribers' and 'receptionist informed' refer to recipes and office visitors, completely unrelated to data security incidents."
+        }
+      }
+    },
+    {
+      "sample_id": "SAMPLE-008",
+      "name": "Mobile SDK Telemetry Policy Without Contact Details",
+      "scenario": "Mobile app policy covering tracking SDKs and breach notification but omitting all contact details.",
+      "text": "Official User Privacy Policy: NexaTrack Fitness App.\nEffective Date: 2026-05-20.\nOur mobile application integrates third-party tracking SDKs and local storage identifiers to analyze workout trends and diagnostics.\nIn the event of a personal data breach, our emergency team will notify affected individuals promptly.",
+      "annotations": {
+        "B1": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Official User Privacy Policy: NexaTrack Fitness App."
+          ],
+          "notes": "Positive ground truth: explicit 'Official User Privacy Policy' heading."
+        },
+        "B3": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Effective Date: 2026-05-20."
+          ],
+          "notes": "ISO date with effective date marker."
+        },
+        "B6": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: policy completely omits contact information, email, or support channels."
+        },
+        "B9": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Our mobile application integrates third-party tracking SDKs and local storage identifiers to analyze workout trends and diagnostics."
+          ],
+          "notes": "Explicitly discloses tracking SDKs and local identifiers."
+        },
+        "B22": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "In the event of a personal data breach, our emergency team will notify affected individuals promptly."
+          ],
+          "notes": "Explicit commitment to notify affected individuals upon personal data breach."
+        }
+      }
+    },
+    {
+      "sample_id": "SAMPLE-009",
+      "name": "Disjointed Keywords Across Sentences Trap",
+      "scenario": "Adversarial test where incident and notification words appear in separate sentences.",
+      "text": "We conduct routine risk management across our cloud infrastructure.\nSeparately, we inform registered users about upcoming maintenance schedules.\nOur company security policy protects corporate equipment.\nFor inquiries, please email contact@novasystems.net.",
+      "annotations": {
+        "B1": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: 'company security policy' refers to employee equipment guidelines, not an application privacy policy."
+        },
+        "B6": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "For inquiries, please email contact@novasystems.net."
+          ],
+          "notes": "Valid inquiry email address."
+        },
+        "B22": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: 'risk' in sentence 1 and 'inform' in sentence 2 are separated across unrelated sentences discussing IT maintenance. No breach notification exists."
+        }
+      }
+    },
+    {
+      "sample_id": "SAMPLE-010",
+      "name": "Developer API Policy Omitting Tracking & Incidents",
+      "scenario": "API backend policy that disclaims cookies and omits breach notice procedures.",
+      "text": "Privacy Policy Name: FastAPI Metrics Service Privacy Document.\nEffective from: January 1, 2026.\nWe do not use cookies, web beacons, or tracking technologies of any kind.\nDevelopers may contact our privacy engineers at api-privacy@metrics-fast.dev.",
+      "annotations": {
+        "B1": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Privacy Policy Name: FastAPI Metrics Service Privacy Document."
+          ],
+          "notes": "Explicit 'Privacy Policy Name:' marker."
+        },
+        "B3": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Effective from: January 1, 2026."
+          ],
+          "notes": "Valid 'effective from' date."
+        },
+        "B6": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Developers may contact our privacy engineers at api-privacy@metrics-fast.dev."
+          ],
+          "notes": "Direct privacy engineering contact email."
+        },
+        "B9": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: explicit negative declaration confirming cookies/tracking are NOT used."
+        },
+        "B22": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: security incident notification is not addressed in this policy."
+        }
+      }
+    },
+    {
+      "sample_id": "SAMPLE-011",
+      "name": "Smart Home IoT Hardware Device Policy",
+      "scenario": "Hardware IoT policy covering title, US slash date, session cookies, regulatory incident notice, and privacy email.",
+      "text": "Privacy Policy Title: SmartTherm Home Thermostat Privacy Policy.\nEffective Date: 04/01/2026.\nOur companion web dashboard uses session cookies to store your temperature preference profile.\nShould any security incident compromise your personal data, we will inform regulatory authorities and notify affected users in accordance with applicable laws.\nYou can reach our privacy support team at privacy@smarttherm-iot.com.",
+      "annotations": {
+        "B1": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Privacy Policy Title: SmartTherm Home Thermostat Privacy Policy."
+          ],
+          "notes": "Explicit 'Privacy Policy Title:' header."
+        },
+        "B3": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Effective Date: 04/01/2026."
+          ],
+          "notes": "US numerical date with effective date marker."
+        },
+        "B6": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "You can reach our privacy support team at privacy@smarttherm-iot.com."
+          ],
+          "notes": "Designated privacy support email."
+        },
+        "B9": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Our companion web dashboard uses session cookies to store your temperature preference profile."
+          ],
+          "notes": "Discloses use of session cookies."
+        },
+        "B22": {
+          "labeled": true,
+          "ground_truth": true,
+          "ground_truth_evidence": [
+            "Should any security incident compromise your personal data, we will inform regulatory authorities and notify affected users in accordance with applicable laws."
+          ],
+          "notes": "Affirmative commitment to inform authorities and notify affected users of security incidents."
+        }
+      }
+    },
+    {
+      "sample_id": "SAMPLE-012",
+      "name": "Non-Privacy Corporate Document Negative Control",
+      "scenario": "Adversarial negative control containing corporate boilerplate, equipment policies, and sales email.",
+      "text": "Please read this Privacy Policy carefully to understand our data practices.\nWe adhere to a strict company security policy regarding corporate equipment.\nThe yields on corporate investments were finalized yesterday.\nFor bulk enterprise sales pricing discounts, please write to sales@enterprise-widgets.corp.",
+      "annotations": {
+        "B1": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: generic phrase 'Please read this Privacy Policy carefully' is preamble boilerplate without a policy name."
+        },
+        "B3": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: no effective date present."
+        },
+        "B6": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: 'sales@enterprise-widgets.corp' for bulk enterprise sales pricing discounts is a commercial sales address, not a privacy contact."
+        },
+        "B9": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: no mention of cookies or tracking."
+        },
+        "B22": {
+          "labeled": true,
+          "ground_truth": false,
+          "ground_truth_evidence": [],
+          "notes": "Negative ground truth: no security incident or breach notification procedure."
+        }
+      }
+    }
+  ]
+}

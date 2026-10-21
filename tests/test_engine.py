@@ -230,6 +230,7 @@ We use reasonable security measures to protect information.
         import io
         from starlette.datastructures import UploadFile, Headers
         sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend"))
+        # pyrefly: ignore[missing-import]
         from main import upload_policy
 
         # Create a valid minimal PDF with readable text

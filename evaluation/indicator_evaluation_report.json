@@ -1,0 +1,426 @@
+{
+  "dataset_schema_version": "1.0",
+  "total_samples": 12,
+  "target_indicators": [
+    "B1",
+    "B3",
+    "B6",
+    "B9",
+    "B22"
+  ],
+  "labeled_cases_evaluated": 49,
+  "unlabeled_cases_excluded": 11,
+  "overall": {
+    "true_positive": 32,
+    "false_positive": 0,
+    "true_negative": 17,
+    "false_negative": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "accuracy": 1.0,
+    "evaluated_cases": 49
+  },
+  "per_indicator": {
+    "B1": {
+      "true_positive": 8,
+      "false_positive": 0,
+      "true_negative": 4,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "accuracy": 1.0,
+      "evaluated_cases": 12
+    },
+    "B3": {
+      "true_positive": 8,
+      "false_positive": 0,
+      "true_negative": 2,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "accuracy": 1.0,
+      "evaluated_cases": 10
+    },
+    "B6": {
+      "true_positive": 10,
+      "false_positive": 0,
+      "true_negative": 2,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "accuracy": 1.0,
+      "evaluated_cases": 12
+    },
+    "B9": {
+      "true_positive": 3,
+      "false_positive": 0,
+      "true_negative": 4,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "accuracy": 1.0,
+      "evaluated_cases": 7
+    },
+    "B22": {
+      "true_positive": 3,
+      "false_positive": 0,
+      "true_negative": 5,
+      "false_negative": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "accuracy": 1.0,
+      "evaluated_cases": 8
+    }
+  },
+  "details": [
+    {
+      "sample_id": "SAMPLE-001",
+      "indicator_id": "B1",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-001",
+      "indicator_id": "B3",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-001",
+      "indicator_id": "B6",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-001",
+      "indicator_id": "B9",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-001",
+      "indicator_id": "B22",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-002",
+      "indicator_id": "B1",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-002",
+      "indicator_id": "B3",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-002",
+      "indicator_id": "B6",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-002",
+      "indicator_id": "B9",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-002",
+      "indicator_id": "B22",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-003",
+      "indicator_id": "B1",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-003",
+      "indicator_id": "B3",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-003",
+      "indicator_id": "B6",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-004",
+      "indicator_id": "B1",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-004",
+      "indicator_id": "B3",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-004",
+      "indicator_id": "B6",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-005",
+      "indicator_id": "B1",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-005",
+      "indicator_id": "B3",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-005",
+      "indicator_id": "B6",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-006",
+      "indicator_id": "B1",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-006",
+      "indicator_id": "B3",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-006",
+      "indicator_id": "B6",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-006",
+      "indicator_id": "B9",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-007",
+      "indicator_id": "B1",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-007",
+      "indicator_id": "B6",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-007",
+      "indicator_id": "B22",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-008",
+      "indicator_id": "B1",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-008",
+      "indicator_id": "B3",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-008",
+      "indicator_id": "B6",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-008",
+      "indicator_id": "B9",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-008",
+      "indicator_id": "B22",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-009",
+      "indicator_id": "B1",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-009",
+      "indicator_id": "B6",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-009",
+      "indicator_id": "B22",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-010",
+      "indicator_id": "B1",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-010",
+      "indicator_id": "B3",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-010",
+      "indicator_id": "B6",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-010",
+      "indicator_id": "B9",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-010",
+      "indicator_id": "B22",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-011",
+      "indicator_id": "B1",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-011",
+      "indicator_id": "B3",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-011",
+      "indicator_id": "B6",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-011",
+      "indicator_id": "B9",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-011",
+      "indicator_id": "B22",
+      "ground_truth": true,
+      "prediction": true,
+      "outcome": "TP"
+    },
+    {
+      "sample_id": "SAMPLE-012",
+      "indicator_id": "B1",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-012",
+      "indicator_id": "B3",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-012",
+      "indicator_id": "B6",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-012",
+      "indicator_id": "B9",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    },
+    {
+      "sample_id": "SAMPLE-012",
+      "indicator_id": "B22",
+      "ground_truth": false,
+      "prediction": false,
+      "outcome": "TN"
+    }
+  ]
+}
