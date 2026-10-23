@@ -269,3 +269,62 @@ def test_multi_document_search_isolation(client):
         # Must only contain text from Document 2, never Document 1
         assert "blood pressure" not in result["text"].lower()
         assert "clinical" not in result["text"].lower()
+
+
+def test_agents_status_endpoint(client):
+    response = client.get("/api/agents/status")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "online"
+    assert "providers" in data
+    assert "gemini" in data["providers"]
+    assert "groq" in data["providers"]
+    assert "claude" in data["providers"]
+    assert "openai" in data["providers"]
+    assert "deepseek" in data["providers"]
+    assert "openrouter" in data["providers"]
+    for p in ["gemini", "groq", "claude", "openai", "deepseek", "openrouter"]:
+        prov = data["providers"][p]
+        assert "status" in prov
+        assert "status_label" in prov
+        assert "is_available" in prov
+        assert "model" in prov
+        assert "configured" in prov
+
+
+
+def test_agents_check_endpoint(client):
+    response = client.post("/api/agents/check", json={"provider": "groq"})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "success"
+    assert "provider" in data
+    assert data["provider"]["provider"] == "groq"
+
+
+def test_agents_evaluate_endpoint(client):
+    from unittest.mock import patch
+    from backend.agents.mock_evaluator import MockPrivacyEvaluator
+
+    mock_evals = [
+        MockPrivacyEvaluator("sim-1"),
+        MockPrivacyEvaluator("sim-2"),
+    ]
+    with patch("backend.agents.provider_health.global_health_service.get_available_evaluators", return_value=mock_evals):
+        response = client.post(
+            "/api/agents/evaluate",
+            json={
+                "primary_indicator_id": "A1",
+                "indicator_id": "B1",
+                "indicator_description": "Privacy policy title",
+                "evidence": "Policy Title: Privacy Policy 2026.",
+            },
+        )
+        assert response.status_code == 200
+        data = response.json()
+        assert data["status"] == "success"
+        assert "result" in data
+        assert "aggregation" in data["result"]
+        assert "evaluations" in data["result"]
+
+

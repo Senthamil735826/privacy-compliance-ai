@@ -3,7 +3,7 @@
   "primary_indicators": [
     {
       "id": "A1",
-      "name": "Basic Information",
+      "name": "Data Collection",
       "secondary_ids": [
         "B1",
         "B2",
@@ -15,7 +15,7 @@
     },
     {
       "id": "A2",
-      "name": "Data Collection Rules",
+      "name": "Purpose Specification",
       "secondary_ids": [
         "B7",
         "B8",
@@ -27,7 +27,7 @@
     },
     {
       "id": "A3",
-      "name": "Data Usage Rules",
+      "name": "Legal Basis",
       "secondary_ids": [
         "B13",
         "B14",
@@ -36,7 +36,7 @@
     },
     {
       "id": "A4",
-      "name": "Data Storage and Security Measures",
+      "name": "Data Retention",
       "secondary_ids": [
         "B16",
         "B17",
@@ -49,7 +49,7 @@
     },
     {
       "id": "A5",
-      "name": "Personal Information and Subject Rights",
+      "name": "Subject Rights",
       "secondary_ids": [
         "B23",
         "B24",
@@ -62,7 +62,7 @@
     },
     {
       "id": "A6",
-      "name": "Rules for Entrusted Processing, Sharing, Transfer, and Public Disclosure",
+      "name": "Third-Party Sharing",
       "secondary_ids": [
         "B30",
         "B31",
@@ -87,7 +87,7 @@
   "secondary_indicators": [
     {
       "id": "B1",
-      "name": "Privacy Policy Name",
+      "name": "Privacy Policy",
       "primary": "A1",
       "any": [
         "Privacy Policy Name:",

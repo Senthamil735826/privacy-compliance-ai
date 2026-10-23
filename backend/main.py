@@ -11,6 +11,8 @@ if str(_BACKEND_DIR) not in sys.path:
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
+from typing import Optional
+
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -319,3 +321,88 @@ def search_policy(request: PolicySearchRequest):
             status_code=500,
             detail="An error occurred while executing semantic search."
         ) from exc
+
+
+# =========================================================
+# AGENT EVALUATION ENDPOINTS
+# =========================================================
+
+@app.get("/api/agents/status")
+def get_agents_status(force: bool = False):
+    """Return verified health status of LLM providers with caching."""
+    from backend.agents.provider_health import global_health_service
+
+    return global_health_service.get_status_payload(force=force)
+
+
+class CheckProviderRequest(BaseModel):
+    provider: Optional[str] = "all"
+
+
+@app.post("/api/agents/check")
+def check_provider_connection(request: CheckProviderRequest):
+    """Manually check connection to one or all providers, bypassing cache."""
+    from backend.agents.provider_health import global_health_service
+
+    if request.provider and request.provider != "all":
+        res = global_health_service.check_provider(request.provider, force=True)
+        return {"status": "success", "provider": res.to_dict()}
+    return global_health_service.get_status_payload(force=True)
+
+
+class AgentEvaluationRequest(BaseModel):
+    primary_indicator_id: str = Field(..., min_length=1)
+    indicator_id: str = Field(..., min_length=1)
+    indicator_description: str = Field(..., min_length=1)
+    evidence: str = Field(..., min_length=1)
+    inherent_difficulty: float = Field(default=0.5, ge=0.0, le=1.0)
+    evidence_recall: float = Field(default=0.5, ge=0.0, le=1.0)
+    evidence_dispersion: float = Field(default=0.5, ge=0.0, le=1.0)
+    semantic_ambiguity: float = Field(default=0.5, ge=0.0, le=1.0)
+
+
+@app.post("/api/agents/evaluate")
+def evaluate_indicator_with_agents(request: AgentEvaluationRequest):
+    """Execute multi-agent compliance evaluation across active verified providers."""
+    from backend.agents import (
+        DynamicScheduler,
+        MockPrivacyEvaluator,
+        PrivacyAgentPipeline,
+        TCAMRouter,
+        global_health_service,
+    )
+
+    evaluators = global_health_service.get_available_evaluators()
+
+    # If no live API evaluators are verified and operational, fall back to simulated mock evaluators for testing
+    if not evaluators:
+        evaluators = [
+            MockPrivacyEvaluator("Simulated-Audit-Agent-1"),
+            MockPrivacyEvaluator("Simulated-Audit-Agent-2"),
+            MockPrivacyEvaluator("Simulated-Audit-Agent-3"),
+        ]
+
+    pipeline = PrivacyAgentPipeline(
+        router=TCAMRouter(),
+        scheduler=DynamicScheduler(),
+        evaluators=evaluators,
+    )
+
+    try:
+        result = pipeline.evaluate_indicator(
+            primary_indicator_id=request.primary_indicator_id,
+            indicator_id=request.indicator_id,
+            indicator_description=request.indicator_description,
+            evidence=request.evidence,
+            inherent_difficulty=request.inherent_difficulty,
+            evidence_recall=request.evidence_recall,
+            evidence_dispersion=request.evidence_dispersion,
+            semantic_ambiguity=request.semantic_ambiguity,
+        )
+        return {"status": "success", "result": result}
+    except Exception as exc:
+        print("Agent evaluation endpoint error:", repr(exc))
+        raise HTTPException(
+            status_code=500,
+            detail=f"Evaluation failed: {exc}"
+        ) from exc
