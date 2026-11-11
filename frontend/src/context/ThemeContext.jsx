@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-const THEME_STORAGE_KEY = 'symbolon_theme'
+const THEME_STORAGE_KEY = 'privacy_compliance_theme'
+const LEGACY_STORAGE_KEY = 'symbolon_theme'
 
 const ThemeContext = createContext({
   theme: 'dark',
@@ -13,14 +14,14 @@ export function ThemeProvider({ children }) {
   // Theme can be 'light', 'dark', or 'system'
   const [theme, setThemeState] = useState(() => {
     try {
-      const stored = localStorage.getItem(THEME_STORAGE_KEY)
+      const stored = localStorage.getItem(THEME_STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY)
       if (stored === 'light' || stored === 'dark' || stored === 'system') {
         return stored
       }
     } catch (e) {
       console.warn('Unable to read theme from localStorage:', e)
     }
-    return 'dark' // Default to approved dark navy & purple
+    return 'dark' // Default to dark luxury theme
   })
 
   // Determine actual rendered theme ('light' or 'dark')

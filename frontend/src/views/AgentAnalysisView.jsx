@@ -541,13 +541,14 @@ export function AgentAnalysisView({
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <div
                     style={{
-                      background: 'rgba(99, 102, 241, 0.15)',
-                      color: '#818CF8',
+                      background: 'var(--accent-primary-light)',
+                      color: 'var(--accent-primary)',
                       padding: '10px',
                       borderRadius: '10px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      border: '1px solid var(--border-color)',
                     }}
                   >
                     <Sliders size={22} />
@@ -593,7 +594,7 @@ export function AgentAnalysisView({
                 {/* Visual Complexity Gauge & Threshold Bar */}
                 <div
                   style={{
-                    background: 'var(--bg-subtle, rgba(255,255,255,0.03))',
+                    background: 'var(--bg-subtle)',
                     padding: '16px 20px',
                     borderRadius: '10px',
                     border: '1px solid var(--border-color)',
@@ -612,7 +613,7 @@ export function AgentAnalysisView({
                   >
                     <span>
                       <strong>Composite Complexity Formula:</strong>{' '}
-                      <code style={{ background: 'rgba(0,0,0,0.2)', padding: '2px 6px', borderRadius: '4px' }}>
+                      <code style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', padding: '2px 8px', borderRadius: '4px' }}>
                         θ = 0.5 · H + 0.5 · S = {tcamExplanation.complexity_score.toFixed(3)}
                       </code>
                     </span>
@@ -631,7 +632,8 @@ export function AgentAnalysisView({
                       position: 'relative',
                       width: '100%',
                       height: '14px',
-                      background: 'rgba(255,255,255,0.1)',
+                      background: 'var(--bg-card)',
+                      border: '1px solid var(--border-color)',
                       borderRadius: '7px',
                       overflow: 'hidden',
                     }}
@@ -661,8 +663,8 @@ export function AgentAnalysisView({
                     }}
                   >
                     <span>0.0 (Trivial)</span>
-                    <span style={{ color: '#10B981', fontWeight: 600 }}>| 0.40 Threshold (1 vs 3 Agents)</span>
-                    <span style={{ color: '#F59E0B', fontWeight: 600 }}>| 0.70 Threshold (3 vs 5 Agents)</span>
+                    <span style={{ color: 'var(--color-success)', fontWeight: 600 }}>| 0.40 Threshold (1 vs 3 Agents)</span>
+                    <span style={{ color: 'var(--color-warning)', fontWeight: 600 }}>| 0.70 Threshold (3 vs 5 Agents)</span>
                     <span>1.0 (Maximum Difficulty)</span>
                   </div>
                 </div>
@@ -680,7 +682,7 @@ export function AgentAnalysisView({
                     className="card"
                     style={{
                       padding: '14px',
-                      background: 'var(--bg-card-elevated, rgba(255,255,255,0.02))',
+                      background: 'var(--bg-card-elevated)',
                       border: '1px solid var(--border-color)',
                       borderRadius: '8px',
                       display: 'flex',
@@ -693,7 +695,7 @@ export function AgentAnalysisView({
                         <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 600 }}>
                           Inherent Difficulty (H)
                         </span>
-                        <Scale size={14} color="#818CF8" />
+                        <Scale size={15} color="var(--accent-primary)" />
                       </div>
                       <div style={{ fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>
                         {(tcamExplanation.inherent_difficulty * 100).toFixed(0)}%
@@ -715,7 +717,7 @@ export function AgentAnalysisView({
                     className="card"
                     style={{
                       padding: '14px',
-                      background: 'var(--bg-card-elevated, rgba(255,255,255,0.02))',
+                      background: 'var(--bg-card-elevated)',
                       border: '1px solid var(--border-color)',
                       borderRadius: '8px',
                       display: 'flex',
@@ -728,7 +730,7 @@ export function AgentAnalysisView({
                         <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 600 }}>
                           Evidence Coverage Proxy (R)
                         </span>
-                        <Target size={14} color="#10B981" />
+                        <Target size={15} color="var(--color-success)" />
                       </div>
                       <div style={{ fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>
                         {(tcamExplanation.evidence_recall * 100).toFixed(1)}%
@@ -751,7 +753,7 @@ export function AgentAnalysisView({
                     className="card"
                     style={{
                       padding: '14px',
-                      background: 'var(--bg-card-elevated, rgba(255,255,255,0.02))',
+                      background: 'var(--bg-card-elevated)',
                       border: '1px solid var(--border-color)',
                       borderRadius: '8px',
                       display: 'flex',
@@ -764,7 +766,7 @@ export function AgentAnalysisView({
                         <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 600 }}>
                           Evidence Dispersion (D)
                         </span>
-                        <Layers size={14} color="#F59E0B" />
+                        <Layers size={15} color="var(--color-warning)" />
                       </div>
                       <div style={{ fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>
                         {(tcamExplanation.evidence_dispersion * 100).toFixed(1)}%
@@ -786,7 +788,7 @@ export function AgentAnalysisView({
                     className="card"
                     style={{
                       padding: '14px',
-                      background: 'var(--bg-card-elevated, rgba(255,255,255,0.02))',
+                      background: 'var(--bg-card-elevated)',
                       border: '1px solid var(--border-color)',
                       borderRadius: '8px',
                       display: 'flex',
@@ -799,7 +801,7 @@ export function AgentAnalysisView({
                         <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 600 }}>
                           Semantic Ambiguity (A)
                         </span>
-                        <HelpCircle size={14} color="#EC4899" />
+                        <HelpCircle size={15} color="var(--accent-secondary)" />
                       </div>
                       <div style={{ fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>
                         {(tcamExplanation.semantic_ambiguity * 100).toFixed(1)}%
@@ -822,7 +824,7 @@ export function AgentAnalysisView({
                     className="card"
                     style={{
                       padding: '14px',
-                      background: 'var(--bg-card-elevated, rgba(255,255,255,0.02))',
+                      background: 'var(--bg-card-elevated)',
                       border: '1px solid var(--border-color)',
                       borderRadius: '8px',
                       display: 'flex',
@@ -835,7 +837,7 @@ export function AgentAnalysisView({
                         <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 600 }}>
                           Evidence Scarcity (S)
                         </span>
-                        <FileText size={14} color="#6366F1" />
+                        <FileText size={15} color="var(--accent-primary)" />
                       </div>
                       <div style={{ fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>
                         {(tcamExplanation.evidence_scarcity * 100).toFixed(1)}%
@@ -861,7 +863,7 @@ export function AgentAnalysisView({
                       alignItems: 'center',
                       gap: '8px',
                       fontSize: '12px',
-                      background: 'var(--bg-subtle, rgba(255,255,255,0.03))',
+                      background: 'var(--bg-subtle)',
                       padding: '8px 14px',
                       borderRadius: '6px',
                       border: '1px solid var(--border-subtle)',
@@ -873,8 +875,9 @@ export function AgentAnalysisView({
                       <span
                         key={cid}
                         style={{
-                          background: 'rgba(99, 102, 241, 0.15)',
-                          color: '#818CF8',
+                          background: 'var(--accent-primary-light)',
+                          color: 'var(--accent-primary)',
+                          border: '1px solid var(--border-color)',
                           padding: '2px 8px',
                           borderRadius: '4px',
                           fontWeight: 600,

@@ -19,7 +19,7 @@ export function ThemeToggle() {
         role="radio"
         aria-checked={!isDark}
         aria-label="Switch to light mode"
-        title="Light Mode"
+        title="Light Mode — Modern Blue & Violet"
       >
         <Sun size={15} />
       </button>
@@ -31,7 +31,7 @@ export function ThemeToggle() {
         role="radio"
         aria-checked={isDark}
         aria-label="Switch to dark mode"
-        title="Dark Mode"
+        title="Dark Mode — Luxury Black & Gold"
       >
         <Moon size={15} />
       </button>
