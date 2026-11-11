@@ -355,10 +355,11 @@ class AgentEvaluationRequest(BaseModel):
     indicator_id: str = Field(..., min_length=1)
     indicator_description: str = Field(..., min_length=1)
     evidence: str = Field(..., min_length=1)
-    inherent_difficulty: float = Field(default=0.5, ge=0.0, le=1.0)
-    evidence_recall: float = Field(default=0.5, ge=0.0, le=1.0)
-    evidence_dispersion: float = Field(default=0.5, ge=0.0, le=1.0)
-    semantic_ambiguity: float = Field(default=0.5, ge=0.0, le=1.0)
+    document_id: Optional[str] = Field(default=None)
+    inherent_difficulty: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+    evidence_recall: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+    evidence_dispersion: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+    semantic_ambiguity: Optional[float] = Field(default=None, ge=0.0, le=1.0)
 
 
 @app.post("/api/agents/evaluate")
@@ -371,6 +372,55 @@ def evaluate_indicator_with_agents(request: AgentEvaluationRequest):
         TCAMRouter,
         global_health_service,
     )
+    from backend.agents.tcam_metrics import compute_automated_tcam_metrics
+
+    # Retrieve chunks from semantic search if document_id is provided
+    retrieved_chunks = None
+    total_document_chunks = None
+    if request.document_id and semantic_search.has_document(request.document_id):
+        try:
+            retrieved_chunks = semantic_search.search(
+                document_id=request.document_id,
+                query=f"{request.indicator_description} {request.evidence[:250]}",
+                top_k=5,
+            )
+            store = semantic_search._stores.get(request.document_id.strip())
+            if store and hasattr(store, "index") and store.index:
+                total_document_chunks = store.index.ntotal
+        except Exception as search_err:
+            print(f"FAISS chunk retrieval warning: {search_err}")
+
+    # Compute automated TCAM metrics from evidence and retrieval
+    metric_explanation = compute_automated_tcam_metrics(
+        indicator_id=request.indicator_id,
+        indicator_description=request.indicator_description,
+        primary_indicator_id=request.primary_indicator_id,
+        evidence_text=request.evidence,
+        retrieved_chunks=retrieved_chunks,
+        total_document_chunks=total_document_chunks,
+    )
+
+    # Use automated metrics unless caller explicitly provides custom overrides
+    has_custom_overrides = any(
+        v is not None and v != 0.5
+        for v in (
+            request.inherent_difficulty,
+            request.evidence_recall,
+            request.evidence_dispersion,
+            request.semantic_ambiguity,
+        )
+    )
+
+    if has_custom_overrides:
+        inh_diff = request.inherent_difficulty if request.inherent_difficulty is not None else metric_explanation.inherent_difficulty
+        ev_rec = request.evidence_recall if request.evidence_recall is not None else metric_explanation.evidence_recall
+        ev_disp = request.evidence_dispersion if request.evidence_dispersion is not None else metric_explanation.evidence_dispersion
+        sem_amb = request.semantic_ambiguity if request.semantic_ambiguity is not None else metric_explanation.semantic_ambiguity
+    else:
+        inh_diff = metric_explanation.inherent_difficulty
+        ev_rec = metric_explanation.evidence_recall
+        ev_disp = metric_explanation.evidence_dispersion
+        sem_amb = metric_explanation.semantic_ambiguity
 
     evaluators = global_health_service.get_available_evaluators()
 
@@ -394,12 +444,18 @@ def evaluate_indicator_with_agents(request: AgentEvaluationRequest):
             indicator_id=request.indicator_id,
             indicator_description=request.indicator_description,
             evidence=request.evidence,
-            inherent_difficulty=request.inherent_difficulty,
-            evidence_recall=request.evidence_recall,
-            evidence_dispersion=request.evidence_dispersion,
-            semantic_ambiguity=request.semantic_ambiguity,
+            inherent_difficulty=inh_diff,
+            evidence_recall=ev_rec,
+            evidence_dispersion=ev_disp,
+            semantic_ambiguity=sem_amb,
+            explanation=metric_explanation.to_dict(),
+            referenced_chunks=metric_explanation.referenced_chunks,
         )
-        return {"status": "success", "result": result}
+        return {
+            "status": "success",
+            "result": result,
+            "tcam_explanation": metric_explanation.to_dict(),
+        }
     except Exception as exc:
         print("Agent evaluation endpoint error:", repr(exc))
         raise HTTPException(

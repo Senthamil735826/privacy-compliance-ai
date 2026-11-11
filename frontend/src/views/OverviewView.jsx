@@ -100,8 +100,8 @@ export function OverviewView({
         />
         <MetricCard
           title="Multi-Agent Consensus"
-          value="6 Providers"
-          subtitle="Claude, Gemini, Groq, OpenAI, DeepSeek, OpenRouter"
+          value="5 Providers"
+          subtitle="Gemini, Groq, OpenRouter, Cohere, Kimi"
           icon={Sparkles}
           variant="indigo"
         />
@@ -231,7 +231,7 @@ export function OverviewView({
                   <div className="hub-action-content">
                     <h4 className="hub-action-title">Multi-Agent Verification</h4>
                     <p className="hub-action-desc">
-                      Compare multi-LLM consensus across Claude, Gemini, and Groq with fault isolation.
+                      Compare multi-LLM consensus across Gemini, Groq, OpenRouter, and Cohere with fault isolation.
                     </p>
                   </div>
                   <ArrowRight size={16} className="hub-action-arrow" />

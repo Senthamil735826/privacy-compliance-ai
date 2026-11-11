@@ -14,9 +14,21 @@ import { SettingsView } from './views/SettingsView'
 const LOCAL_STORAGE_KEY = 'symbolon_policy_library_v1'
 
 export default function App() {
-  const [currentView, setCurrentView] = useState('overview')
+  const [currentView, setCurrentView] = useState(() => {
+    const hash = window.location.hash.replace('#', '')
+    return hash || 'overview'
+  })
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
   const [apiOnline, setApiOnline] = useState(true)
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '')
+      if (hash) setCurrentView(hash)
+    }
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
 
   // Document & Analysis State
   const [file, setFile] = useState(null)

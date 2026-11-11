@@ -259,12 +259,11 @@ export function EvidenceViewer({
 
               <div className="agent-cards-grid">
                 {[
-                  { name: 'Google Gemini', model: 'gemini-2.5-flash', status: 'Ready' },
+                  { name: 'Google Gemini', model: 'gemini-3.5-flash', status: 'Ready' },
                   { name: 'Groq LPU Engine', model: 'openai/gpt-oss-20b', status: 'Ready' },
                   { name: 'OpenRouter', model: 'openai/gpt-4o-mini', status: 'Ready' },
-                  { name: 'Anthropic Claude', model: 'claude-3-5-sonnet', status: 'Available' },
-                  { name: 'OpenAI GPT', model: 'gpt-4o-mini', status: 'Available' },
-                  { name: 'DeepSeek LLM', model: 'deepseek-chat', status: 'Available' },
+                  { name: 'Cohere Command', model: 'command-r-plus', status: 'Ready' },
+                  { name: 'Kimi Moonshot AI', model: 'kimi-k3', status: 'Configured' },
                 ].map((agent, i) => (
 
                   <div key={i} className="agent-item-card">

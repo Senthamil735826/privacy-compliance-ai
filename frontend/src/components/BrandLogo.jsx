@@ -12,7 +12,7 @@ export function BrandLogo({ compact = false, hideText = false, onClick }) {
           onClick()
         }
       }}
-      title="Symbolon Law — Privacy Intelligence"
+      title="Privacy Compliance AI — Privacy Intelligence"
     >
       <div className="symbolon-brand-symbol" aria-hidden="true">
         <svg
@@ -64,11 +64,11 @@ export function BrandLogo({ compact = false, hideText = false, onClick }) {
       {!hideText && (
         <div className="symbolon-brand-text">
           <div className="symbolon-brand-title">
-            <span className="symbolon-brand-name">Symbolon</span>
-            <span className="symbolon-brand-tag">LAW</span>
+            <span className="symbolon-brand-name">Privacy</span>
+            <span className="symbolon-brand-tag">AI</span>
           </div>
           {!compact && (
-            <span className="symbolon-brand-subtitle">Privacy Intelligence</span>
+            <span className="symbolon-brand-subtitle">Compliance Intelligence</span>
           )}
         </div>
       )}

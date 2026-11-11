@@ -154,7 +154,7 @@ export function Sidebar({
           </div>
 
           <div className="sidebar-version-tag">
-            <span>Symbolon Law</span>
+            <span>Privacy Compliance AI</span>
             <span className="sidebar-version-pill">v1.0</span>
           </div>
         </div>

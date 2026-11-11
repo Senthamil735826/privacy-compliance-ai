@@ -107,18 +107,17 @@ export function SettingsView({ apiOnline }) {
             </div>
             <div>
               <h3 className="card-title">Multi-LLM Evaluator Pool</h3>
-              <p className="card-subtitle">6 configured consensus providers</p>
+              <p className="card-subtitle">5 configured consensus providers</p>
             </div>
           </div>
           <div className="card-body">
             <div className="settings-providers-list">
               {Object.entries({
-                claude: { name: 'Anthropic Claude', defaultModel: 'claude-3-7-sonnet-20250219' },
-                gemini: { name: 'Google Gemini', defaultModel: 'gemini-2.5-flash' },
+                gemini: { name: 'Google Gemini', defaultModel: 'gemini-3.5-flash' },
                 groq: { name: 'Groq LPU Engine', defaultModel: 'openai/gpt-oss-20b' },
-                openai: { name: 'OpenAI GPT', defaultModel: 'gpt-4.1-mini' },
-                deepseek: { name: 'DeepSeek LLM', defaultModel: 'deepseek-chat' },
                 openrouter: { name: 'OpenRouter', defaultModel: 'openai/gpt-4o-mini' },
+                cohere: { name: 'Cohere Command', defaultModel: 'command-r-plus-08-2024' },
+                kimi: { name: 'Kimi Moonshot AI', defaultModel: 'kimi-k3' },
               }).map(([key, meta]) => {
 
                 const live = providers[key]
@@ -171,7 +170,7 @@ export function SettingsView({ apiOnline }) {
               <Info size={18} className="disclaimer-callout-icon" />
               <div className="disclaimer-callout-text">
                 <p>
-                  <strong>Symbolon Law</strong> provides automated statutory policy parsing, verbatim citation retrieval,
+                  <strong>Privacy Compliance AI</strong> provides automated statutory policy parsing, verbatim citation retrieval,
                   and multi-agent natural language cross-examination. Findings reflect presence or absence of prescribed
                   contractual and disclosure provisions under regulatory privacy frameworks.
                 </p>

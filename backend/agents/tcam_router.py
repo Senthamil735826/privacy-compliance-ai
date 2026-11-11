@@ -43,6 +43,8 @@ class TCAMResult:
     complexity_score: float
     complexity_level: str
     evaluator_count: int
+    explanation: dict[str, Any] | None = None
+    referenced_chunks: list[int] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -109,6 +111,8 @@ class TCAMRouter:
         evidence_recall: float,
         evidence_dispersion: float,
         semantic_ambiguity: float,
+        explanation: dict[str, Any] | None = None,
+        referenced_chunks: list[int] | None = None,
     ) -> TCAMResult:
         """Calculate complexity and choose 1, 3, or 5 evaluators."""
 
@@ -167,5 +171,7 @@ class TCAMRouter:
             complexity_score=complexity_score,
             complexity_level=complexity_level,
             evaluator_count=evaluator_count,
+            explanation=explanation,
+            referenced_chunks=referenced_chunks,
         )
 

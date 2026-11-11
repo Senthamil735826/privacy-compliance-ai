@@ -130,29 +130,23 @@ PROVIDER_SPECS = {
         "env_model": "GROQ_MODEL",
         "default_model": "openai/gpt-oss-20b",
     },
-    "claude": {
-        "name": "Anthropic Claude",
-        "env_key": "ANTHROPIC_API_KEY",
-        "env_model": "CLAUDE_MODEL",
-        "default_model": "claude-3-5-sonnet-20241022",
-    },
-    "openai": {
-        "name": "OpenAI GPT",
-        "env_key": "OPENAI_API_KEY",
-        "env_model": "OPENAI_MODEL",
-        "default_model": "gpt-4.1-mini",
-    },
-    "deepseek": {
-        "name": "DeepSeek LLM",
-        "env_key": "DEEPSEEK_API_KEY",
-        "env_model": "DEEPSEEK_MODEL",
-        "default_model": "deepseek-chat",
-    },
     "openrouter": {
         "name": "OpenRouter",
         "env_key": "OPENROUTER_API_KEY",
         "env_model": "OPENROUTER_MODEL",
         "default_model": "openai/gpt-4o-mini",
+    },
+    "cohere": {
+        "name": "Cohere Command",
+        "env_key": "COHERE_API_KEY",
+        "env_model": "COHERE_MODEL",
+        "default_model": "command-r-plus-08-2024",
+    },
+    "kimi": {
+        "name": "Kimi Moonshot AI",
+        "env_key": "KIMI_API_KEY",
+        "env_model": "KIMI_MODEL",
+        "default_model": "kimi-k3",
     },
 }
 
@@ -257,18 +251,15 @@ class ProviderHealthService:
             elif provider_id == "groq":
                 from backend.agents.groq_evaluator import GroqEvaluator
                 evaluator = GroqEvaluator(model=model, timeout=12.0, max_retries=0)
-            elif provider_id == "claude":
-                from backend.agents.claude_evaluator import ClaudeEvaluator
-                evaluator = ClaudeEvaluator(model=model, timeout=12.0, max_retries=0)
-            elif provider_id == "openai":
-                from backend.agents.openai_evaluator import OpenAIEvaluator
-                evaluator = OpenAIEvaluator(model=model, timeout=12.0, max_retries=0)
-            elif provider_id == "deepseek":
-                from backend.agents.deepseek_evaluator import DeepSeekEvaluator
-                evaluator = DeepSeekEvaluator(model=model, timeout=12.0, max_retries=0)
             elif provider_id == "openrouter":
                 from backend.agents.openrouter_evaluator import OpenRouterEvaluator
                 evaluator = OpenRouterEvaluator(model=model, timeout=12.0, max_retries=0)
+            elif provider_id == "cohere":
+                from backend.agents.cohere_evaluator import CohereEvaluator
+                evaluator = CohereEvaluator(model=model, timeout=25.0, max_retries=0)
+            elif provider_id == "kimi":
+                from backend.agents.kimi_evaluator import KimiEvaluator
+                evaluator = KimiEvaluator(model=model, timeout=12.0, max_retries=0)
             else:
                 raise ValueError(f"Unknown provider: {provider_id}")
 
@@ -488,31 +479,24 @@ class ProviderHealthService:
             except Exception:
                 pass
 
-        if checks.get("claude") and checks["claude"].is_available:
-            try:
-                from backend.agents.claude_evaluator import ClaudeEvaluator
-                active_evaluators.append(ClaudeEvaluator(model=checks["claude"].model))
-            except Exception:
-                pass
-
-        if checks.get("openai") and checks["openai"].is_available:
-            try:
-                from backend.agents.openai_evaluator import OpenAIEvaluator
-                active_evaluators.append(OpenAIEvaluator(model=checks["openai"].model))
-            except Exception:
-                pass
-
-        if checks.get("deepseek") and checks["deepseek"].is_available:
-            try:
-                from backend.agents.deepseek_evaluator import DeepSeekEvaluator
-                active_evaluators.append(DeepSeekEvaluator(model=checks["deepseek"].model))
-            except Exception:
-                pass
-
         if checks.get("openrouter") and checks["openrouter"].is_available:
             try:
                 from backend.agents.openrouter_evaluator import OpenRouterEvaluator
                 active_evaluators.append(OpenRouterEvaluator(model=checks["openrouter"].model))
+            except Exception:
+                pass
+
+        if checks.get("cohere") and checks["cohere"].is_available:
+            try:
+                from backend.agents.cohere_evaluator import CohereEvaluator
+                active_evaluators.append(CohereEvaluator(model=checks["cohere"].model))
+            except Exception:
+                pass
+
+        if checks.get("kimi") and checks["kimi"].is_available:
+            try:
+                from backend.agents.kimi_evaluator import KimiEvaluator
+                active_evaluators.append(KimiEvaluator(model=checks["kimi"].model))
             except Exception:
                 pass
 

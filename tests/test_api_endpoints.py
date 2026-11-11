@@ -277,13 +277,9 @@ def test_agents_status_endpoint(client):
     data = response.json()
     assert data["status"] == "online"
     assert "providers" in data
-    assert "gemini" in data["providers"]
-    assert "groq" in data["providers"]
-    assert "claude" in data["providers"]
-    assert "openai" in data["providers"]
-    assert "deepseek" in data["providers"]
-    assert "openrouter" in data["providers"]
-    for p in ["gemini", "groq", "claude", "openai", "deepseek", "openrouter"]:
+    active_providers = ["gemini", "groq", "openrouter", "cohere", "kimi"]
+    for p in active_providers:
+        assert p in data["providers"]
         prov = data["providers"][p]
         assert "status" in prov
         assert "status_label" in prov
@@ -326,5 +322,14 @@ def test_agents_evaluate_endpoint(client):
         assert "result" in data
         assert "aggregation" in data["result"]
         assert "evaluations" in data["result"]
+        assert "tcam" in data["result"]
+        assert "tcam_explanation" in data
+        explanation = data["tcam_explanation"]
+        assert "inherent_difficulty" in explanation
+        assert "evidence_recall" in explanation
+        assert "evidence_dispersion" in explanation
+        assert "semantic_ambiguity" in explanation
+        assert "complexity_score" in explanation
+        assert "routing_decision" in explanation
 
 

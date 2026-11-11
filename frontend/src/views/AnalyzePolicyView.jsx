@@ -319,7 +319,7 @@ export function AnalyzePolicyView({
                   <div className="next-step-body">
                     <h4 className="next-step-name">Multi-Agent Verification</h4>
                     <p className="next-step-desc">
-                      Cross-examine provisions with Claude, Gemini, Groq, and consensus aggregation.
+                      Cross-examine provisions with Gemini, Groq, OpenRouter, and consensus aggregation.
                     </p>
                   </div>
                   <ArrowRight size={16} className="next-step-arrow" />
@@ -334,7 +334,7 @@ export function AnalyzePolicyView({
       <div className="upload-guidelines-card card">
         <h3 className="guidelines-title">Statutory Evaluation Scope</h3>
         <p className="guidelines-desc">
-          Symbolon Law audits uploaded policies against the comprehensive statutory indicator framework:
+          Privacy Compliance AI audits uploaded policies against the comprehensive statutory indicator framework:
         </p>
         <div className="guidelines-grid">
           {PRIMARY_CATEGORIES.map((cat) => (

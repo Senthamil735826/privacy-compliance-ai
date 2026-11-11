@@ -44,6 +44,8 @@ class PrivacyAgentPipeline:
         evidence_recall: float,
         evidence_dispersion: float,
         semantic_ambiguity: float,
+        explanation: dict[str, Any] | None = None,
+        referenced_chunks: list[int] | None = None,
     ) -> dict[str, Any]:
         """Route, execute evaluators with fault isolation, and aggregate results."""
 
@@ -53,6 +55,8 @@ class PrivacyAgentPipeline:
             evidence_recall=evidence_recall,
             evidence_dispersion=evidence_dispersion,
             semantic_ambiguity=semantic_ambiguity,
+            explanation=explanation,
+            referenced_chunks=referenced_chunks,
         )
 
         def make_task(evaluator: LLMEvaluator):
@@ -117,6 +121,7 @@ class PrivacyAgentPipeline:
             "primary_indicator_id": primary_indicator_id,
             "indicator_id": indicator_id,
             "tcam": tcam_result.to_dict(),
+            "tcam_explanation": explanation or tcam_result.explanation,
             "evaluator_count": len(successful_results),
             "requested_evaluators": tcam_result.evaluator_count,
             "selected_evaluators": selected_agents,

@@ -4,10 +4,12 @@ from backend.agents.agent_pipeline import PrivacyAgentPipeline
 from backend.agents.aggregation import AggregationResult, ConsensusAggregator
 from backend.agents.base_evaluator import BaseLLMEvaluator
 from backend.agents.claude_evaluator import ClaudeEvaluator
+from backend.agents.cohere_evaluator import CohereEvaluator
 from backend.agents.deepseek_evaluator import DeepSeekEvaluator
 from backend.agents.dynamic_scheduler import DynamicScheduler
 from backend.agents.gemini_evaluator import GeminiEvaluator
 from backend.agents.groq_evaluator import GroqEvaluator
+from backend.agents.kimi_evaluator import KimiEvaluator
 from backend.agents.llm_evaluator import EvaluationResult, LLMEvaluator
 from backend.agents.mock_evaluator import MockPrivacyEvaluator
 from backend.agents.openai_evaluator import OpenAIEvaluator
@@ -43,6 +45,7 @@ __all__ = [
     "AuthFailureError",
     "BaseLLMEvaluator",
     "ClaudeEvaluator",
+    "CohereEvaluator",
     "ConsensusAggregator",
     "DeepSeekEvaluator",
     "DynamicScheduler",
@@ -50,6 +53,7 @@ __all__ = [
     "GeminiEvaluator",
     "GroqEvaluator",
     "InvalidResponseError",
+    "KimiEvaluator",
     "LLMEvaluator",
     "MissingConfigError",
     "MockPrivacyEvaluator",

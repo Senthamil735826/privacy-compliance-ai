@@ -15,6 +15,11 @@ import {
   RefreshCw,
   Clock,
   ExternalLink,
+  Sliders,
+  Layers,
+  FileText,
+  Target,
+  Scale,
 } from 'lucide-react'
 import { StatusBadge } from '../components/StatusBadge'
 import { SECONDARY_INDICATORS } from '../data/indicatorsData'
@@ -149,6 +154,7 @@ export function AgentAnalysisView({
     setEvalResult(null)
 
     try {
+      const docId = analysis?.document_id || analysis?.id || targetIndicator?.document_id || null
       const response = await fetch('/api/agents/evaluate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -157,6 +163,7 @@ export function AgentAnalysisView({
           indicator_id: currentIndicatorMeta.id,
           indicator_description: currentIndicatorMeta.description,
           evidence: evidenceText.trim(),
+          document_id: docId,
         }),
       })
 
@@ -165,7 +172,10 @@ export function AgentAnalysisView({
         throw new Error(data.detail || 'Evaluation failed on backend.')
       }
 
-      setEvalResult(data.result)
+      setEvalResult({
+        ...data.result,
+        tcam_explanation: data.tcam_explanation || data.result?.tcam?.explanation || data.result?.tcam_explanation,
+      })
     } catch (err) {
       setEvalError(err.message || 'Error occurred while running multi-agent evaluation.')
     } finally {
@@ -173,20 +183,26 @@ export function AgentAnalysisView({
     }
   }
 
-  // Baseline fallback providers if API call is loading
-  const providers = providerStatus?.providers || {
+  // Baseline fallback providers matching active .env configuration
+  const rawProviders = providerStatus?.providers || {
     gemini: { provider: 'gemini', name: 'Google Gemini', configured: true, model: 'gemini-3.5-flash', status: 'READY', is_available: true },
     groq: { provider: 'groq', name: 'Groq LPU Engine', configured: true, model: 'openai/gpt-oss-20b', status: 'READY', is_available: true },
-    claude: { provider: 'claude', name: 'Anthropic Claude', configured: true, model: 'claude-3-5-sonnet-20241022', status: 'INSUFFICIENT_BALANCE', is_available: false, error: 'Account credit balance is exhausted or too low.' },
-    openai: { provider: 'openai', name: 'OpenAI GPT', configured: true, model: 'gpt-4.1-mini', status: 'INSUFFICIENT_BALANCE', is_available: false, error: 'Account credit balance is exhausted.' },
-    deepseek: { provider: 'deepseek', name: 'DeepSeek LLM', configured: true, model: 'deepseek-chat', status: 'INSUFFICIENT_BALANCE', is_available: false, error: 'Account balance insufficient.' },
     openrouter: { provider: 'openrouter', name: 'OpenRouter', configured: true, model: 'openai/gpt-4o-mini', status: 'READY', is_available: true },
+    cohere: { provider: 'cohere', name: 'Cohere Command', configured: true, model: 'command-r-plus-08-2024', status: 'READY', is_available: true },
+    kimi: { provider: 'kimi', name: 'Kimi Moonshot AI', configured: true, model: 'kimi-k3', status: 'INSUFFICIENT_BALANCE', is_available: false, error: 'Account balance exhausted.' },
   }
+
+  // Filter out removed legacy providers (Claude, OpenAI, DeepSeek)
+  const excludedKeys = new Set(['claude', 'openai', 'deepseek'])
+  const providers = Object.fromEntries(
+    Object.entries(rawProviders).filter(([k]) => !excludedKeys.has(k.toLowerCase()))
+  )
 
 
   const consensus = evalResult?.aggregation || evalResult?.consensus
   const results = evalResult?.evaluations || evalResult?.results || []
   const failedEvals = evalResult?.failed_evaluations || []
+  const tcamExplanation = evalResult?.tcam_explanation || evalResult?.tcam?.explanation
 
   // Detect disagreements among completed evaluations
   const validResults = results.filter((r) => r.decision && r.decision !== 'inconclusive' && !r.error)
@@ -293,7 +309,7 @@ export function AgentAnalysisView({
             <p className="audit-status-desc">
               {readyCount === totalCount
                 ? 'All configured independent evaluator engines are verified and accepting queries.'
-                : 'Operational evaluators (Gemini, Groq, OpenRouter) conduct consensus audits. Unavailable engines with exhausted credit balances are isolated and excluded.'}
+                : 'Operational evaluators conduct multi-agent consensus audits with fault isolation for unavailable providers.'}
             </p>
           </div>
         </div>
@@ -314,12 +330,11 @@ export function AgentAnalysisView({
       <div className="provider-status-grid">
         {Object.entries(providers).map(([key, info]) => {
           const providerTitles = {
-            claude: 'Anthropic Claude',
             gemini: 'Google Gemini',
             groq: 'Groq LPU Engine',
-            openai: 'OpenAI GPT',
-            deepseek: 'DeepSeek LLM',
             openrouter: 'OpenRouter',
+            cohere: 'Cohere Command',
+            kimi: 'Kimi Moonshot AI',
           }
 
           const providerName = info.name || providerTitles[key] || key
@@ -379,12 +394,16 @@ export function AgentAnalysisView({
 
       {/* Interactive Evaluation Form */}
       <div className="card evaluation-form-card">
-        <div className="card-header">
+        <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
           <div>
             <h3 className="card-title">Initiate Multi-Agent Audit</h3>
             <p className="card-subtitle">
               Select an indicator and provide a policy excerpt to cross-examine across operational evaluators.
             </p>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', background: 'var(--bg-subtle, rgba(255,255,255,0.05))', padding: '6px 12px', borderRadius: '20px', border: '1px solid var(--border-color)' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: readyCount > 0 ? '#10B981' : '#EF4444' }} />
+            <span>Active Voting Engines: <strong>{Object.values(providers).filter(p => p.is_available).map(p => p.name.split(' ')[0]).join(', ') || 'None ready'}</strong></span>
           </div>
         </div>
 
@@ -426,9 +445,25 @@ export function AgentAnalysisView({
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="evidence-text">
-              Policy Evidence Passage (Extracted Text)
-            </label>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+              <label className="form-label" htmlFor="evidence-text" style={{ margin: 0 }}>
+                Policy Evidence Passage (Extracted Text)
+              </label>
+              {analysis?.indicators && (
+                <button
+                  type="button"
+                  style={{ background: 'none', border: 'none', color: 'var(--accent-primary, #6366F1)', cursor: 'pointer', fontSize: '12px', fontWeight: 500 }}
+                  onClick={() => {
+                    const match = analysis.indicators.find((ind) => ind.id === selectedIndId)
+                    if (match?.evidence?.[0]) {
+                      setEvidenceText(extractEvidenceString(match.evidence[0]))
+                    }
+                  }}
+                >
+                  ↺ Load Evidence from Uploaded Document
+                </button>
+              )}
+            </div>
             <textarea
               id="evidence-text"
               className="form-textarea"
@@ -488,6 +523,373 @@ export function AgentAnalysisView({
       {/* Consensus Summary Banner (When Results Available) */}
       {evalResult && (
         <div className="eval-results-container">
+          {/* Automated TCAM Complexity Assessment & Evidence Quality Card */}
+          {tcamExplanation && (
+            <div className="card tcam-assessment-card" style={{ marginBottom: '24px' }}>
+              <div
+                className="card-header"
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  gap: '12px',
+                  borderBottom: '1px solid var(--border-color)',
+                  paddingBottom: '14px',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div
+                    style={{
+                      background: 'rgba(99, 102, 241, 0.15)',
+                      color: '#818CF8',
+                      padding: '10px',
+                      borderRadius: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Sliders size={22} />
+                  </div>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span className="page-badge" style={{ fontSize: '11px', padding: '2px 8px' }}>
+                        TCAM v1.0
+                      </span>
+                      <h3 className="card-title" style={{ margin: 0, fontSize: '18px' }}>
+                        Automated Task Complexity & Evidence Quality Assessment
+                      </h3>
+                    </div>
+                    <p className="card-subtitle" style={{ margin: '4px 0 0 0', fontSize: '13px' }}>
+                      Deterministic routing driven by statutory indicator difficulty and actual retrieval quality.
+                    </p>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  <span
+                    className={`status-badge ${
+                      tcamExplanation.complexity_score < 0.4
+                        ? 'status-badge--success'
+                        : tcamExplanation.complexity_score < 0.7
+                        ? 'status-badge--warning'
+                        : 'status-badge--error'
+                    }`}
+                    style={{ fontSize: '13px', padding: '6px 12px', fontWeight: 600 }}
+                  >
+                    θ = {tcamExplanation.complexity_score.toFixed(3)} ({tcamExplanation.complexity_level?.toUpperCase()} COMPLEXITY)
+                  </span>
+                  <span
+                    className="audit-tag audit-tag--active"
+                    style={{ fontSize: '13px', padding: '6px 12px' }}
+                  >
+                    {tcamExplanation.routing_decision} Evaluator{tcamExplanation.routing_decision > 1 ? 's' : ''} Allocated
+                  </span>
+                </div>
+              </div>
+
+              <div className="card-body" style={{ display: 'flex', flexDirection: 'column', gap: '20px', paddingTop: '16px' }}>
+                {/* Visual Complexity Gauge & Threshold Bar */}
+                <div
+                  style={{
+                    background: 'var(--bg-subtle, rgba(255,255,255,0.03))',
+                    padding: '16px 20px',
+                    borderRadius: '10px',
+                    border: '1px solid var(--border-color)',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '10px',
+                      fontSize: '13px',
+                      flexWrap: 'wrap',
+                      gap: '8px',
+                    }}
+                  >
+                    <span>
+                      <strong>Composite Complexity Formula:</strong>{' '}
+                      <code style={{ background: 'rgba(0,0,0,0.2)', padding: '2px 6px', borderRadius: '4px' }}>
+                        θ = 0.5 · H + 0.5 · S = {tcamExplanation.complexity_score.toFixed(3)}
+                      </code>
+                    </span>
+                    <span style={{ fontWeight: 500 }}>
+                      {tcamExplanation.complexity_score < 0.4
+                        ? '✓ Low Complexity (< 0.40) ➔ Routed to 1 Evaluator'
+                        : tcamExplanation.complexity_score < 0.7
+                        ? '⚡ Medium Complexity [0.40, 0.70) ➔ Routed to 3 Evaluators'
+                        : '⚠ High Complexity (≥ 0.70) ➔ Routed to 5 Evaluators'}
+                    </span>
+                  </div>
+
+                  {/* Visual Progress Bar with Threshold Marks */}
+                  <div
+                    style={{
+                      position: 'relative',
+                      width: '100%',
+                      height: '14px',
+                      background: 'rgba(255,255,255,0.1)',
+                      borderRadius: '7px',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: `${Math.min(100, Math.max(0, tcamExplanation.complexity_score * 100))}%`,
+                        height: '100%',
+                        background:
+                          tcamExplanation.complexity_score < 0.4
+                            ? 'linear-gradient(90deg, #10B981, #34D399)'
+                            : tcamExplanation.complexity_score < 0.7
+                            ? 'linear-gradient(90deg, #F59E0B, #FBBF24)'
+                            : 'linear-gradient(90deg, #EF4444, #F87171)',
+                        borderRadius: '7px',
+                        transition: 'width 0.5s ease',
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      marginTop: '8px',
+                      fontSize: '11px',
+                      color: 'var(--text-muted)',
+                    }}
+                  >
+                    <span>0.0 (Trivial)</span>
+                    <span style={{ color: '#10B981', fontWeight: 600 }}>| 0.40 Threshold (1 vs 3 Agents)</span>
+                    <span style={{ color: '#F59E0B', fontWeight: 600 }}>| 0.70 Threshold (3 vs 5 Agents)</span>
+                    <span>1.0 (Maximum Difficulty)</span>
+                  </div>
+                </div>
+
+                {/* Grid of 5 Metric Component Cards */}
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
+                    gap: '14px',
+                  }}
+                >
+                  {/* Card 1: Inherent Difficulty (H) */}
+                  <div
+                    className="card"
+                    style={{
+                      padding: '14px',
+                      background: 'var(--bg-card-elevated, rgba(255,255,255,0.02))',
+                      border: '1px solid var(--border-color)',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                        <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 600 }}>
+                          Inherent Difficulty (H)
+                        </span>
+                        <Scale size={14} color="#818CF8" />
+                      </div>
+                      <div style={{ fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>
+                        {(tcamExplanation.inherent_difficulty * 100).toFixed(0)}%
+                        <span style={{ fontSize: '12px', fontWeight: 400, color: 'var(--text-muted)', marginLeft: '6px' }}>
+                          ({tcamExplanation.inherent_difficulty.toFixed(2)})
+                        </span>
+                      </div>
+                      <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: 1.4, margin: '6px 0 0 0' }}>
+                        {tcamExplanation.inherent_difficulty_rationale}
+                      </p>
+                    </div>
+                    <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px dashed var(--border-subtle)', fontSize: '11px', color: 'var(--text-muted)' }}>
+                      Benchmark Calibrated ({selectedIndId})
+                    </div>
+                  </div>
+
+                  {/* Card 2: Evidence Recall / Coverage Proxy (R) */}
+                  <div
+                    className="card"
+                    style={{
+                      padding: '14px',
+                      background: 'var(--bg-card-elevated, rgba(255,255,255,0.02))',
+                      border: '1px solid var(--border-color)',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                        <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 600 }}>
+                          Evidence Coverage Proxy (R)
+                        </span>
+                        <Target size={14} color="#10B981" />
+                      </div>
+                      <div style={{ fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>
+                        {(tcamExplanation.evidence_recall * 100).toFixed(1)}%
+                        <span style={{ fontSize: '12px', fontWeight: 400, color: 'var(--text-muted)', marginLeft: '6px' }}>
+                          ({tcamExplanation.evidence_recall.toFixed(2)})
+                        </span>
+                      </div>
+                      <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: 1.4, margin: '6px 0 0 0' }}>
+                        {tcamExplanation.evidence_recall_rationale}
+                      </p>
+                    </div>
+                    <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px dashed var(--border-subtle)', fontSize: '11px', color: 'var(--text-muted)', display: 'flex', justifyContent: 'space-between' }}>
+                      <span>Lexical: {(tcamExplanation.lexical_coverage_score * 100).toFixed(0)}%</span>
+                      <span>Density: {(tcamExplanation.semantic_density_score * 100).toFixed(0)}%</span>
+                    </div>
+                  </div>
+
+                  {/* Card 3: Evidence Dispersion (D) */}
+                  <div
+                    className="card"
+                    style={{
+                      padding: '14px',
+                      background: 'var(--bg-card-elevated, rgba(255,255,255,0.02))',
+                      border: '1px solid var(--border-color)',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                        <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 600 }}>
+                          Evidence Dispersion (D)
+                        </span>
+                        <Layers size={14} color="#F59E0B" />
+                      </div>
+                      <div style={{ fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>
+                        {(tcamExplanation.evidence_dispersion * 100).toFixed(1)}%
+                        <span style={{ fontSize: '12px', fontWeight: 400, color: 'var(--text-muted)', marginLeft: '6px' }}>
+                          ({tcamExplanation.evidence_dispersion.toFixed(2)})
+                        </span>
+                      </div>
+                      <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: 1.4, margin: '6px 0 0 0' }}>
+                        {tcamExplanation.evidence_dispersion_rationale}
+                      </p>
+                    </div>
+                    <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px dashed var(--border-subtle)', fontSize: '11px', color: 'var(--text-muted)' }}>
+                      Span: {(tcamExplanation.chunk_span * 100).toFixed(0)}% of document
+                    </div>
+                  </div>
+
+                  {/* Card 4: Semantic Ambiguity (A) */}
+                  <div
+                    className="card"
+                    style={{
+                      padding: '14px',
+                      background: 'var(--bg-card-elevated, rgba(255,255,255,0.02))',
+                      border: '1px solid var(--border-color)',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                        <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 600 }}>
+                          Semantic Ambiguity (A)
+                        </span>
+                        <HelpCircle size={14} color="#EC4899" />
+                      </div>
+                      <div style={{ fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>
+                        {(tcamExplanation.semantic_ambiguity * 100).toFixed(1)}%
+                        <span style={{ fontSize: '12px', fontWeight: 400, color: 'var(--text-muted)', marginLeft: '6px' }}>
+                          ({tcamExplanation.semantic_ambiguity.toFixed(2)})
+                        </span>
+                      </div>
+                      <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: 1.4, margin: '6px 0 0 0' }}>
+                        {tcamExplanation.semantic_ambiguity_rationale}
+                      </p>
+                    </div>
+                    <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px dashed var(--border-subtle)', fontSize: '11px', color: 'var(--text-muted)', display: 'flex', justifyContent: 'space-between' }}>
+                      <span>Hedge: {(tcamExplanation.hedge_density * 100).toFixed(0)}%</span>
+                      <span>Flatness: {(tcamExplanation.distribution_entropy * 100).toFixed(0)}%</span>
+                    </div>
+                  </div>
+
+                  {/* Card 5: Evidence Scarcity (S) */}
+                  <div
+                    className="card"
+                    style={{
+                      padding: '14px',
+                      background: 'var(--bg-card-elevated, rgba(255,255,255,0.02))',
+                      border: '1px solid var(--border-color)',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                        <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', fontWeight: 600 }}>
+                          Evidence Scarcity (S)
+                        </span>
+                        <FileText size={14} color="#6366F1" />
+                      </div>
+                      <div style={{ fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>
+                        {(tcamExplanation.evidence_scarcity * 100).toFixed(1)}%
+                        <span style={{ fontSize: '12px', fontWeight: 400, color: 'var(--text-muted)', marginLeft: '6px' }}>
+                          ({tcamExplanation.evidence_scarcity.toFixed(2)})
+                        </span>
+                      </div>
+                      <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: 1.4, margin: '6px 0 0 0' }}>
+                        Composite quality penalty derived from recall deficit, chunk dispersion, and semantic ambiguity.
+                      </p>
+                    </div>
+                    <div style={{ marginTop: '10px', paddingTop: '8px', borderTop: '1px dashed var(--border-subtle)', fontSize: '11px', color: 'var(--text-muted)' }}>
+                      <code>S = 1 - ⅓(R + (1-D) + (1-A))</code>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Referenced Chunks Badges */}
+                {tcamExplanation.referenced_chunks && tcamExplanation.referenced_chunks.length > 0 && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      fontSize: '12px',
+                      background: 'var(--bg-subtle, rgba(255,255,255,0.03))',
+                      padding: '8px 14px',
+                      borderRadius: '6px',
+                      border: '1px solid var(--border-subtle)',
+                      flexWrap: 'wrap',
+                    }}
+                  >
+                    <strong style={{ color: 'var(--text-secondary)' }}>Referenced FAISS Retrieval Chunks:</strong>
+                    {tcamExplanation.referenced_chunks.map((cid) => (
+                      <span
+                        key={cid}
+                        style={{
+                          background: 'rgba(99, 102, 241, 0.15)',
+                          color: '#818CF8',
+                          padding: '2px 8px',
+                          borderRadius: '4px',
+                          fontWeight: 600,
+                          fontSize: '11px',
+                        }}
+                      >
+                        Chunk #{cid}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           <div className="card consensus-card">
             <div className="consensus-header">
               <div className="consensus-title-area">
@@ -523,6 +925,14 @@ export function AgentAnalysisView({
                     {results.length} Evaluator{results.length !== 1 ? 's' : ''}
                   </span>
                 </div>
+                {evalResult?.tcam && (
+                  <div className="consensus-metric-item">
+                    <span className="metric-tiny-label">TCAM Routing</span>
+                    <span className="metric-tiny-value">
+                      {evalResult.tcam.complexity_level} ({evalResult.tcam.evaluator_count} Agents)
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
